@@ -28,3 +28,10 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'
+
+
+#文件上传相关配置
+file:
+  type: fdfs
+  conf: fdfs_client.conf
+  actualUrl: http://172.16.52.84:10002/
