@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atmoon.demo.mapper.GirlMapper">
+
+    <select id="queryGirl" resultType="com.atmoon.demo.entity.Girl">
+        SELECT * FROM girl WHERE 1 = 1
+        <if test=" city != null and city != ''">
+            city=#{city}
+        </if>
+    </select>
+
+</mapper>
