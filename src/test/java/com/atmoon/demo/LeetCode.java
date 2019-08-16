@@ -1,8 +1,6 @@
 package com.atmoon.demo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zy
@@ -11,11 +9,12 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        System.out.println(myAtoi("  +"));
+        System.out.println(isMatch("aaa", "ab*a*c*a"));
     }
 
     /**
      * 15. 三数之和
+     *
      * @param nums
      * @return
      */
@@ -48,6 +47,7 @@ public class LeetCode {
 
     /**
      * 15. 三数之和
+     *
      * @param nums
      * @return
      */
@@ -95,6 +95,7 @@ public class LeetCode {
 
     /**
      * 16. 最接近的三数之和
+     *
      * @param nums
      * @return
      */
@@ -133,6 +134,7 @@ public class LeetCode {
 
     /**
      * 42. 接雨水
+     *
      * @param height
      * @return
      */
@@ -184,6 +186,7 @@ public class LeetCode {
 
     /**
      * 2. 两数相加
+     *
      * @param l1
      * @param l2
      * @return
@@ -226,16 +229,17 @@ public class LeetCode {
 
     /**
      * 3. 无重复字符的最长子串
+     *
      * @param s
      * @return
      */
-    public static int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring0(String s) {
         int maxLength = s.length() < 1 ? 0 : 1;
         int length = s.length();
         for (int i = 0; i < length - maxLength; i++) {
             int current = i + 1;
             // 如果下一位不包含在当前子串中则继续
-            while (current < length && s.substring(i, current).indexOf(String.valueOf(s.charAt(current))) == -1) {
+            while (current < length && !s.substring(i, current).contains(String.valueOf(s.charAt(current)))) {
                 current++;
             }
             maxLength = Math.max(maxLength, current - i);
@@ -244,7 +248,30 @@ public class LeetCode {
     }
 
     /**
+     * 3. 无重复字符的最长子串
+     * 优化的滑动窗口(发现重复字符后直接从第一次出现重复字符的下一位开始)
+     * abcdbef省去了从b开始的一次循环
+     *
+     * @param s
+     * @return
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        int n = s.length(), maxLength = 0;
+        Map<Character, Integer> map = new HashMap<>(); // current index of character
+        // try to extend the range [i, j]
+        for (int j = 0, i = 0; j < n; j++) {
+            if (map.containsKey(s.charAt(j))) {
+                i = Math.max(map.get(s.charAt(j)), i);
+            }
+            maxLength = Math.max(maxLength, j - i + 1);
+            map.put(s.charAt(j), j + 1);
+        }
+        return maxLength;
+    }
+
+    /**
      * 4. 寻找两个有序数组的中位数
+     *
      * @param nums1
      * @param nums2
      * @return
@@ -300,6 +327,7 @@ public class LeetCode {
     /**
      * 5. 最长回文子串
      * 暴力法(将所有可能的字符串都判断一遍)
+     *
      * @param s
      * @return
      */
@@ -329,6 +357,7 @@ public class LeetCode {
     /**
      * 5. 最长回文子串
      * 中心扩展法(边界会有两个、中心只有一个)
+     *
      * @param s
      * @return
      */
@@ -394,6 +423,7 @@ public class LeetCode {
 
     /**
      * 7. 整数反转
+     *
      * @param x
      * @return
      */
@@ -402,10 +432,10 @@ public class LeetCode {
         while (x != 0) {
             int pop = x % 10;
             // 反转后可能溢出返回0
-            if (rev > Integer.MAX_VALUE/10 || (rev == Integer.MAX_VALUE/10 && pop > Integer.MAX_VALUE % 10)) {
+            if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && pop > Integer.MAX_VALUE % 10)) {
                 return 0;
             }
-            if (rev < Integer.MIN_VALUE/10 || (rev == Integer.MIN_VALUE/10 && pop < Integer.MIN_VALUE % 10)){
+            if (rev < Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 && pop < Integer.MIN_VALUE % 10)) {
                 return 0;
             }
             rev = rev * 10 + pop;
@@ -416,6 +446,7 @@ public class LeetCode {
 
     /**
      * 8. 字符串转换整数 (atoi)
+     *
      * @param str
      * @return
      */
@@ -436,7 +467,7 @@ public class LeetCode {
             sign = false;
         }
         // 找到第一个非零数
-        while (begin < trim.length() &&trim.charAt(begin) == '0') {
+        while (begin < trim.length() && trim.charAt(begin) == '0') {
             begin++;
         }
         // 找到最后一位数字
@@ -447,7 +478,7 @@ public class LeetCode {
             return 0;
         }
         // 计算边界值长度
-        int maxLen = (int)Math.ceil(Math.log10(Integer.MAX_VALUE));
+        int maxLen = (int) Math.ceil(Math.log10(Integer.MAX_VALUE));
         // 有效位数超长直接返回边界值
         if (end - begin > maxLen) {
             if (sign) {
@@ -455,21 +486,105 @@ public class LeetCode {
             } else {
                 return Integer.MIN_VALUE;
             }
-        } else if(end - begin == maxLen) {
-            int temp = Integer.parseInt(trim.substring(0,end - 1));
-            int lastBit = Integer.parseInt(trim.substring(end - 1,end));
-            if (temp > Integer.MAX_VALUE/10 || (temp == Integer.MAX_VALUE/10 && lastBit > Integer.MAX_VALUE % 10)) {
+        } else if (end - begin == maxLen) {
+            int temp = Integer.parseInt(trim.substring(0, end - 1));
+            int lastBit = Integer.parseInt(trim.substring(end - 1, end));
+            if (temp > Integer.MAX_VALUE / 10 || (temp == Integer.MAX_VALUE / 10 && lastBit > Integer.MAX_VALUE % 10)) {
                 return Integer.MAX_VALUE;
             }
-            if (temp < Integer.MIN_VALUE/10 || (temp == Integer.MIN_VALUE/10 && -lastBit < Integer.MIN_VALUE % 10)){
+            if (temp < Integer.MIN_VALUE / 10 || (temp == Integer.MIN_VALUE / 10 && -lastBit < Integer.MIN_VALUE % 10)) {
                 return Integer.MIN_VALUE;
             }
         }
-        return Integer.parseInt(trim.substring(0,end));
+        return Integer.parseInt(trim.substring(0, end));
     }
 
-    private static boolean isNumber(char bit){
+    private static boolean isNumber(char bit) {
         return bit >= '0' && bit <= '9';
+    }
+
+    /**
+     * 9. 回文数
+     * 反转一半数字
+     *
+     * @param x
+     * @return
+     */
+    public static boolean isPalindrome(int x) {
+        if (x < 0 || x % 10 == 0 && x != 0) {
+            return false;
+        }
+        // 如果将数字全部反转可能会存在整数溢出,只反转一半并与另一半比较
+        int rev = 0;
+        while (x > rev) {
+            rev = x % 10 + rev * 10;
+            x = x / 10;
+        }
+        return x == rev || x == rev / 10;
+    }
+
+    /**
+     * 10. 正则表达式匹配
+     *
+     * @param s
+     * @param p
+     * @return
+     */
+    public static boolean isMatch(String s, String p) {
+        // 均为空时返回ture
+        if (s.length() == 0 && p.length() == 0) {
+            return true;
+        }
+        // s不为空、p为空时返回false
+        if (p.length() == 0) {
+            return false;
+        }
+        // 均不为空、s为空p不为空时进行校验
+        int sIndex = 0, pIndex = 0;
+        char current = 0;
+        while (sIndex < s.length() && pIndex < p.length()) {
+            if (p.charAt(pIndex) == '*') {
+                // 如果*前一位为空返回false
+                if (current == 0) {
+                    return false;
+                }
+                while (sIndex < s.length() && (s.charAt(sIndex) == current || current == '.')) {
+                    sIndex++;
+                    // 如果匹配符下一位与当前匹配字符相同则顺延,防止'a*a'这种
+                    if (pIndex + 1 < p.length() && p.charAt(pIndex + 1) == current) {
+                        pIndex++;
+                    }
+                }
+            } else {
+                current = p.charAt(pIndex);
+                // 下一位通配符为*时可以匹配零个
+                if (!(current == '.' || s.charAt(sIndex) == current) && pIndex + 1 < p.length() && p.charAt(pIndex + 1) != '*') {
+                    return false;
+                }
+                // 匹配成功(下一位为*时不移动字符坐标)
+                if ((current == '.' || s.charAt(sIndex) == current) && (pIndex + 1 == p.length() || p.charAt(pIndex + 1) != '*')) {
+                    sIndex++;
+                }
+            }
+            // 避免'a*a'越界
+            if (pIndex < p.length()) {
+                pIndex++;
+            }
+        }
+        // 如果匹配符未到末位则进行判断,避免'a*b*v*c*x*'之类的情况
+        int endP = pIndex;
+        while (pIndex < p.length()) {
+            // 剩余匹配符为偶数但偶数位不是*
+            if ((pIndex - endP) % 2 == 1 && p.charAt(pIndex) != '*') {
+                return false;
+            }
+            // 剩余匹配符为奇数
+            if ((pIndex - endP) % 2 == 0 && pIndex == p.length() - 1) {
+                return false;
+            }
+            pIndex++;
+        }
+        return sIndex == s.length();
     }
 
 }
