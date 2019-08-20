@@ -9,7 +9,15 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        System.out.println(isMatch("aaa", "ab*a*c*a"));
+        Trie trie = new Trie();
+
+        trie.insert("apple");
+        System.out.println(trie.search("apple"));// 返回 true
+        System.out.println(trie.search("app"));// 返回 false
+        System.out.println(trie.startsWith("app"));// 返回 true
+        trie.insert("app");
+        System.out.println(trie.search("app"));// 返回 true
+
     }
 
     /**
@@ -524,67 +532,223 @@ public class LeetCode {
     }
 
     /**
-     * 10. 正则表达式匹配
+     * 10. 正则表达式匹配(回溯法)
      *
      * @param s
      * @param p
      * @return
      */
     public static boolean isMatch(String s, String p) {
-        // 均为空时返回ture
-        if (s.length() == 0 && p.length() == 0) {
-            return true;
+        if (p.isEmpty()) return s.isEmpty();
+        // .可以匹配任意字符
+        boolean first_match = (!s.isEmpty() &&
+                (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'));
+        // *匹配零个或者多个
+        if (p.length() >= 2 && p.charAt(1) == '*') {
+            return (isMatch(s, p.substring(2)) ||
+                    (first_match && isMatch(s.substring(1), p)));
+        } else {
+            return first_match && isMatch(s.substring(1), p.substring(1));
         }
-        // s不为空、p为空时返回false
-        if (p.length() == 0) {
-            return false;
-        }
-        // 均不为空、s为空p不为空时进行校验
-        int sIndex = 0, pIndex = 0;
-        char current = 0;
-        while (sIndex < s.length() && pIndex < p.length()) {
-            if (p.charAt(pIndex) == '*') {
-                // 如果*前一位为空返回false
-                if (current == 0) {
-                    return false;
-                }
-                while (sIndex < s.length() && (s.charAt(sIndex) == current || current == '.')) {
-                    sIndex++;
-                    // 如果匹配符下一位与当前匹配字符相同则顺延,防止'a*a'这种
-                    if (pIndex + 1 < p.length() && p.charAt(pIndex + 1) == current) {
-                        pIndex++;
-                    }
-                }
-            } else {
-                current = p.charAt(pIndex);
-                // 下一位通配符为*时可以匹配零个
-                if (!(current == '.' || s.charAt(sIndex) == current) && pIndex + 1 < p.length() && p.charAt(pIndex + 1) != '*') {
-                    return false;
-                }
-                // 匹配成功(下一位为*时不移动字符坐标)
-                if ((current == '.' || s.charAt(sIndex) == current) && (pIndex + 1 == p.length() || p.charAt(pIndex + 1) != '*')) {
-                    sIndex++;
-                }
-            }
-            // 避免'a*a'越界
-            if (pIndex < p.length()) {
-                pIndex++;
-            }
-        }
-        // 如果匹配符未到末位则进行判断,避免'a*b*v*c*x*'之类的情况
-        int endP = pIndex;
-        while (pIndex < p.length()) {
-            // 剩余匹配符为偶数但偶数位不是*
-            if ((pIndex - endP) % 2 == 1 && p.charAt(pIndex) != '*') {
-                return false;
-            }
-            // 剩余匹配符为奇数
-            if ((pIndex - endP) % 2 == 0 && pIndex == p.length() - 1) {
-                return false;
-            }
-            pIndex++;
-        }
-        return sIndex == s.length();
     }
 
+    /**
+     * 10. 正则表达式匹配(动态规划)
+     * 类似于回溯法,将匹配结果存入数组避免字符串的重复生成
+     *
+     * @param s
+     * @param p
+     * @return
+     */
+    public static boolean isMatchDynamicPlanning(String s, String p) {
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+        dp[s.length()][p.length()] = true;
+
+        for (int i = s.length(); i >= 0; i--) {
+            for (int j = p.length() - 1; j >= 0; j--) {
+                boolean first_match = (i < s.length() &&
+                        (p.charAt(j) == s.charAt(i) ||
+                                p.charAt(j) == '.'));
+                if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
+                    dp[i][j] = dp[i][j + 2] || first_match && dp[i + 1][j];
+                } else {
+                    dp[i][j] = first_match && dp[i + 1][j + 1];
+                }
+            }
+        }
+        return dp[0][0];
+    }
+
+
+    /**
+     * 12. 整数转罗马数字
+     *
+     * @param num
+     * @return
+     */
+    public static String intToRoman(int num) {
+        int[] arab = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
+        String[] roman = {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = arab.length - 1; i >= 0; i--) {
+            while (num >= arab[i]) {
+                sb.append(roman[i]);
+                num -= arab[i];
+            }
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * 13. 罗马数字转整数
+     *
+     * @param s
+     * @return
+     */
+    public static int romanToInt(String s) {
+        int[] arab = {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
+        String[] roman = {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
+
+        StringBuilder sb = new StringBuilder(s);
+        int i = roman.length - 1, result = 0;
+        while (sb.length() > 0) {
+            if (sb.indexOf(roman[i]) == 0) {
+                sb.delete(0, roman[i].length());
+                result += arab[i];
+            } else {
+                i--;
+            }
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 14. 最长公共前缀
+     *
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0 || strs[0].length() == 0) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        char current = 0;
+        for (int i = 0; i < strs[0].length(); i++) {
+            current = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                // 找到长度最小串或不相等
+                if (strs[j].length() == i || strs[j].charAt(i) != current) {
+                    return sb.toString();
+                }
+            }
+            sb.append(current);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 208. 实现 Trie (前缀树)
+     */
+    static class Trie {
+
+        private TrieNode root;
+
+        /**
+         * Initialize your data structure here.
+         */
+        Trie() {
+            root = new TrieNode();
+        }
+
+        /**
+         * Inserts a word into the trie.
+         */
+        void insert(String word) {
+            TrieNode node = root;
+            for (int i = 0; i < word.length(); i++) {
+                char current = word.charAt(i);
+                if (!node.containsKey(current)) {
+                    node.put(current, new TrieNode());
+                }
+                node = node.get(current);
+            }
+            node.setEnd();
+        }
+
+        /**
+         * Returns if the word is in the trie.
+         */
+        boolean search(String word) {
+            TrieNode node = searchPrefix(word);
+            return node != null && node.isEnd();
+        }
+
+        /**
+         * Returns if there is any word in the trie that starts with the given prefix.
+         */
+        boolean startsWith(String prefix) {
+            TrieNode node = searchPrefix(prefix);
+            return node != null;
+        }
+
+        /**
+         * search a prefix or whole key in trie and
+         * returns the node where search ends
+         *
+         * @param word
+         * @return
+         */
+        private TrieNode searchPrefix(String word) {
+            TrieNode node = root;
+            for (int i = 0; i < word.length(); i++) {
+                char current = word.charAt(i);
+                if (node.containsKey(current)) {
+                    node = node.get(current);
+                } else {
+                    return null;
+                }
+            }
+            return node;
+        }
+    }
+
+    static class TrieNode {
+
+        // 保存当前节点的所有子节点
+        private TrieNode[] links;
+
+        // 子节点可能出现总数
+        private final int SIZE = 26;
+
+        private boolean isEnd;
+
+        public TrieNode() {
+            links = new TrieNode[SIZE];
+        }
+
+        public boolean containsKey(char ch) {
+            return links[ch - 'a'] != null;
+        }
+
+        public TrieNode get(char ch) {
+            return links[ch - 'a'];
+        }
+
+        public void put(char ch, TrieNode node) {
+            links[ch - 'a'] = node;
+        }
+
+        public boolean isEnd() {
+            return isEnd;
+        }
+
+        public void setEnd() {
+            isEnd = true;
+        }
+    }
 }
