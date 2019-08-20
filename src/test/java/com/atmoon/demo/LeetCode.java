@@ -9,15 +9,7 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        Trie trie = new Trie();
-
-        trie.insert("apple");
-        System.out.println(trie.search("apple"));// 返回 true
-        System.out.println(trie.search("app"));// 返回 false
-        System.out.println(trie.startsWith("app"));// 返回 true
-        trie.insert("app");
-        System.out.println(trie.search("app"));// 返回 true
-
+        System.out.println(fourSum(new int[]{-1, 2, 2, -5, 0, -1, 4}, 3));
     }
 
     /**
@@ -750,5 +742,109 @@ public class LeetCode {
         public void setEnd() {
             isEnd = true;
         }
+    }
+
+    /**
+     * 17. 电话号码的字母组合
+     *
+     * @param digits
+     * @return
+     */
+    public static List<String> letterCombinations(String digits) {
+        String[][] keyLetterMap = {{"!", "@", "#"}, {"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"}, {"p", "q", "r", "s"}, {"t", "u", "v"}, {"w", "x", "y", "z"}};
+        List<String> combinations = new ArrayList<>();
+        if (digits.length() == 0) {
+            return combinations;
+        }
+        combinations = combination(keyLetterMap[digits.charAt(0) - '1'], new String[]{});
+        for (int i = 1; i < digits.length(); i++) {
+            combinations = combination(combinations.toArray(new String[combinations.size()]), keyLetterMap[digits.charAt(i) - '1']);
+        }
+        return combinations;
+    }
+
+    /**
+     * 对两个数组进行结合
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    private static List<String> combination(String[] a, String[] b) {
+        List<String> combinations = new ArrayList<>();
+        for (String l1 : a) {
+            if (b.length == 0) {
+                combinations.add(l1);
+            }
+            for (String l2 : b) {
+                combinations.add(l1 + l2);
+            }
+        }
+        return combinations;
+    }
+
+
+    /**
+     * 18. 四数之和
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static List<List<Integer>> fourSum(int[] nums, int target) {
+        int len = nums.length;
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        // 排除无结果情况([[-5,-4,-3,1]] -11 不能将target与0的情况混为一谈)
+        if (len < 4) {
+            return result;
+        }
+        for (int i = 0; i < len - 3; i++) {
+            // 如果当前位与上一位相等则跳过
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) {
+                break;
+            }
+            if (nums[i] + nums[len - 1] + nums[len - 2] + nums[len - 3] < target) {
+                continue;
+            }
+            for (int j = i + 1; j < len - 2; j++) {
+                // 如果当前位与上一位相等则跳过
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                if (nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) {
+                    break;
+                }
+                if (nums[i] + nums[j] + nums[len - 1] + nums[len - 2] < target) {
+                    continue;
+                }
+                int base = nums[i] + nums[j];
+                int l = j + 1, r = len - 1;
+                while (l < r) {
+                    int sum = base + nums[l] + nums[r];
+                    if (sum == target) {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[l], nums[r]));
+                        // 如果匹配成功将左边界右移
+                        while (l < r && nums[l] == nums[++l]) {
+
+                        }
+                    } else if (sum < target) {
+                        // 结果偏小最小值右移，考虑去重
+                        while (l < r && nums[l] == nums[++l]) {
+
+                        }
+                    } else {
+                        // 结果偏大最大值左移，考虑去重
+                        while (l < r && nums[r] == nums[--r]) {
+
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
