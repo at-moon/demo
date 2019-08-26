@@ -1,5 +1,8 @@
 package com.atmoon.demo;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -9,7 +12,12 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        System.out.println(fourSum(new int[]{-1, 2, 2, -5, 0, -1, 4}, 3));
+        ListNode node = new ListNode(1);
+//        node.next = new ListNode(2);
+//        node.next.next = new ListNode(3);
+//        node.next.next.next = new ListNode(4);
+//        node.next.next.next.next = new ListNode(5);
+        node =  removeNthFromEnd(node,1);
     }
 
     /**
@@ -218,7 +226,7 @@ public class LeetCode {
         return node;
     }
 
-    class ListNode {
+    static class ListNode {
         int val;
         ListNode next;
 
@@ -847,4 +855,55 @@ public class LeetCode {
         }
         return result;
     }
+
+    /**
+     * 19. 删除链表的倒数第N个节点
+     *
+     * @param head
+     * @param n
+     * @return
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        HashMap<Integer,ListNode> map = new HashMap();
+        int i = 0;
+        ListNode node = head;
+        while (node != null) {
+            map.put(i,node);
+            node = node.next;
+            i++;
+        }
+        // 如果移除的是第一位
+        if (i == n) {
+            return head.next;
+        }
+        map.get(i - n - 1).next = map.get(i - n + 1);
+        return head;
+    }
+
+    /**
+     * 19. 删除链表的倒数第N个节点
+     * 官方题解(一次循环)
+     *
+     * @param head
+     * @param n
+     * @return
+     */
+    public static ListNode removeNthFromEndOfficial(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode first = dummy;
+        ListNode second = dummy;
+        // Advances first pointer so that the gap between first and second is n nodes apart
+        for (int i = 1; i <= n + 1; i++) {
+            first = first.next;
+        }
+        // Move first to the end, maintaining the gap
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+        second.next = second.next.next;
+        return dummy.next;
+    }
+
 }
