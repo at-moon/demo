@@ -1,9 +1,7 @@
 package com.atmoon.demo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.Executor;
 
 /**
  * @Author: zy
@@ -12,12 +10,7 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        ListNode node = new ListNode(1);
-//        node.next = new ListNode(2);
-//        node.next.next = new ListNode(3);
-//        node.next.next.next = new ListNode(4);
-//        node.next.next.next.next = new ListNode(5);
-        node =  removeNthFromEnd(node,1);
+        System.out.println(removeElement(new int[]{0, 1, 2, 2, 3, 0, 4, 2}, 2));
     }
 
     /**
@@ -864,11 +857,11 @@ public class LeetCode {
      * @return
      */
     public static ListNode removeNthFromEnd(ListNode head, int n) {
-        HashMap<Integer,ListNode> map = new HashMap();
+        HashMap<Integer, ListNode> map = new HashMap();
         int i = 0;
         ListNode node = head;
         while (node != null) {
-            map.put(i,node);
+            map.put(i, node);
             node = node.next;
             i++;
         }
@@ -904,6 +897,242 @@ public class LeetCode {
         }
         second.next = second.next.next;
         return dummy.next;
+    }
+
+    /**
+     * 20. 有效的括号
+     *
+     * @param s
+     * @return
+     */
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char current = s.charAt(i);
+            switch (current) {
+                case '(':
+                    stack.push(')');
+                    break;
+                case '[':
+                    stack.push(']');
+                    break;
+                case '{':
+                    stack.push('}');
+                    break;
+                case ')':
+                case ']':
+                case '}':
+                    if (stack.isEmpty() || current != stack.pop()) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    /**
+     * 21. 合并两个有序链表
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        ListNode result = new ListNode(0);
+        ListNode temp = result;
+        while (l1 != null) {
+            while (l2 != null && l2.val <= l1.val) {
+                temp.next = l2;
+                l2 = l2.next;
+                temp = temp.next;
+            }
+            temp.next = l1;
+            l1 = l1.next;
+            temp = temp.next;
+        }
+        while (l2 != null) {
+            temp.next = l2;
+            l2 = l2.next;
+            temp = temp.next;
+        }
+        return result.next;
+    }
+
+    /**
+     * 22. 括号生成
+     *
+     * @param n
+     * @return
+     */
+    public static List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList();
+        if (n == 0) {
+            ans.add("");
+        } else {
+            for (int c = 0; c < n; ++c)
+                for (String left : generateParenthesis(c))
+                    for (String right : generateParenthesis(n - 1 - c))
+                        ans.add("(" + left + ")" + right);
+        }
+        return ans;
+    }
+
+
+    /**
+     * 23. 合并K个排序链表
+     *
+     * @param lists
+     * @return
+     */
+    public static ListNode mergeKLists(ListNode[] lists) {
+        while (lists.length > 1) {
+            ListNode[] temp = new ListNode[(lists.length + 1) / 2];
+            for (int i = 0; i < lists.length; i += 2) {
+                ListNode l2 = null;
+                if (i + 1 < lists.length) {
+                    l2 = lists[i + 1];
+                }
+                temp[i / 2] = mergeTwoLists(lists[i], l2);
+            }
+            lists = temp;
+        }
+        return lists.length == 0 ? null : lists[0];
+    }
+
+    /**
+     * 24. 两两交换链表中的节点
+     *
+     * @param head
+     * @return
+     */
+    public static ListNode swapPairs(ListNode head) {
+        ListNode result = new ListNode(0);
+        ListNode temp = result;
+        while (head != null) {
+            if (head.next != null) {
+                temp.next = head.next;
+                head.next = head.next.next;
+                temp.next.next = head;
+                temp = temp.next;
+            } else {
+                temp.next = head;
+            }
+            head = head.next;
+            temp = temp.next;
+        }
+        return result.next;
+    }
+
+    /**
+     * 25. K 个一组翻转链表
+     *
+     * @param head
+     * @param k
+     * @return
+     */
+    public static ListNode reverseKGroup(ListNode head, int k) {
+        ListNode result = new ListNode(0);
+        ListNode temp = result;
+        ListNode[] nodes = new ListNode[k];
+        boolean isEnd = false;
+        while (!isEnd) {
+            ListNode current = head;
+            // 将当前需要翻转的k位存入数组,如果位数不够更新标识
+            for (int i = 0; i < k; i++) {
+                if (current != null) {
+                    nodes[i] = current;
+                    current = current.next;
+                } else {
+                    isEnd = true;
+                }
+            }
+            // 需要翻转
+            if (!isEnd) {
+                // 依次更新存入的节点，最后一位即翻转之后的首位
+                nodes[0].next = nodes[k - 1].next;
+                for (int i = 1; i < k; i++) {
+                    nodes[i].next = nodes[i - 1];
+                }
+                temp.next = nodes[k - 1];
+                // 移到当前位
+                head = current;
+                for (int i = 0; i < k; i++) {
+                    temp = temp.next;
+                }
+            } else {
+                temp.next = head;
+            }
+        }
+        return result.next;
+    }
+
+    /**
+     * 26. 删除排序数组中的重复项
+     *
+     * @param nums
+     * @return
+     */
+    public static int removeDuplicates(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int current = nums[0];
+        int j = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (current == nums[i]) {
+                continue;
+            } else {
+                current = nums[i];
+                nums[++j] = current;
+            }
+        }
+        return j + 1;
+    }
+
+    /**
+     * 27. 移除元素
+     *
+     * @param nums
+     * @param val
+     * @return
+     */
+    public static int removeElement(int[] nums, int val) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int j = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (val != nums[i]) {
+                nums[j++] = nums[i];
+            }
+        }
+        return j;
+    }
+
+    /**
+     * 27. 移除元素(因为可以不考虑排序,所以直接进行元素替换)
+     *
+     * @param nums
+     * @param val
+     * @return
+     */
+    public static int removeElement2(int[] nums, int val) {
+        int i = 0;
+        int n = nums.length;
+        while (i < n) {
+            if (nums[i] == val) {
+                nums[i] = nums[n - 1];
+                // reduce array size by one
+                n--;
+            } else {
+                i++;
+            }
+        }
+        return n;
     }
 
 }
