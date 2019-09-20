@@ -1,7 +1,6 @@
 package com.atmoon.demo;
 
 import java.util.*;
-import java.util.concurrent.Executor;
 
 /**
  * @Author: zy
@@ -10,7 +9,8 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        System.out.println(removeElement(new int[]{0, 1, 2, 2, 3, 0, 4, 2}, 2));
+
+        nextPermutation(new int[]{1, 2, 3});
     }
 
     /**
@@ -1134,5 +1134,151 @@ public class LeetCode {
         }
         return n;
     }
+
+    /**
+     * 28. 实现 strStr()
+     *
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public static int strStr(String haystack, String needle) {
+        if (needle.length() == 0) {
+            return 0;
+        }
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
+            if (haystack.charAt(i) == needle.charAt(0)) {
+                int j = 1;
+                for (; j < needle.length(); j++) {
+                    if (haystack.charAt(i + j) != needle.charAt(j)) {
+                        break;
+                    }
+                }
+                if (j == needle.length()) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 29. 两数相除
+     *
+     * @param dividend
+     * @param divisor
+     * @return
+     */
+    public static int divide(int dividend, int divisor) {
+        // 最小数翻转会导致溢出
+        if (divisor == Integer.MIN_VALUE) {
+            return dividend == Integer.MIN_VALUE ? 1 : 0;
+        }
+        if (dividend == Integer.MIN_VALUE) {
+            if (divisor == -1) {
+                return Integer.MAX_VALUE;
+            } else if (divisor == 1) {
+                return Integer.MIN_VALUE;
+            } else if (divisor == -2) {
+                return -(Integer.MIN_VALUE >> 1);
+            } else if (divisor == 2) {
+                return Integer.MIN_VALUE >> 1;
+            }
+            dividend += 1;
+        }
+        if (dividend == 0) {
+            return 0;
+        }
+        // 标识符号
+        boolean isPositive = true;
+        // 获取符号标识以及翻转负数
+        if (dividend < 0) {
+            dividend = -dividend;
+            if (divisor > 0) {
+                isPositive = false;
+            } else {
+                divisor = -divisor;
+            }
+        } else if (divisor < 0) {
+            isPositive = false;
+            divisor = -divisor;
+        }
+        int result = 0, temp = dividend;
+        for (int i = 31; i >= 0; i--) {
+            // 将除数左移可能溢出,通过被除数右移来判断
+            if ((temp >> i) >= divisor) {
+                temp -= divisor << i;
+                result += 1 << i;
+            }
+        }
+        return isPositive ? result : -result;
+    }
+
+
+    /**
+     * 30. 串联所有单词的子串
+     *
+     * @param s
+     * @param words
+     * @return
+     */
+    public List<Integer> findSubstring(String s, String[] words) {
+        if (s.length() == 0 || words.length == 0) {
+            return new ArrayList<>();
+        }
+        int len = words[0].length();
+
+
+        return null;
+    }
+
+    /**
+     * 31. 下一个排列
+     *
+     * @param nums
+     */
+    public static void nextPermutation(int[] nums) {
+        int i = nums.length - 1;
+        while (i > 0 && nums[i - 1] >= nums[i]) {
+            i--;
+        }
+        if (i > 0) {
+            int j = nums.length - 1;
+            while (nums[j] <= nums[i - 1]) {
+                j--;
+            }
+            swap(nums, i - 1, j);
+        }
+        reverse(nums, i);
+    }
+
+    /**
+     * 翻转部分数组(指定坐标到结尾)
+     *
+     * @param nums
+     * @param startIndex
+     */
+    private static void reverse(int[] nums, int startIndex) {
+        int endIndex = nums.length - 1;
+        while (startIndex < endIndex) {
+            swap(nums, startIndex, endIndex);
+            startIndex++;
+            endIndex--;
+        }
+    }
+
+    /**
+     * 交换数组两位
+     *
+     * @param nums
+     * @param i
+     * @param j
+     */
+    private static void swap(int[] nums, int i, int j) {
+        nums[i] = nums[i] + nums[j];
+        nums[j] = nums[i] - nums[j];
+        nums[i] = nums[i] - nums[j];
+    }
+
 
 }
