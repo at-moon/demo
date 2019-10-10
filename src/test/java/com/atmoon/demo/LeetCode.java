@@ -9,8 +9,9 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-
-        nextPermutation(new int[]{1, 2, 3});
+        System.out.println(search(new int[] {4,5,6,7,0,1,2},1));
+        System.out.println(search(new int[] {7,0,1,2},1));
+        System.out.println(search(new int[] {2},1));
     }
 
     /**
@@ -1214,7 +1215,6 @@ public class LeetCode {
         return isPositive ? result : -result;
     }
 
-
     /**
      * 30. 串联所有单词的子串
      *
@@ -1278,6 +1278,84 @@ public class LeetCode {
         nums[i] = nums[i] + nums[j];
         nums[j] = nums[i] - nums[j];
         nums[i] = nums[i] - nums[j];
+    }
+
+    /**
+     * 32. 最长有效括号
+     *
+     * @param s
+     * @return
+     */
+    public static int longestValidParentheses1(String s) {
+        int maxLength = 0, start = 0;
+        while (s.length() - start > maxLength) {
+            Stack<Character> stack = new Stack<>();
+            for (int i = start; i < s.length(); i++) {
+                char current = s.charAt(i);
+                if (current == '(') {
+                    stack.push(')');
+                } else if (stack.isEmpty() || current != stack.pop()) {
+                    break;
+                }
+                if (stack.isEmpty()) {
+                    maxLength = Math.max(maxLength, i - start + 1);
+                }
+            }
+            start++;
+        }
+        return maxLength;
+    }
+
+    /**
+     * 32. 最长有效括号(存入左括号下标)
+     *
+     * @param s
+     * @return
+     */
+    public static int longestValidParentheses(String s) {
+        int maxLength = 0;
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        for (int i = 0; i < s.length(); i++) {
+            char current = s.charAt(i);
+            if (current == '(') {
+                stack.push(i);
+            } else {
+                stack.pop();
+                if (stack.isEmpty()) {
+                    stack.push(i);
+                } else {
+                    maxLength = Math.max(maxLength, i - stack.peek());
+                }
+            }
+        }
+        return maxLength;
+    }
+
+    /**
+     * 33. 搜索旋转排序数组
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int search(int[] nums, int target) {
+        if (nums.length == 0) {
+            return -1;
+        }
+        if (nums.length == 1) {
+            return target == nums[0] ? 0 : -1;
+        }
+        int pivot = nums.length / 2, l = 0, r = nums.length;
+        while (pivot < r && nums[pivot] <= nums[pivot + 1]) {
+            if (nums[pivot] > nums[0]) {
+                l = pivot;
+            } else {
+                r = pivot;
+            }
+            pivot = (l + r) / 2;
+        }
+        return pivot + 1;
     }
 
 
