@@ -9,9 +9,9 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-        System.out.println(search(new int[] {4,5,6,7,0,1,2},1));
-        System.out.println(search(new int[] {7,0,1,2},1));
-        System.out.println(search(new int[] {2},1));
+//        System.out.println(search(new int[]{4, 5, 6, 7, 0, 1, 2}, 3));
+//        System.out.println(search(new int[]{7, 0, 1, 2}, 1));
+        System.out.println(search(new int[]{3,1}, 1));
     }
 
     /**
@@ -1346,16 +1346,58 @@ public class LeetCode {
         if (nums.length == 1) {
             return target == nums[0] ? 0 : -1;
         }
-        int pivot = nums.length / 2, l = 0, r = nums.length;
-        while (pivot < r && nums[pivot] <= nums[pivot + 1]) {
-            if (nums[pivot] > nums[0]) {
+        int pivot = findPivotOfRotateSortArray(nums);
+        return findTargetInRotateSortArray(nums, target, pivot);
+    }
+
+    private static int findPivotOfRotateSortArray(int[] nums) {
+        if (nums[0] < nums[nums.length - 1]) {
+            return 0;
+        }
+        int pivot = 0, l = 0, r = nums.length - 1;
+        while (l <= r) {
+            pivot = (l + r) / 2;
+            if (nums[pivot] > nums[pivot + 1])
+                break;
+            else {
+                if (nums[pivot] < nums[l])
+                    r = pivot - 1;
+                else
+                    l = pivot + 1;
+            }
+        }
+        return pivot + 1;
+    }
+
+    private static int findTargetInRotateSortArray(int[] nums, int target, int pivot) {
+        int length = nums.length, l = 0, r = nums.length - 1;
+        if (pivot == 0) {
+            if (target > nums[length - 1] || target < nums[0]) {
+                return -1;
+            }
+        } else {
+            if (target > nums[pivot - 1] || target < nums[pivot]) {
+                return -1;
+            }
+            if (target < nums[0]) {
                 l = pivot;
             } else {
                 r = pivot;
             }
-            pivot = (l + r) / 2;
         }
-        return pivot + 1;
+        while (l <= r) {
+            int index = (l + r) / 2;
+            if (nums[index] == target) {
+                return index;
+            } else {
+                if (nums[index] > target) {
+                    r = index - 1;
+                } else {
+                    l = index + 1;
+                }
+            }
+        }
+        return -1;
     }
 
 
