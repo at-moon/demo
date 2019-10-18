@@ -9,9 +9,6 @@ public class LeetCode {
 
 
     public static void main(String[] args) {
-//        System.out.println(search(new int[]{4, 5, 6, 7, 0, 1, 2}, 3));
-//        System.out.println(search(new int[]{7, 0, 1, 2}, 1));
-        System.out.println(search(new int[]{3,1}, 1));
     }
 
     /**
@@ -1400,5 +1397,256 @@ public class LeetCode {
         return -1;
     }
 
+    /**
+     * 34. 在排序数组中查找元素的第一个和最后一个位置
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int[] searchRange(int[] nums, int target) {
+        int[] targetRange = {-1, -1};
+        int start = -1;
+        int l = 0, r = nums.length;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] >= target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        if (l == nums.length || nums[l] != target) {
+            return targetRange;
+        }
+        targetRange[0] = l;
+        // 获取右边界
+        r = nums.length;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] > target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        targetRange[1] = l - 1;
+        return targetRange;
+    }
+
+    /**
+     * 35. 搜索插入位置
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int searchInsert(int[] nums, int target) {
+        int l = 0, r = nums.length;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+
+    /**
+     * 36. 有效的数独
+     *
+     * @param board
+     * @return
+     */
+    public static boolean isValidSudoku(char[][] board) {
+        HashSet<Character>[] rows = new HashSet[9];
+        HashSet<Character>[] cols = new HashSet[9];
+        HashSet<Character>[] boxes = new HashSet[9];
+
+        for (int i = 0; i < 9; i++) {
+            rows[i] = new HashSet<>();
+            cols[i] = new HashSet<>();
+            boxes[i] = new HashSet<>();
+        }
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char c = board[i][j];
+                if (c == '.') {
+                    continue;
+                }
+                int boxIndex = (i / 3) * 3 + j / 3;
+
+                if (rows[i].contains(c) || cols[j].contains(c) || boxes[boxIndex].contains(c)) {
+                    return false;
+                }
+                rows[i].add(c);
+                cols[j].add(c);
+                boxes[boxIndex].add(c);
+            }
+        }
+        return true;
+    }
+
+    HashSet<Character>[] rows = new HashSet[9];
+    HashSet<Character>[] cols = new HashSet[9];
+    HashSet<Character>[] boxes = new HashSet[9];
+
+    char[][] board;
+
+    boolean sudokuSolved = false;
+
+    int N = 9;
+
+    /**
+     * 37. 解数独
+     *
+     * @param board
+     */
+    public void solveSudoku(char[][] board) {
+        this.board = board;
+        for (int i = 0; i < 9; i++) {
+            rows[i] = new HashSet<>();
+            cols[i] = new HashSet<>();
+            boxes[i] = new HashSet<>();
+        }
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char c = board[i][j];
+                if (c == '.') {
+                    continue;
+                }
+                int boxIndex = (i / 3) * 3 + j / 3;
+
+                rows[i].add(c);
+                cols[j].add(c);
+                boxes[boxIndex].add(c);
+            }
+        }
+        backtrack(0, 0);
+    }
+
+    private void backtrack(int row, int col) {
+        if (board[row][col] == '.') {
+            for (int d = 1; d < 10; d++) {
+                char num = (char) ('0' + d);
+                // 无有效数字时不会继续放置
+                if (couldPlace(row, col, num)) {
+                    placeNumber(row, col, num);
+                    placeNextNumbers(row, col);
+                    // 下一位无法继续放置时移除当前位,尝试当前位下一个有效数字
+                    if (!sudokuSolved) {
+                        removeNumber(row, col, num);
+                    }
+                }
+            }
+        } else {
+            placeNextNumbers(row, col);
+        }
+    }
+
+    private boolean couldPlace(int row, int col, char num) {
+        int boxIndex = (row / 3) * 3 + col / 3;
+        return !(rows[row].contains(num) || cols[col].contains(num) || boxes[boxIndex].contains(num));
+    }
+
+    private void placeNumber(int row, int col, char num) {
+        int boxIndex = (row / 3) * 3 + col / 3;
+        board[row][col] = num;
+        rows[row].add(num);
+        cols[col].add(num);
+        boxes[boxIndex].add(num);
+    }
+
+    private void removeNumber(int row, int col, char num) {
+        int boxIndex = (row / 3) * 3 + col / 3;
+        board[row][col] = '.';
+        rows[row].remove(num);
+        cols[col].remove(num);
+        boxes[boxIndex].remove(num);
+    }
+
+    private void placeNextNumbers(int row, int col) {
+        // 到达最后一格时表示已解决
+        if ((col == N - 1) && (row == N - 1)) {
+            sudokuSolved = true;
+        } else {
+            // 换行
+            if (col == N - 1) {
+                backtrack(row + 1, 0);
+            } else {
+                backtrack(row, col + 1);
+            }
+        }
+    }
+
+    /**
+     * 38. 报数
+     *
+     * @param n
+     * @return
+     */
+    public String countAndSay(int n) {
+        if (n == 1) {
+            return "1";
+        }
+        String s = countAndSay(n - 1);
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        char current = s.charAt(0);
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            // 字符变化时存入信息,否则增加计数
+            if (c != current) {
+                sb.append(count).append(current);
+                current = c;
+                count = 1;
+            } else {
+                count++;
+            }
+        }
+        // 到达最后一位时存入信息
+        sb.append(count).append(current);
+        return sb.toString();
+    }
+
+
+    private List<List<Integer>> res;
+    private int [] candidates;
+
+    /**
+     * 39. 组合总和
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        res = new ArrayList<>();
+        Arrays.sort(candidates);
+        this.candidates = candidates;
+        backtrack(target, 0, new ArrayList<>());
+        return res;
+    }
+
+    private void backtrack(int target, int index, List<Integer> tmp) {
+        if (target < 0) {
+            return;
+        }
+        if (target == 0) {
+            res.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            tmp.add(candidates[i]);
+            backtrack(target - candidates[i], i, tmp);
+            tmp.remove(tmp.size() - 1);
+        }
+    }
 
 }
