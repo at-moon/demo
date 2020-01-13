@@ -100,7 +100,7 @@ public class LeetCodeTests {
         res.add(tmp);
         Assert.assertEquals(res, leetCode.combinationSum(candidates, 7));
 
-        candidates = new int[] {2, 3, 5};
+        candidates = new int[]{2, 3, 5};
         res = new ArrayList<>();
         tmp = new ArrayList<>();
         tmp.add(2);
@@ -118,5 +118,75 @@ public class LeetCodeTests {
         tmp.add(5);
         res.add(tmp);
         Assert.assertEquals(res, leetCode.combinationSum(candidates, 8));
+    }
+
+    @Test
+    public void test43() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals("0", leetCode.multiply("0", "0"));
+        Assert.assertEquals("6", leetCode.multiply("2", "3"));
+        Assert.assertEquals("208", leetCode.multiply("13", "16"));
+        Assert.assertEquals("56088", leetCode.multiply("123", "456"));
+    }
+
+    @Test
+    public void test46() {
+        LeetCode leetCode = new LeetCode();
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> tmp = new ArrayList<>();
+        tmp.add(1);
+        tmp.add(2);
+        tmp.add(3);
+        res.add(tmp);
+        tmp = new ArrayList<>();
+        tmp.add(1);
+        tmp.add(3);
+        tmp.add(2);
+        res.add(tmp);
+        tmp = new ArrayList<>();
+        tmp.add(2);
+        tmp.add(1);
+        tmp.add(3);
+        res.add(tmp);
+        tmp = new ArrayList<>();
+        tmp.add(2);
+        tmp.add(3);
+        tmp.add(1);
+        res.add(tmp);
+        tmp = new ArrayList<>();
+        tmp.add(3);
+        tmp.add(1);
+        tmp.add(2);
+        res.add(tmp);
+        tmp = new ArrayList<>();
+        tmp.add(3);
+        tmp.add(2);
+        tmp.add(1);
+        res.add(tmp);
+        Assert.assertEquals(res, leetCode.permute(new int[]{1, 2, 3}));
+        res.remove(res.size() - 1);
+        res.remove(res.size() - 1);
+        tmp = new ArrayList<>();
+        tmp.add(3);
+        tmp.add(2);
+        tmp.add(1);
+        res.add(tmp);
+        tmp = new ArrayList<>();
+        tmp.add(3);
+        tmp.add(1);
+        tmp.add(2);
+        res.add(tmp);
+        Assert.assertEquals(res, leetCode.permute2(new int[]{1, 2, 3}));
+    }
+
+    @Test
+    public void test53() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(6, leetCode.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        Assert.assertEquals(-1, leetCode.maxSubArray(new int[]{-1}));
+        Assert.assertEquals(1, leetCode.maxSubArray(new int[]{-2, 1}));
+        Assert.assertEquals(6, leetCode.maxSubArray2(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        Assert.assertEquals(-1, leetCode.maxSubArray2(new int[]{-1}));
+        Assert.assertEquals(1, leetCode.maxSubArray2(new int[]{-2, 1}));
     }
 }

@@ -1,6 +1,7 @@
 package com.atmoon.demo;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: zy
@@ -1617,7 +1618,7 @@ public class LeetCode {
 
 
     private List<List<Integer>> res;
-    private int [] candidates;
+    private int[] candidates;
 
     /**
      * 39. 组合总和
@@ -1647,6 +1648,123 @@ public class LeetCode {
             backtrack(target - candidates[i], i, tmp);
             tmp.remove(tmp.size() - 1);
         }
+    }
+
+    /**
+     * 43. 字符串相乘
+     *
+     * @param num1
+     * @param num2
+     * @return
+     */
+    public String multiply(String num1, String num2) {
+        int l1 = num1.length();
+        int l2 = num2.length();
+        if (l1 == 0 || l2 == 0) {
+            return "";
+        }
+        int[] resultArray = new int[l1 + l2];
+        int i = l1 - 1;
+        for (; i >= 0; i--) {
+            for (int j = l2 - 1; j >= 0; j--) {
+                int each = (num1.charAt(i) - '0') * (num2.charAt(j) - '0') + resultArray[i + j + 1];
+                resultArray[i + j] += each / 10;
+                resultArray[i + j + 1] = each % 10;
+            }
+        }
+        while (resultArray[++i] == 0) {
+            if (i == resultArray.length - 1) {
+                break;
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (i < l1 + l2) {
+            sb.append(resultArray[i]);
+            i++;
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 46. 全排列
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer> param = Arrays.stream(nums).boxed().collect(Collectors.toList());
+        return recursion(param);
+    }
+
+    private List<List<Integer>> recursion(List<Integer> nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.size() == 1) {
+            List<Integer> list = new ArrayList<>();
+            list.add(nums.get(0));
+            result.add(list);
+            return result;
+        }
+        for (int i = 0; i < nums.size(); i++) {
+            List<Integer> removed = new ArrayList<>();
+            removed.addAll(0, nums);
+            removed.remove(i);
+            List<List<Integer>> temp = recursion(removed);
+            for (List<Integer> list : temp) {
+                list.add(0, nums.get(i));
+                result.add(list);
+            }
+        }
+        return result;
+    }
+
+    public List<List<Integer>> permute2(int[] nums) {
+        List<Integer> numList = Arrays.stream(nums).boxed().collect(Collectors.toList());
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(numList, result, 0);
+        return result;
+    }
+
+    private void backtrack(List<Integer> nums, List<List<Integer>> result, int index) {
+        int size = nums.size();
+        if (size == index) {
+            List<Integer> temp = new ArrayList<>();
+            temp.addAll(0, nums);
+            result.add(temp);
+        }
+        for (int i = index; i < size; i++) {
+            Collections.swap(nums, index, i);
+            backtrack(nums, result, index + 1);
+            Collections.swap(nums, index, i);
+        }
+    }
+
+    /**
+     * 53. 最大子序和
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int currSum = nums[0], maxSum = nums[0];
+
+        for (int i = 1; i < n; ++i) {
+            currSum = Math.max(nums[i], currSum + nums[i]);
+            maxSum = Math.max(maxSum, currSum);
+        }
+        return maxSum;
+    }
+
+    public int maxSubArray2(int[] nums) {
+        int maxSum = nums[0];
+
+        for (int i = 1; i < nums.length; ++i) {
+            if (nums[i - 1] > 0) {
+                nums[i] += nums[i - 1];
+            }
+            maxSum = Math.max(maxSum, nums[i]);
+        }
+        return maxSum;
     }
 
 }
