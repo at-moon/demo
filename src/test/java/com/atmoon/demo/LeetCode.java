@@ -1767,4 +1767,240 @@ public class LeetCode {
         return maxSum;
     }
 
+    /**
+     * 54. 螺旋矩阵
+     *
+     * @param matrix
+     * @return
+     */
+    public List<Integer> spiralOrder(int[][] matrix) {
+        if (matrix.length == 0) {
+            return new ArrayList<>();
+        }
+        List<Integer> result = new ArrayList<>();
+        int x1 = 0, y1 = 0;
+        int x2 = matrix[0].length - 1;
+        int y2 = matrix.length - 1;
+
+        while (x1 <= x2 && y1 <= y2) {
+            for (int i = x1; i <= x2; i++) {
+                result.add(matrix[y1][i]);
+            }
+            y1++;
+            if (y1 > y2) {
+                break;
+            }
+            for (int i = y1; i <= y2; i++) {
+                result.add(matrix[i][x2]);
+            }
+            x2--;
+            if (x1 > x2) {
+                break;
+            }
+            for (int i = x2; i >= x1; i--) {
+                result.add(matrix[y2][i]);
+            }
+            y2--;
+            for (int i = y2; i >= y1; i--) {
+                result.add(matrix[i][x1]);
+            }
+            x1++;
+        }
+        return result;
+    }
+
+    /**
+     * 59. 螺旋矩阵 II
+     *
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int current = 1;
+        int x1 = 0, y1 = 0, x2 = n - 1, y2 = n - 1;
+        while (current <= n * n) {
+            for (int i = x1; i <= x2; i++) {
+                matrix[y1][i] = current++;
+            }
+            y1++;
+            for (int i = y1; i <= y2; i++) {
+                matrix[i][x2] = current++;
+            }
+            x2--;
+            for (int i = x2; i >= x1; i--) {
+                matrix[y2][i] = current++;
+            }
+            y2--;
+            for (int i = y2; i >= y1; i--) {
+                matrix[i][x1] = current++;
+            }
+            x1++;
+        }
+        return matrix;
+    }
+
+    /**
+     * 61. 旋转链表
+     *
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode temp = head;
+        int length = 1;
+        while (temp.next != null) {
+            temp = temp.next;
+            length++;
+        }
+        int actualK = length - k % length;
+        temp.next = head;
+        for (int i = 0; i < actualK; i++) {
+            temp = temp.next;
+        }
+        head = temp.next;
+        temp.next = null;
+        return head;
+    }
+
+    /**
+     * 62. 不同路径
+     *
+     * @param m
+     * @param n
+     * @return
+     */
+    public int uniquePaths(int m, int n) {
+        if (m == 1 || n == 1) {
+            return 1;
+        }
+        int[][] result = new int[m][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int temp;
+                if (i == 0 || j == 0) {
+                    temp = 1;
+                } else {
+                    temp = result[j][i - 1] + result[j - 1][i];
+                }
+                result[j][i] = temp;
+            }
+        }
+        return result[m - 1][n - 1];
+    }
+
+    public int uniquePaths2(int m, int n) {
+        // 初始化对应行的数组
+        int[] rows = new int[n];
+        Arrays.fill(rows, 1);
+        // 通过上一列数据自增获取当前列
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                rows[j] += rows[j - 1];
+            }
+        }
+        return rows[n - 1];
+    }
+
+    /**
+     * 70. 爬楼梯
+     *
+     * @param n
+     * @return
+     */
+    public int climbStairs(int n) {
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        // 记录前两级台阶方法数
+        int i = 1, j = 2;
+        for (int k = 0; k < n - 3; k++) {
+            i = i + 2 * j;
+            j = i - j;
+            i = i - j;
+        }
+        return i + j;
+    }
+
+    /**
+     * 78. 子集
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        int len = nums.length;
+        List<List<Integer>> result = new ArrayList<>();
+        if (len == 0) {
+            return result;
+        }
+        for (int i = 0; i < len; i++) {
+            List<Integer> temp;
+            if (i == 0) {
+                temp = new ArrayList<>();
+                temp.add(nums[i]);
+                result.add(new ArrayList<>());
+                result.add(temp);
+            } else {
+                List<List<Integer>> resultTemp = new ArrayList<>();
+                for (List<Integer> sub : result) {
+                    temp = new ArrayList<>();
+                    temp.addAll(0, sub);
+                    temp.add(nums[i]);
+                    resultTemp.add(temp);
+                }
+                result.addAll(result.size(), resultTemp);
+            }
+
+        }
+        return result;
+    }
+
+    /**
+     * 88. 合并两个有序数组
+     *
+     * @param nums1
+     * @param m
+     * @param nums2
+     * @param n
+     */
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = 0, j = 0;
+        int[] temp = new int[m];
+        System.arraycopy(nums1, 0, temp, 0, m);
+        for (int k = 0; k < m + n; k++) {
+            int n1 = i < m ? temp[i] : Integer.MAX_VALUE;
+            int n2 = j < n ? nums2[j] : Integer.MAX_VALUE;
+            if (n1 < n2) {
+                nums1[i + j] = n1;
+                i++;
+            } else {
+                nums1[i + j] = n2;
+                j++;
+            }
+        }
+    }
+
+    public void merge2(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1, j = n - 1;
+        while (i >= 0 || j >= 0) {
+            int n1 = i >= 0 ? nums1[i] : Integer.MIN_VALUE;
+            int n2 = j >= 0 ? nums2[j] : Integer.MIN_VALUE;
+            if (n1 > n2) {
+                nums1[i + j + 1] = n1;
+                i--;
+            } else {
+                nums1[i + j + 1] = n2;
+                j--;
+            }
+        }
+    }
+
 }
