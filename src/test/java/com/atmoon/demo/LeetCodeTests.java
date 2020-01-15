@@ -308,4 +308,77 @@ public class LeetCodeTests {
         actual = Arrays.stream(nums1).boxed().collect(Collectors.toList());
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void test104() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        Assert.assertEquals(3, leetCode.maxDepth(node));
+    }
+
+    @Test
+    public void test121() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(5, leetCode.maxProfit(new int[]{7, 1, 5, 3, 6, 4}));
+        Assert.assertEquals(0, leetCode.maxProfit(new int[]{7, 6, 4, 3, 1}));
+        Assert.assertEquals(1, leetCode.maxProfit(new int[]{1, 2}));
+        Assert.assertEquals(5, leetCode.maxProfit2(new int[]{7, 1, 5, 3, 6, 4}));
+        Assert.assertEquals(0, leetCode.maxProfit2(new int[]{7, 6, 4, 3, 1}));
+        Assert.assertEquals(1, leetCode.maxProfit2(new int[]{1, 2}));
+    }
+
+    @Test
+    public void test122() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(7, leetCode.maxProfitSecond(new int[]{7, 1, 5, 3, 6, 4}));
+        Assert.assertEquals(4, leetCode.maxProfitSecond(new int[]{1, 2, 3, 4, 5}));
+        Assert.assertEquals(0, leetCode.maxProfitSecond(new int[]{7, 6, 4, 3, 1}));
+    }
+
+    @Test
+    public void test124() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(-10);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        Assert.assertEquals(42, leetCode.maxPathSum(node));
+        node = new LeetCode.TreeNode(-3);
+        Assert.assertEquals(-3, leetCode.maxPathSum(node));
+    }
+
+    @Test
+    public void test136() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(1, leetCode.singleNumber(new int[]{2, 2, 1}));
+        Assert.assertEquals(4, leetCode.singleNumber(new int[]{4, 1, 2, 1, 2}));
+    }
+
+    @Test
+    public void test141() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(3);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(2);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(0);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(-4);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node1;
+        Assert.assertEquals(true, leetCode.hasCycle(node));
+        Assert.assertEquals(true, leetCode.hasCycle2(node));
+    }
 }

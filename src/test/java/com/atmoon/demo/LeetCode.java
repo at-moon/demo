@@ -2003,4 +2003,178 @@ public class LeetCode {
         }
     }
 
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    /**
+     * 104. 二叉树的最大深度
+     *
+     * @param root
+     * @return
+     */
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+        int depth = 1;
+        depth += Math.max(maxDepth(root.left), maxDepth(root.right));
+        return depth;
+    }
+
+    /**
+     * 121. 买卖股票的最佳时机
+     *
+     * @param prices
+     * @return
+     */
+    public int maxProfit(int[] prices) {
+        int max = 0;
+        int length = prices.length;
+        if (length <= 1) {
+            return max;
+        }
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = i + 1; j < length; j++) {
+                if (prices[i] < prices[j]) {
+                    max = Math.max(max, prices[j] - prices[i]);
+                }
+            }
+        }
+        return max;
+    }
+
+    public int maxProfit2(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        int length = prices.length;
+        if (length <= 1) {
+            return maxProfit;
+        }
+        for (int i = 0; i < length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            } else if (maxProfit < prices[i] - minPrice) {
+                maxProfit = prices[i] - minPrice;
+            }
+        }
+        return maxProfit;
+    }
+
+    /**
+     * 122. 买卖股票的最佳时机 II
+     *
+     * @param prices
+     * @return
+     */
+    public int maxProfitSecond(int[] prices) {
+        int maxProfit = 0;
+        int length = prices.length;
+        if (length <= 1) {
+            return maxProfit;
+        }
+        for (int i = 1; i < length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
+        }
+        return maxProfit;
+    }
+
+    private int maxPathSum = 0;
+
+    /**
+     * 124. 二叉树中的最大路径和
+     *
+     * @param root
+     * @return
+     */
+    public int maxPathSum(TreeNode root) {
+        maxPathSum = root.val;
+        recursion(root);
+        return maxPathSum;
+    }
+
+    private int recursion(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftSum = recursion(root.left);
+        int rightSum = recursion(root.right);
+        // 计算当前节点路径和
+        maxPathSum = Math.max(maxPathSum, leftSum + root.val + rightSum);
+        int currentNodeSum = Math.max(leftSum + root.val, root.val + rightSum);
+        if (currentNodeSum < 0) {
+            currentNodeSum = 0;
+        }
+        return currentNodeSum;
+    }
+
+    /**
+     * 136. 只出现一次的数字
+     *
+     * @param nums
+     * @return
+     */
+    public int singleNumber(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        int sum = 0;
+        int singleSum = 0;
+        for (int num : nums) {
+            set.add(num);
+            sum += num;
+        }
+        for (Integer num : set) {
+            singleSum += num;
+        }
+        return singleSum * 2 - sum;
+    }
+
+    /**
+     * 141. 环形链表
+     *
+     * @param head
+     * @return
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        Set<ListNode> set = new HashSet<>();
+        while (head.next != null) {
+            if (!set.contains(head)) {
+                set.add(head);
+            } else {
+                return true;
+            }
+            head = head.next;
+        }
+        return false;
+    }
+
+    public boolean hasCycle2(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true;
+    }
+
 }
