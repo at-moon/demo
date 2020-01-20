@@ -2177,4 +2177,370 @@ public class LeetCode {
         return true;
     }
 
+    /**
+     * 142. 环形链表 II
+     *
+     * @param head
+     * @return
+     */
+    public ListNode detectCycle(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        Set<ListNode> set = new HashSet<>();
+        while (head.next != null) {
+            if (!set.contains(head)) {
+                set.add(head);
+            } else {
+                return head;
+            }
+            head = head.next;
+        }
+        return null;
+    }
+
+    public ListNode detectCycle2(ListNode head) {
+        if (head == null || head.next == null) {
+            return null;
+        }
+        ListNode slow = head.next;
+        ListNode fast = head.next.next;
+        while (slow != fast) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode node1 = head;
+        ListNode node2 = slow;
+
+        while (node1 != node2) {
+            node1 = node1.next;
+            node2 = node2.next;
+        }
+        return node1;
+    }
+
+    /**
+     * 146. LRU缓存机制
+     */
+    static class LRUCache {
+
+        LinkedHashMap<Integer, Integer> map;
+        int capacity;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            map = new LinkedHashMap<>(capacity);
+        }
+
+        public int get(int key) {
+            if (map.containsKey(key)) {
+                int val = map.remove(key);
+                map.put(key, val);
+                return val;
+            }
+            return -1;
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                map.remove(key);
+            } else if (map.size() == capacity) {
+                Integer key1 = map.entrySet().iterator().next().getKey();
+                map.remove(key1);
+            }
+            map.put(key, value);
+        }
+    }
+
+    static class LRUCache2 extends LinkedHashMap<Integer, Integer> {
+
+        private int capacity;
+
+        public LRUCache2(int capacity) {
+            super(capacity, 0.75F, true);
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            return super.getOrDefault(key, -1);
+        }
+
+        public void put(int key, int value) {
+            super.put(key, value);
+        }
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+            return size() > capacity;
+        }
+    }
+
+    /**
+     * 148. 排序链表
+     *
+     * @param head
+     * @return
+     */
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        List<ListNode> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head);
+            head = head.next;
+        }
+        list.sort(Comparator.comparingInt(node -> node.val));
+        for (int i = 0; i < list.size() - 1; i++) {
+            list.get(i).next = list.get(i + 1);
+        }
+        list.get(list.size() - 1).next = null;
+        return list.get(0);
+    }
+
+    public ListNode sortList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        int length = 0, sortLength = 1;
+        ListNode current = head;
+        while (current != null) {
+            current = current.next;
+            length++;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode dummyTemp, left, right;
+        int i, leftLength, rightLength;
+        while (sortLength < length) {
+            dummyTemp = dummy;
+            current = dummy.next;
+            while (current != null) {
+                i = sortLength;
+                // cut
+                left = current;
+                while (i > 0 && current != null) {
+                    current = current.next;
+                    i--;
+                }
+                if (i > 0) {
+                    break;
+                }
+                right = current;
+                i = sortLength;
+                while (i > 0 && current != null) {
+                    current = current.next;
+                    i--;
+                }
+                leftLength = sortLength;
+                rightLength = sortLength - i;
+                // merge
+                while (leftLength > 0 && rightLength > 0) {
+                    if (left.val > right.val) {
+                        dummyTemp.next = right;
+                        right = right.next;
+                        rightLength--;
+                    } else {
+                        dummyTemp.next = left;
+                        left = left.next;
+                        leftLength--;
+                    }
+                    dummyTemp = dummyTemp.next;
+                }
+                dummyTemp.next = leftLength == 0 ? right : left;
+                while (leftLength > 0 || rightLength > 0) {
+                    dummyTemp = dummyTemp.next;
+                    leftLength--;
+                    rightLength--;
+                }
+            }
+            sortLength *= 2;
+        }
+        return dummy.next;
+    }
+
+    /**
+     * 155. 最小栈
+     */
+    static class MinStack {
+
+        private Stack<Integer> stack;
+        private Stack<Integer> helper;
+
+        /**
+         * initialize your data structure here.
+         */
+        public MinStack() {
+            stack = new Stack<>();
+            helper = new Stack<>();
+        }
+
+        public void push(int x) {
+            stack.push(x);
+            if (helper.isEmpty() || x <= helper.peek()) {
+                helper.add(x);
+            }
+        }
+
+        public void pop() {
+            if (helper.peek().equals(stack.pop())) {
+                helper.pop();
+            }
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int getMin() {
+            return helper.peek();
+        }
+    }
+
+    /**
+     * 160. 相交链表
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode pointerA = headA, pointerB = headB, endA = null, endB = null;
+        while (pointerA != null && pointerB != null) {
+            if (pointerA.equals(pointerB)) {
+                return pointerA;
+            }
+            if (pointerA.next == null) {
+                if (endB != null && !pointerA.equals(endB)) {
+                    return null;
+                }
+                endA = pointerA;
+                pointerA = headB;
+            } else {
+                pointerA = pointerA.next;
+            }
+            if (pointerB.next == null) {
+                if (endA != null && !pointerB.equals(endA)) {
+                    return null;
+                }
+                endB = pointerB;
+                pointerB = headA;
+            } else {
+                pointerB = pointerB.next;
+            }
+        }
+        return null;
+    }
+
+    public ListNode getIntersectionNode2(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode tempA = headA;
+        ListNode tempB = headB;
+        while (tempA != tempB) {
+            tempA = tempA == null ? headB : tempA.next;
+            tempB = tempB == null ? headA : tempB.next;
+        }
+        return tempA;
+    }
+
+    /**
+     * 169. 多数元素
+     *
+     * @param nums
+     * @return
+     */
+    public int majorityElement(int[] nums) {
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int num : nums) {
+            count.put(num, count.getOrDefault(num, 0) + 1);
+        }
+        for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+            if (entry.getValue() > nums.length / 2) {
+                return entry.getKey();
+            }
+        }
+        return 0;
+    }
+
+    public int majorityElement2(int[] nums) {
+        int candidate = nums[0], count = 0;
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+            count += num == candidate ? 1 : -1;
+        }
+        return candidate;
+    }
+
+    /**
+     * 206. 反转链表
+     *
+     * @param head
+     * @return
+     */
+    public ListNode reverseList(ListNode head) {
+        ListNode pre = null;
+        ListNode current = head;
+        while (current != null) {
+            ListNode temp = current.next;
+            current.next = pre;
+            pre = current;
+            current = temp;
+        }
+        return pre;
+    }
+
+    public ListNode reverseList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        // 1->2<-3<-4(子节点已翻转完成)
+        ListNode node = reverseList2(head.next);
+        // 1<->2<-3<-4
+        head.next.next = head;
+        // null<-1<-2<-3<-4
+        head.next = null;
+        return node;
+    }
+
+    /**
+     * 215. 数组中的第K个最大元素
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int findKthLargest(int[] nums, int k) {
+        // N logN
+        Arrays.sort(nums);
+        return nums[nums.length - k];
+    }
+
+    public int findKthLargest2(int[] nums, int k) {
+        // N logK
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.comparingInt(n -> n));
+        for (int num : nums) {
+            heap.add(num);
+            if (heap.size() > k) {
+                heap.poll();
+            }
+        }
+        int result = 0;
+        if (heap.size() > 0) {
+            result = heap.peek();
+        }
+        return result;
+    }
+
+    public int findKthLargest3(int[] nums, int k) {
+
+        return 0;
+    }
+
 }

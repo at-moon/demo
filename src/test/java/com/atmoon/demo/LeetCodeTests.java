@@ -381,4 +381,275 @@ public class LeetCodeTests {
         Assert.assertEquals(true, leetCode.hasCycle(node));
         Assert.assertEquals(true, leetCode.hasCycle2(node));
     }
+
+    @Test
+    public void test142() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(3);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(2);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(0);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(-4);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node1;
+        Assert.assertEquals(node1, leetCode.detectCycle(node));
+        Assert.assertEquals(node1, leetCode.detectCycle2(node));
+        node = new LeetCode.ListNode(1);
+        node.next = node1;
+        node1.next = node;
+        Assert.assertEquals(node, leetCode.detectCycle(node));
+        Assert.assertEquals(node, leetCode.detectCycle2(node));
+        node = new LeetCode.ListNode(1);
+        Assert.assertNull(leetCode.detectCycle(node));
+        Assert.assertNull(leetCode.detectCycle2(node));
+    }
+
+    @Test
+    public void test146() {
+        LeetCode.LRUCache cache = new LeetCode.LRUCache(2);
+        cache.put(1, 1);
+        cache.put(2, 2);
+        Assert.assertEquals(1, cache.get(1));
+        // 该操作会使得密钥 2 作废
+        cache.put(3, 3);
+        Assert.assertEquals(-1, cache.get(2));
+        // 该操作会使得密钥 1 作废
+        cache.put(4, 4);
+        Assert.assertEquals(-1, cache.get(1));
+        Assert.assertEquals(3, cache.get(3));
+        Assert.assertEquals(4, cache.get(4));
+
+        cache = new LeetCode.LRUCache(2);
+        Assert.assertEquals(-1, cache.get(2));
+        cache.put(2, 6);
+        Assert.assertEquals(-1, cache.get(1));
+        cache.put(1, 5);
+        cache.put(1, 2);
+        Assert.assertEquals(2, cache.get(1));
+        Assert.assertEquals(6, cache.get(2));
+
+        LeetCode.LRUCache2 cache2 = new LeetCode.LRUCache2(2);
+        cache2.put(1, 1);
+        cache2.put(2, 2);
+        Assert.assertEquals(1, cache2.get(1));
+        // 该操作会使得密钥 2 作废
+        cache2.put(3, 3);
+        Assert.assertEquals(-1, cache2.get(2));
+        // 该操作会使得密钥 1 作废
+        cache2.put(4, 4);
+        Assert.assertEquals(-1, cache2.get(1));
+        Assert.assertEquals(3, cache2.get(3));
+        Assert.assertEquals(4, cache2.get(4));
+
+        cache2 = new LeetCode.LRUCache2(2);
+        Assert.assertEquals(-1, cache2.get(2));
+        cache2.put(2, 6);
+        Assert.assertEquals(-1, cache2.get(1));
+        cache2.put(1, 5);
+        cache2.put(1, 2);
+        Assert.assertEquals(2, cache2.get(1));
+        Assert.assertEquals(6, cache2.get(2));
+    }
+
+    @Test
+    public void test148() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(4);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(2);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(1);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node = leetCode.sortList(node);
+        Assert.assertEquals(1, node.val);
+        node = node.next;
+        Assert.assertEquals(2, node.val);
+        node = node.next;
+        Assert.assertEquals(3, node.val);
+        node = node.next;
+        Assert.assertEquals(4, node.val);
+
+        node = new LeetCode.ListNode(-1);
+        node1 = new LeetCode.ListNode(5);
+        node2 = new LeetCode.ListNode(3);
+        node3 = new LeetCode.ListNode(4);
+        LeetCode.ListNode node4 = new LeetCode.ListNode(0);
+        LeetCode.ListNode node5 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node = leetCode.sortList(node);
+        Assert.assertEquals(-1, node.val);
+        node = node.next;
+        Assert.assertEquals(0, node.val);
+        node = node.next;
+        Assert.assertEquals(3, node.val);
+        node = node.next;
+        Assert.assertEquals(3, node.val);
+        node = node.next;
+        Assert.assertEquals(4, node.val);
+        node = node.next;
+        Assert.assertEquals(5, node.val);
+    }
+
+    @Test
+    public void test148v2() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(4);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(2);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(1);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node = leetCode.sortList2(node);
+        Assert.assertEquals(1, node.val);
+        node = node.next;
+        Assert.assertEquals(2, node.val);
+        node = node.next;
+        Assert.assertEquals(3, node.val);
+        node = node.next;
+        Assert.assertEquals(4, node.val);
+
+        node = new LeetCode.ListNode(-1);
+        node1 = new LeetCode.ListNode(5);
+        node2 = new LeetCode.ListNode(3);
+        node3 = new LeetCode.ListNode(4);
+        LeetCode.ListNode node4 = new LeetCode.ListNode(0);
+        LeetCode.ListNode node5 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        node = leetCode.sortList2(node);
+        Assert.assertEquals(-1, node.val);
+        node = node.next;
+        Assert.assertEquals(0, node.val);
+        node = node.next;
+        Assert.assertEquals(3, node.val);
+        node = node.next;
+        Assert.assertEquals(3, node.val);
+        node = node.next;
+        Assert.assertEquals(4, node.val);
+        node = node.next;
+        Assert.assertEquals(5, node.val);
+    }
+
+    @Test
+    public void test155() {
+        LeetCode.MinStack minStack = new LeetCode.MinStack();
+        minStack.push(-2);
+        minStack.push(0);
+        minStack.push(-3);
+        Assert.assertEquals(-3, minStack.getMin());
+        minStack.pop();
+        Assert.assertEquals(0, minStack.top());
+        Assert.assertEquals(-2, minStack.getMin());
+    }
+
+    @Test
+    public void test160() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(4);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(1);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(8);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(4);
+        LeetCode.ListNode node4 = new LeetCode.ListNode(5);
+        LeetCode.ListNode node5 = new LeetCode.ListNode(5);
+        LeetCode.ListNode node6 = new LeetCode.ListNode(0);
+        LeetCode.ListNode node7 = new LeetCode.ListNode(1);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node5.next = node6;
+        node6.next = node7;
+        node7.next = node2;
+        Assert.assertEquals(node2, leetCode.getIntersectionNode(node, node5));
+        Assert.assertEquals(node2, leetCode.getIntersectionNode2(node, node5));
+
+        node = new LeetCode.ListNode(0);
+        node1 = new LeetCode.ListNode(9);
+        node2 = new LeetCode.ListNode(1);
+        node3 = new LeetCode.ListNode(2);
+        node4 = new LeetCode.ListNode(4);
+        node5 = new LeetCode.ListNode(3);
+
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node5.next = node3;
+        Assert.assertEquals(node3, leetCode.getIntersectionNode(node, node5));
+        Assert.assertEquals(node3, leetCode.getIntersectionNode2(node, node5));
+
+        node = new LeetCode.ListNode(2);
+        node1 = new LeetCode.ListNode(6);
+        node2 = new LeetCode.ListNode(4);
+        node3 = new LeetCode.ListNode(1);
+        node4 = new LeetCode.ListNode(5);
+        node.next = node1;
+        node1.next = node2;
+        node3.next = node4;
+        Assert.assertNull(leetCode.getIntersectionNode(node, node3));
+        Assert.assertNull(leetCode.getIntersectionNode2(node, node3));
+
+        node = new LeetCode.ListNode(1);
+        node1 = new LeetCode.ListNode(2);
+        node2 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+        Assert.assertEquals(node, leetCode.getIntersectionNode(node, node));
+        Assert.assertEquals(node, leetCode.getIntersectionNode2(node, node));
+    }
+
+    @Test
+    public void test169() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(3, leetCode.majorityElement(new int[]{3, 2, 3}));
+        Assert.assertEquals(2, leetCode.majorityElement(new int[]{2, 2, 1, 1, 1, 2, 2}));
+        Assert.assertEquals(3, leetCode.majorityElement2(new int[]{3, 2, 3}));
+        Assert.assertEquals(2, leetCode.majorityElement2(new int[]{2, 2, 1, 1, 1, 2, 2}));
+    }
+
+    @Test
+    public void test206() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(1);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(2);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+
+        node = leetCode.reverseList(node);
+        Assert.assertEquals(3, node.val);
+        Assert.assertEquals(2, node.next.val);
+        Assert.assertEquals(1, node.next.next.val);
+
+        node = new LeetCode.ListNode(1);
+        node1 = new LeetCode.ListNode(2);
+        node2 = new LeetCode.ListNode(3);
+
+        node.next = node1;
+        node1.next = node2;
+
+        node = leetCode.reverseList2(node);
+        Assert.assertEquals(3, node.val);
+        Assert.assertEquals(2, node.next.val);
+        Assert.assertEquals(1, node.next.next.val);
+    }
+
+    @Test
+    public void test215() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(5, leetCode.findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
+        Assert.assertEquals(4, leetCode.findKthLargest(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+        Assert.assertEquals(5, leetCode.findKthLargest2(new int[]{3, 2, 1, 5, 6, 4}, 2));
+        Assert.assertEquals(4, leetCode.findKthLargest2(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+    }
 }
