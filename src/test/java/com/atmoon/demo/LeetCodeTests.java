@@ -649,7 +649,20 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertEquals(5, leetCode.findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
         Assert.assertEquals(4, leetCode.findKthLargest(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+        Assert.assertEquals(2, leetCode.findKthLargest(new int[]{2, 1}, 1));
         Assert.assertEquals(5, leetCode.findKthLargest2(new int[]{3, 2, 1, 5, 6, 4}, 2));
         Assert.assertEquals(4, leetCode.findKthLargest2(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+        Assert.assertEquals(2, leetCode.findKthLargest2(new int[]{2, 1}, 1));
+        Assert.assertEquals(5, leetCode.findKthLargest3(new int[]{3, 2, 1, 5, 6, 4}, 2));
+        Assert.assertEquals(4, leetCode.findKthLargest3(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+        Assert.assertEquals(2, leetCode.findKthLargest3(new int[]{2, 1}, 1));
+    }
+
+    @Test
+    public void test217() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.containsDuplicate(new int[]{1, 2, 3, 1}));
+        Assert.assertFalse(leetCode.containsDuplicate(new int[]{1, 2, 3, 4}));
+        Assert.assertTrue(leetCode.containsDuplicate(new int[]{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}));
     }
 }

@@ -2538,9 +2538,70 @@ public class LeetCode {
         return result;
     }
 
-    public int findKthLargest3(int[] nums, int k) {
+    int[] nums;
 
-        return 0;
+    public int findKthLargest3(int[] nums, int k) {
+        // 平均 N 最坏 N2
+        this.nums = nums;
+        int length = nums.length;
+        return quickSelect(0, length - 1, length - k);
+    }
+
+    private int partition(int left, int right, int pivotIndex) {
+        int pivot = nums[pivotIndex];
+        int actualPivotIndex = left;
+        // 先将中位数放到最右边
+        swap(pivotIndex, right);
+        // 将比中位数小的都移到左边
+        for (int i = left; i < right; i++) {
+            if (nums[i] < pivot) {
+                swap(i, actualPivotIndex);
+                actualPivotIndex++;
+            }
+        }
+        // 将中位数放到实际的中位上
+        swap(actualPivotIndex, right);
+        return actualPivotIndex;
+    }
+
+    private int quickSelect(int left, int right, int k) {
+        if (left == right) {
+            return nums[left];
+        }
+        int pivotIndex = partition(left, right, left);
+        if (pivotIndex == k) {
+            return nums[pivotIndex];
+        } else if (pivotIndex > k) {
+            return quickSelect(left, pivotIndex - 1, k);
+        } else {
+            return quickSelect(pivotIndex + 1, right, k);
+        }
+    }
+
+    private void swap(int i1, int i2) {
+        if (i1 == i2) {
+            return;
+        }
+        nums[i1] += nums[i2];
+        nums[i2] = nums[i1] - nums[i2];
+        nums[i1] = nums[i1] - nums[i2];
+    }
+
+    /**
+     * 217. 存在重复元素
+     *
+     * @param nums
+     * @return
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            }
+            set.add(num);
+        }
+        return false;
     }
 
 }
