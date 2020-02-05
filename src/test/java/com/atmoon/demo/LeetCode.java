@@ -2604,4 +2604,94 @@ public class LeetCode {
         return false;
     }
 
+    /**
+     * 230. 二叉搜索树中第K小的元素
+     *
+     * @param root
+     * @param k
+     * @return
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        // 二叉搜索树是排序树，按中序搜索可以得到升序序列
+        List<Integer> list = new ArrayList<>();
+        fillTreeNodeList(root, list);
+        return list.get(k - 1);
+    }
+
+    private void fillTreeNodeList(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        fillTreeNodeList(root.left, list);
+        list.add(root.val);
+        fillTreeNodeList(root.right, list);
+    }
+
+    public int kthSmallest2(TreeNode root, int k) {
+        LinkedList<TreeNode> stack = new LinkedList<>();
+
+        while (true) {
+            while (root != null) {
+                stack.add(root);
+                root = root.left;
+            }
+            root = stack.removeLast();
+            if (--k == 0) {
+                return root.val;
+            }
+            root = root.right;
+        }
+    }
+
+    /**
+     * 231. 2的幂
+     *
+     * @param n
+     * @return
+     */
+    public boolean isPowerOfTwo(int n) {
+        if (n == 0) {
+            return false;
+        }
+        if (n == 1) {
+            return true;
+        }
+        if (n % 2 != 0) {
+            return false;
+        }
+        return isPowerOfTwo(n / 2);
+    }
+
+    public boolean isPowerOfTwo2(int n) {
+        // 0100 & 0011 = 0000
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+
+    /**
+     * 235. 二叉搜索树的最近公共祖先
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 二叉搜索树的左子树节点都小于当前节点，右子树节点都大于当前节点
+        int val = root.val;
+        int pVal = p.val;
+        int qVal = q.val;
+        TreeNode node = root;
+        while (node != null) {
+            val = node.val;
+            if (pVal < val && qVal < val) {
+                node = node.left;
+            } else if (pVal > val && qVal > val) {
+                node = node.right;
+            } else {
+                return node;
+            }
+        }
+        return null;
+    }
+
 }

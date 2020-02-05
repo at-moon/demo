@@ -665,4 +665,59 @@ public class LeetCodeTests {
         Assert.assertFalse(leetCode.containsDuplicate(new int[]{1, 2, 3, 4}));
         Assert.assertTrue(leetCode.containsDuplicate(new int[]{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}));
     }
+
+    @Test
+    public void test230() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(4);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(2);
+        node.left = node1;
+        node.right = node2;
+        node1.right = node3;
+        Assert.assertEquals(1, leetCode.kthSmallest(node, 1));
+        Assert.assertEquals(1, leetCode.kthSmallest2(node, 1));
+    }
+
+    @Test
+    public void test231() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertFalse(leetCode.isPowerOfTwo(-2));
+        Assert.assertFalse(leetCode.isPowerOfTwo(-1));
+        Assert.assertFalse(leetCode.isPowerOfTwo(0));
+        Assert.assertTrue(leetCode.isPowerOfTwo(1));
+        Assert.assertTrue(leetCode.isPowerOfTwo(2));
+        Assert.assertFalse(leetCode.isPowerOfTwo(3));
+        Assert.assertFalse(leetCode.isPowerOfTwo2(-2));
+        Assert.assertFalse(leetCode.isPowerOfTwo2(-1));
+        Assert.assertFalse(leetCode.isPowerOfTwo2(0));
+        Assert.assertTrue(leetCode.isPowerOfTwo2(1));
+        Assert.assertTrue(leetCode.isPowerOfTwo2(2));
+        Assert.assertFalse(leetCode.isPowerOfTwo2(3));
+    }
+
+    @Test
+    public void test235() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(6);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(8);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(0);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(4);
+        LeetCode.TreeNode node5 = new LeetCode.TreeNode(7);
+        LeetCode.TreeNode node6 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node7 = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node8 = new LeetCode.TreeNode(5);
+        node.left = node1;
+        node.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+        node2.left = node5;
+        node2.right = node6;
+        node4.left = node7;
+        node4.right = node8;
+        Assert.assertEquals(node, leetCode.lowestCommonAncestor(node, node1, node2));
+        Assert.assertEquals(node1, leetCode.lowestCommonAncestor(node, node1, node4));
+    }
 }
