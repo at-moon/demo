@@ -2694,4 +2694,110 @@ public class LeetCode {
         return null;
     }
 
+
+    /**
+     * 237. 删除链表中的节点
+     *
+     * @param node
+     */
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    /**
+     * 238. 除自身以外数组的乘积
+     *
+     * @param nums
+     * @return
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int[] result = new int[nums.length];
+        long product = 1;
+        int zeroTimes = 0;
+        for (int num : nums) {
+            if (num == 0) {
+                zeroTimes++;
+            } else {
+                product *= num;
+            }
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (zeroTimes == 0) {
+                result[i] = (int) (product / nums[i]);
+            } else if (zeroTimes == 1) {
+                if (nums[i] == 0) {
+                    result[i] = (int) product;
+                } else {
+                    result[i] = 0;
+                }
+            } else {
+                result[i] = 0;
+            }
+        }
+        return result;
+    }
+
+    public int[] productExceptSelf2(int[] nums) {
+        // 使用左侧数组乘积乘以右侧数组乘积
+        int length = nums.length;
+        int[] result = new int[length];
+        result[0] = 1;
+        for (int i = 1; i < length; i++) {
+            result[i] = result[i - 1] * nums[i - 1];
+        }
+        int right = 1;
+        for (int i = length - 1; i >= 0; i--) {
+            result[i] = result[i] * right;
+            right *= nums[i];
+        }
+        return result;
+    }
+
+    /**
+     * 292. Nim 游戏
+     *
+     * @param n
+     * @return
+     */
+    public boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+
+    /**
+     * 344. 反转字符串
+     *
+     * @param s
+     */
+    public void reverseString(char[] s) {
+        char temp;
+        int length = s.length;
+        for (int i = 0; i < length / 2; i++) {
+            temp = s[i];
+            s[i] = s[length - i - 1];
+            s[length - i - 1] = temp;
+        }
+    }
+
+    /**
+     * 557. 反转字符串中的单词 III
+     *
+     * @param s
+     * @return
+     */
+    public String reverseWords(String s) {
+        String[] strings = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String str : strings) {
+            char[] chars = str.toCharArray();
+            reverseString(chars);
+            sb.append(chars);
+            sb.append(" ");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+
 }

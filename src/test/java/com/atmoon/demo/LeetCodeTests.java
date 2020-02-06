@@ -720,4 +720,70 @@ public class LeetCodeTests {
         Assert.assertEquals(node, leetCode.lowestCommonAncestor(node, node1, node2));
         Assert.assertEquals(node1, leetCode.lowestCommonAncestor(node, node1, node4));
     }
+
+    @Test
+    public void test238() {
+        LeetCode leetCode = new LeetCode();
+        int[] nums = new int[]{1, 2, 3, 4};
+        int[] expect = new int[]{24, 12, 8, 6};
+        int[] result = leetCode.productExceptSelf(nums);
+        for (int i = 0; i < nums.length; i++) {
+            Assert.assertEquals(expect[i], result[i]);
+        }
+        nums = new int[]{0, 0};
+        expect = new int[]{0, 0};
+        result = leetCode.productExceptSelf(nums);
+        for (int i = 0; i < nums.length; i++) {
+            Assert.assertEquals(expect[i], result[i]);
+        }
+        nums = new int[]{1, 2, 3, 4};
+        expect = new int[]{24, 12, 8, 6};
+        result = leetCode.productExceptSelf2(nums);
+        for (int i = 0; i < nums.length; i++) {
+            Assert.assertEquals(expect[i], result[i]);
+        }
+        nums = new int[]{0, 0};
+        expect = new int[]{0, 0};
+        result = leetCode.productExceptSelf2(nums);
+        for (int i = 0; i < nums.length; i++) {
+            Assert.assertEquals(expect[i], result[i]);
+        }
+
+    }
+
+    @Test
+    public void test292() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertFalse(leetCode.canWinNim(4));
+        Assert.assertTrue(leetCode.canWinNim(5));
+    }
+
+    @Test
+    public void test344() {
+        LeetCode leetCode = new LeetCode();
+        char[] before = new char[]{'h', 'e', 'l', 'l', 'o'};
+        char[] expect = new char[]{'o', 'l', 'l', 'e', 'h'};
+        leetCode.reverseString(before);
+        for (int i = 0; i < before.length; i++) {
+            Assert.assertEquals(before[i], expect[i]);
+        }
+        before = new char[]{'H', 'a', 'n', 'n', 'a', 'h'};
+        expect = new char[]{'h', 'a', 'n', 'n', 'a', 'H'};
+        leetCode.reverseString(before);
+        for (int i = 0; i < before.length; i++) {
+            Assert.assertEquals(before[i], expect[i]);
+        }
+        before = new char[]{'A', ' ', 'm', 'a', 'n', ',', ' ', 'a', ' ', 'p', 'l', 'a', 'n', ',', ' ', 'a', ' ', 'c', 'a', 'n', 'a', 'l', ':', ' ', 'P', 'a', 'n', 'a', 'm', 'a'};
+        expect = new char[]{'a', 'm', 'a', 'n', 'a', 'P', ' ', ':', 'l', 'a', 'n', 'a', 'c', ' ', 'a', ' ', ',', 'n', 'a', 'l', 'p', ' ', 'a', ' ', ',', 'n', 'a', 'm', ' ', 'A'};
+        leetCode.reverseString(before);
+        for (int i = 0; i < before.length; i++) {
+            Assert.assertEquals(before[i], expect[i]);
+        }
+    }
+
+    @Test
+    public void test557() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals("s'teL ekat edoCteeL tsetnoc", leetCode.reverseWords("Let's take LeetCode contest"));
+    }
 }
