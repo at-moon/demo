@@ -2800,4 +2800,32 @@ public class LeetCode {
         return sb.toString();
     }
 
+    private TreeNode lca = null;
+
+    /**
+     * 236. 二叉树的最近公共祖先
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        reverseTree(root, p, q);
+        return lca;
+    }
+
+    private boolean reverseTree(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return false;
+        }
+        int mid = root == p || root == q ? 1 : 0;
+        int left = reverseTree(root.left, p, q) ? 1 : 0;
+        int right = reverseTree(root.right, p, q) ? 1 : 0;
+        if (mid + left + right == 2) {
+            lca = root;
+        }
+        return mid + left + right > 0;
+    }
+
 }
