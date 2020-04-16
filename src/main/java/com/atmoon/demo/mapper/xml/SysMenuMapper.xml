@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atmoon.demo.mapper.SysMenuMapper">
+
+    <select id="getAllMenu" resultType="com.atmoon.demo.entity.vo.TreeNode">
+        SELECT
+            id,
+            NAME label,
+            parent_id parentId
+        FROM
+            sys_menu
+        ORDER BY
+            parent_id
+    </select>
+
+    <select id="getChildren" resultType="com.atmoon.demo.entity.vo.TreeNode">
+        SELECT
+            id,
+            NAME label
+        FROM
+            sys_menu
+        WHERE
+            parent_id = #{parentId}
+    </select>
+
+</mapper>

@@ -29,7 +29,7 @@ public class GeneratorServiceEntity {
     @Test
     public void generateCode() {
         String packageName = "com.atmoon.demo";
-        String[] s = new String[]{"department", "girl"};
+        String[] s = new String[]{"sys_menu"};
         generateByTables(packageName, s);
     }
 
