@@ -10,14 +10,10 @@ import com.atmoon.demo.util.ExportUtil;
 import com.atmoon.demo.util.FastDfsUtil;
 import com.atmoon.demo.util.FileFormatUtil;
 import com.baomidou.mybatisplus.plugins.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.Map;
@@ -30,13 +26,18 @@ import java.util.Map;
  * @author zy
  * @since 2019-07-19
  */
-@Controller
+@RestController
 @RequestMapping("/girl")
 public class GirlController {
 
 
-    @Autowired
+    @Resource
     private IGirlService girlService;
+
+    @GetMapping("/hello")
+    public String hello(@RequestParam String name) {
+        return "hello " + name;
+    }
 
     @GetMapping("/list")
     @ResponseBody
