@@ -10,6 +10,8 @@ import com.atmoon.demo.util.ExportUtil;
 import com.atmoon.demo.util.FastDfsUtil;
 import com.atmoon.demo.util.FileFormatUtil;
 import com.baomidou.mybatisplus.plugins.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,12 +32,19 @@ import java.util.Map;
 @RequestMapping("/girl")
 public class GirlController {
 
+    private static final Logger logger = LoggerFactory.getLogger(GirlController.class);
 
     @Resource
     private IGirlService girlService;
 
     @GetMapping("/hello")
     public String hello(@RequestParam String name) {
+        logger.info("request name is " + name);
+        try {
+            Thread.sleep(1000000);
+        } catch (Exception e) {
+            logger.error(" hello error", e);
+        }
         return "hello " + name;
     }
 
