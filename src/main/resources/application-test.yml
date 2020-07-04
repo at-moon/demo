@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+#文件上传相关配置
+file:
+  type: fdfs
+  conf: fdfs_client_test.conf
+  actualUrl: http://192.168.197.128:8000/

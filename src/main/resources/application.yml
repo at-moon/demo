@@ -1,7 +1,7 @@
-server:
-  port: 8081
-
 spring:
+  profiles:
+    active: test
+
   application:
     name: demo
   datasource:
@@ -40,10 +40,3 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'
-
-
-#文件上传相关配置
-file:
-  type: fdfs
-  conf: fdfs_client.conf
-  actualUrl: http://192.168.30.128:8000/

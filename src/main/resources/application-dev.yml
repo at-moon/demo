@@ -1,0 +1,8 @@
+server:
+  port: 8081
+
+#文件上传相关配置
+file:
+  type: fdfs
+  conf: fdfs_client.conf
+  actualUrl: http://192.168.30.128:8000/
