@@ -810,4 +810,20 @@ public class LeetCodeTests {
         Assert.assertEquals(node, leetCode.lowestCommonAncestor2(node, node1, node2));
         Assert.assertEquals(node1, leetCode.lowestCommonAncestor2(node, node1, node8));
     }
+
+    @Test
+    public void testOffer45() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals("102", leetCode.minNumber(new int[]{10, 2}));
+        Assert.assertEquals("3033459", leetCode.minNumber(new int[]{3, 30, 34, 5, 9}));
+        Assert.assertEquals("030359", leetCode.minNumber(new int[]{3, 30, 0, 5, 9}));
+    }
+
+    @Test
+    public void testQuicksort() {
+        LeetCode leetCode = new LeetCode();
+        int[] array = new int[]{1, 45, 4, 4, 6, 0};
+        leetCode.quicksort(array, 0, array.length - 1);
+        Assert.assertArrayEquals(new int[]{0, 1, 4, 4, 6, 45}, array);
+    }
 }

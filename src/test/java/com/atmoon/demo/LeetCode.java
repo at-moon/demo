@@ -2828,4 +2828,53 @@ public class LeetCode {
         return mid + left + right > 0;
     }
 
+    /**
+     * 剑指 Offer 45. 把数组排成最小的数
+     *
+     * @param nums
+     * @return
+     */
+    public String minNumber(int[] nums) {
+        List<String> result = new ArrayList<>();
+        for (int num : nums) {
+            result.add(String.valueOf(num));
+        }
+        result.sort((o1, o2) -> (o1 + o2).compareTo(o2 + o1));
+        StringBuilder sb = new StringBuilder();
+        for (String str : result) {
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 快排
+     *
+     * @param nums
+     */
+    public void quicksort(int[] nums, int l, int r) {
+        // 结束递归
+        if (l >= r) {
+            return;
+        }
+        int temp = nums[l];
+        int i = l, j = r;
+        while (i < j) {
+            while (i < j && nums[j] >= temp) {
+                j--;
+            }
+            // 将比基准数小的放到左边
+            nums[i] = nums[j];
+            while (i < j && nums[i] <= temp) {
+                i++;
+            }
+            // 将比基准数大的放到右边
+            nums[j] = nums[i];
+        }
+        // 将基准数放到正确的位置
+        nums[i] = temp;
+        quicksort(nums, l, i - 1);
+        quicksort(nums, i + 1, r);
+    }
+
 }
