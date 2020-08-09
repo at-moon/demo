@@ -2877,4 +2877,20 @@ public class LeetCode {
         quicksort(nums, i + 1, r);
     }
 
+    /**
+     * 剑指 Offer 03. 数组中重复的数字
+     *
+     * @param nums
+     * @return
+     */
+    public int findRepeatNumber(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (!set.add(num)) {
+                return num;
+            }
+        }
+        return 0;
+    }
+
 }

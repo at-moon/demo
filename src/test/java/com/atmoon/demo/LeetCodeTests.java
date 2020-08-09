@@ -826,4 +826,10 @@ public class LeetCodeTests {
         leetCode.quicksort(array, 0, array.length - 1);
         Assert.assertArrayEquals(new int[]{0, 1, 4, 4, 6, 45}, array);
     }
+
+    @Test
+    public void testOffer03() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(2, leetCode.findRepeatNumber(new int[]{2, 3, 1, 0, 2, 5, 3}));
+    }
 }
