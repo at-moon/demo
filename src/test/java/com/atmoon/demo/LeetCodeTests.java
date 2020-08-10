@@ -832,4 +832,12 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertEquals(2, leetCode.findRepeatNumber(new int[]{2, 3, 1, 0, 2, 5, 3}));
     }
+
+    @Test
+    public void testOffer49() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(1, leetCode.nthUglyNumber2(1));
+        Assert.assertEquals(12, leetCode.nthUglyNumber2(10));
+        Assert.assertEquals(51200000, leetCode.nthUglyNumber2(1000));
+    }
 }

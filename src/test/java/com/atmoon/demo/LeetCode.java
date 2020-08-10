@@ -2893,4 +2893,49 @@ public class LeetCode {
         return 0;
     }
 
+    /**
+     * 剑指 Offer 49. 丑数
+     *
+     * @param n
+     * @return
+     */
+    public int nthUglyNumber(int n) {
+        int uglyNumber = 0;
+        while (n > 0) {
+            int temp = ++uglyNumber;
+            while (temp % 2 == 0) {
+                temp = temp / 2;
+            }
+            while (temp % 3 == 0) {
+                temp = temp / 3;
+            }
+            while (temp % 5 == 0) {
+                temp = temp / 5;
+            }
+            if (temp == 1) {
+                n--;
+            }
+        }
+        return uglyNumber;
+    }
+
+    public int nthUglyNumber2(int n) {
+        int[] dp = new int[n];
+        dp[0] = 1;
+        int a = 0, b = 0, c = 0;
+        for (int i = 1; i < n; i++) {
+            int n2 = dp[a] * 2, n3 = dp[b] * 3, n5 = dp[c] * 5;
+            dp[i] = Math.min(n2, Math.min(n3, n5));
+            if (dp[i] == n2) {
+                a++;
+            }
+            if (dp[i] == n3) {
+                b++;
+            }
+            if (dp[i] == n5) {
+                c++;
+            }
+        }
+        return dp[n - 1];
+    }
 }
