@@ -2978,10 +2978,11 @@ public class LeetCode {
 
     /**
      * N个人围成一个圆圈进行报数, 报偶数者出列, 剩下的人继续报数
-     *
+     * <p>
      * int f(int n, int m)
      * return n == 1 ? n : (f(n - 1, m) + m - 1) % n + 1;
      * old = (new + m) % n 由于编号从1开始需要先-后+
+     *
      * @param n
      * @return
      */
@@ -3025,5 +3026,74 @@ public class LeetCode {
         return head;
     }
 
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<>();
+        }
+
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<>();
+        }
+
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+
+    private HashMap<Node, Node> visited = new HashMap<>();
+
+    /**
+     * 133. 克隆图
+     *
+     * dfs
+     * @param node
+     * @return
+     */
+    public Node cloneGraph(Node node) {
+        if (node == null) {
+            return null;
+        }
+        if (visited.containsKey(node)) {
+            return visited.get(node);
+        }
+        Node cloneNode = new Node(node.val);
+        visited.put(node, cloneNode);
+
+        for (Node neighbor: node.neighbors) {
+            cloneNode.neighbors.add(cloneGraph(neighbor));
+        }
+
+        return cloneNode;
+    }
+
+    public Node cloneGraphBfs(Node node) {
+        if (node == null) {
+            return null;
+        }
+
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.add(node);
+
+        visited.put(node, new Node(node.val));
+
+        while (!queue.isEmpty()) {
+            Node n = queue.remove();
+            for (Node neighbor: n.neighbors) {
+                if (!visited.containsKey(neighbor)) {
+                    visited.put(neighbor, new Node(neighbor.val));
+                    queue.add(neighbor);
+                }
+                visited.get(n).neighbors.add(visited.get(neighbor));
+            }
+        }
+
+        return visited.get(node);
+    }
 
 }
