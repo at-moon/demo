@@ -2900,26 +2900,6 @@ public class LeetCode {
      * @return
      */
     public int nthUglyNumber(int n) {
-        int uglyNumber = 0;
-        while (n > 0) {
-            int temp = ++uglyNumber;
-            while (temp % 2 == 0) {
-                temp = temp / 2;
-            }
-            while (temp % 3 == 0) {
-                temp = temp / 3;
-            }
-            while (temp % 5 == 0) {
-                temp = temp / 5;
-            }
-            if (temp == 1) {
-                n--;
-            }
-        }
-        return uglyNumber;
-    }
-
-    public int nthUglyNumber2(int n) {
         int[] dp = new int[n];
         dp[0] = 1;
         int a = 0, b = 0, c = 0;
@@ -2938,4 +2918,112 @@ public class LeetCode {
         }
         return dp[n - 1];
     }
+
+    /**
+     * 130. 被围绕的区域
+     *
+     * @param board
+     */
+    public void solve(char[][] board) {
+        n = board.length;
+        if (n == 0) {
+            return;
+        }
+        m = board[0].length;
+        // 从上下边界开始搜索
+        for (int i = 0; i < m; i++) {
+            dfs(board, i, 0);
+            dfs(board, i, n - 1);
+        }
+        // 从左右边界开始搜索
+        for (int i = 1; i < n - 1; i++) {
+            dfs(board, 0, i);
+            dfs(board, m - 1, i);
+        }
+        // 恢复标记并修改未标记O
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == 'A') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+
+    }
+
+    // 二维数组宽、高
+    int m, n;
+
+    /**
+     * 深度优先搜索
+     *
+     * @param board
+     * @param x
+     * @param y
+     */
+    public void dfs(char[][] board, int x, int y) {
+        // 到达边界或者遇到不为O(X/A)的就返回
+        if (x < 0 || x > m - 1 || y < 0 || y > n - 1 || board[y][x] != 'O') {
+            return;
+        }
+        // 标记连接点
+        board[y][x] = 'A';
+        dfs(board, x - 1, y);
+        dfs(board, x + 1, y);
+        dfs(board, x, y - 1);
+        dfs(board, x, y + 1);
+    }
+
+    /**
+     * N个人围成一个圆圈进行报数, 报偶数者出列, 剩下的人继续报数
+     *
+     * int f(int n, int m)
+     * return n == 1 ? n : (f(n - 1, m) + m - 1) % n + 1;
+     * old = (new + m) % n 由于编号从1开始需要先-后+
+     * @param n
+     * @return
+     */
+    public Object[] countOffInACircle(int n) {
+        List<Integer> result = new ArrayList<>(n);
+        ListNode current = createCircularLinkedList(n);
+        ListNode pre = null;
+        int i = 1;
+        while (current.next != current) {
+            if (i != 2) {
+                i++;
+                pre = current;
+                current = current.next;
+            } else {
+                i = 1;
+                result.add(current.val);
+                // remove current
+                pre.next = current.next;
+                current = pre.next;
+            }
+        }
+        result.add(current.val);
+        return result.toArray();
+    }
+
+    /**
+     * 创建环形链表
+     *
+     * @param n
+     * @return
+     */
+    private ListNode createCircularLinkedList(int n) {
+        ListNode head = new ListNode(1);
+        ListNode pre = head;
+        for (int i = 1; i < n; i++) {
+            pre.next = new ListNode(i + 1);
+            pre = pre.next;
+        }
+        // 闭环
+        pre.next = head;
+        return head;
+    }
+
+
 }

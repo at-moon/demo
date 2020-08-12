@@ -836,8 +836,53 @@ public class LeetCodeTests {
     @Test
     public void testOffer49() {
         LeetCode leetCode = new LeetCode();
-        Assert.assertEquals(1, leetCode.nthUglyNumber2(1));
-        Assert.assertEquals(12, leetCode.nthUglyNumber2(10));
-        Assert.assertEquals(51200000, leetCode.nthUglyNumber2(1000));
+        Assert.assertEquals(1, leetCode.nthUglyNumber(1));
+        Assert.assertEquals(12, leetCode.nthUglyNumber(10));
+        Assert.assertEquals(51200000, leetCode.nthUglyNumber(1000));
+    }
+
+    @Test
+    public void test130() {
+        LeetCode leetCode = new LeetCode();
+        char[][] result = new char[][]{
+                {'X', 'X', 'X', 'O'},
+                {'X', 'O', 'O', 'X'},
+                {'X', 'X', 'O', 'X'},
+                {'X', 'O', 'X', 'X'},
+        };
+        leetCode.solve(result);
+        char[][] expected = new char[][]{
+                {'X', 'X', 'X', 'O'},
+                {'X', 'X', 'X', 'X'},
+                {'X', 'X', 'X', 'X'},
+                {'X', 'O', 'X', 'X'},
+        };
+        Assert.assertArrayEquals(expected, result);
+        result = new char[][]{
+                {'O', 'O'},
+                {'O', 'O'}
+        };
+        leetCode.solve(result);
+        expected = new char[][]{
+                {'O', 'O'},
+                {'O', 'O'}
+        };
+        Assert.assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void testSimpleArrayList() {
+        MyArrayList arrayList = new MyArrayList();
+        arrayList.add("a");
+        arrayList.add("b");
+        arrayList.add("c");
+        arrayList.remove("b");
+        Assert.assertEquals(1, arrayList.indexOf("c"));
+    }
+
+    @Test
+    public void testCountOffInACircle() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertArrayEquals(new Object[]{2, 4, 6, 3, 1, 5}, leetCode.countOffInACircle(6));
     }
 }
