@@ -1672,6 +1672,7 @@ public class LeetCode {
                 resultArray[i + j + 1] = each % 10;
             }
         }
+        // 找到第一个非0位，避免(1000 * 0)情况出错
         while (resultArray[++i] == 0) {
             if (i == resultArray.length - 1) {
                 break;
@@ -3050,8 +3051,9 @@ public class LeetCode {
 
     /**
      * 133. 克隆图
-     *
+     * <p>
      * dfs
+     *
      * @param node
      * @return
      */
@@ -3065,7 +3067,7 @@ public class LeetCode {
         Node cloneNode = new Node(node.val);
         visited.put(node, cloneNode);
 
-        for (Node neighbor: node.neighbors) {
+        for (Node neighbor : node.neighbors) {
             cloneNode.neighbors.add(cloneGraph(neighbor));
         }
 
@@ -3084,7 +3086,7 @@ public class LeetCode {
 
         while (!queue.isEmpty()) {
             Node n = queue.remove();
-            for (Node neighbor: n.neighbors) {
+            for (Node neighbor : n.neighbors) {
                 if (!visited.containsKey(neighbor)) {
                     visited.put(neighbor, new Node(neighbor.val));
                     queue.add(neighbor);
@@ -3094,6 +3096,36 @@ public class LeetCode {
         }
 
         return visited.get(node);
+    }
+
+    /**
+     * 剑指 Offer 04. 二维数组中的查找
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean findNumberIn2DArray(int[][] matrix, int target) {
+        int n = matrix.length;
+        if (n == 0) {
+            return false;
+        }
+        int m = matrix[0].length;
+        if (m == 0) {
+            return false;
+        }
+        int row = 0, col = m - 1;
+        while (row < n && col >= 0) {
+            int num = matrix[row][col];
+            if (num == target) {
+                return true;
+            } else if (num > target) {
+                col--;
+            } else {
+                row++;
+            }
+        }
+        return false;
     }
 
 }
