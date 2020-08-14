@@ -2977,6 +2977,61 @@ public class LeetCode {
         dfs(board, x, y + 1);
     }
 
+    public void solveBfs(char[][] board) {
+        n = board.length;
+        if (n == 0) {
+            return;
+        }
+        m = board[0].length;
+        Queue<int[]> queue = new ArrayDeque<>();
+        for (int i = 0; i < m; i++) {
+            if (board[0][i] == 'O') {
+                queue.offer(new int[]{i, 0});
+            }
+            if (board[n - 1][i] == 'O') {
+                queue.offer(new int[]{i, n - 1});
+            }
+        }
+        for (int i = 1; i < n - 1; i++) {
+            if (board[i][0] == 'O') {
+                queue.offer(new int[]{0, i});
+            }
+            if (board[i][m - 1] == 'O') {
+                queue.offer(new int[]{m - 1, i});
+            }
+        }
+        // 检查每个与边界'O'相连的点
+        while (!queue.isEmpty()) {
+            int[] temp = queue.remove();
+            int row = temp[1];
+            int col = temp[0];
+            board[row][col] = 'A';
+            if (row + 1 < n && board[row + 1][col] == 'O') {
+                queue.offer(new int[]{col, row + 1});
+            }
+            if (row - 1 >= 0 && board[row - 1][col] == 'O') {
+                queue.offer(new int[]{col, row - 1});
+            }
+            if (col + 1 < m && board[row][col + 1] == 'O') {
+                queue.offer(new int[]{col + 1, row});
+            }
+            if (col - 1 >= 0 && board[row][col - 1] == 'O') {
+                queue.offer(new int[]{col - 1, row});
+            }
+        }
+        // 恢复标记并修改未标记O
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == 'A') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+
+
     /**
      * N个人围成一个圆圈进行报数, 报偶数者出列, 剩下的人继续报数
      * <p>
@@ -3126,6 +3181,24 @@ public class LeetCode {
             }
         }
         return false;
+    }
+
+    /**
+     * 剑指 Offer 05. 替换空格
+     *
+     * @param s
+     * @return
+     */
+    public String replaceSpace(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c == ' ') {
+                sb.append("%20");
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 
 }

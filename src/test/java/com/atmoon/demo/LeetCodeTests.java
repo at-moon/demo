@@ -14,6 +14,15 @@ import java.util.stream.Collectors;
 public class LeetCodeTests {
 
     @Test
+    public void test20() {
+        Assert.assertTrue(LeetCode.isValid("()"));
+        Assert.assertTrue(LeetCode.isValid("()[]{}"));
+        Assert.assertFalse(LeetCode.isValid("(]"));
+        Assert.assertFalse(LeetCode.isValid("([)]"));
+        Assert.assertTrue(LeetCode.isValid("{[]}"));
+    }
+
+    @Test
     public void test34() {
         Assert.assertArrayEquals(new int[]{3, 4}, LeetCode.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8));
         Assert.assertArrayEquals(new int[]{-1, -1}, LeetCode.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 6));
@@ -850,7 +859,7 @@ public class LeetCodeTests {
                 {'X', 'X', 'O', 'X'},
                 {'X', 'O', 'X', 'X'},
         };
-        leetCode.solve(result);
+        leetCode.solveBfs(result);
         char[][] expected = new char[][]{
                 {'X', 'X', 'X', 'O'},
                 {'X', 'X', 'X', 'X'},
@@ -862,7 +871,7 @@ public class LeetCodeTests {
                 {'O', 'O'},
                 {'O', 'O'}
         };
-        leetCode.solve(result);
+        leetCode.solveBfs(result);
         expected = new char[][]{
                 {'O', 'O'},
                 {'O', 'O'}
@@ -910,5 +919,11 @@ public class LeetCodeTests {
                 {10, 13, 14, 17, 24},
                 {18, 21, 23, 26, 30}
         }, 100));
+    }
+
+    @Test
+    public void testOffer05() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals("We%20are%20happy.", leetCode.replaceSpace("We are happy."));
     }
 }
