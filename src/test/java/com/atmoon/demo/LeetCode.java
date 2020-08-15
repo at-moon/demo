@@ -3201,4 +3201,62 @@ public class LeetCode {
         return sb.toString();
     }
 
+    /**
+     * 546. 移除盒子
+     *
+     * @param boxes
+     * @return
+     */
+    public int removeBoxes(int[] boxes) {
+        int[][][] dp = new int[100][100][100];
+        return calculatePoint(boxes, dp, 0, boxes.length - 1, 0);
+    }
+
+    public int calculatePoint(int[] boxes, int[][][] dp, int l, int r, int k) {
+        // end condition
+        if (l > r) {
+            return 0;
+        }
+        // avoid double counting
+        if (dp[l][r][k] > 0) {
+            return dp[l][r][k];
+        }
+        // merge external same boxes
+        while (r > l && boxes[r - 1] == boxes[r]) {
+            r--;
+            k++;
+        }
+        dp[l][r][k] = calculatePoint(boxes, dp, l, r - 1, 0) + (k + 1) * (k + 1);
+        // find internal same box
+        for (int i = l; i < r; i++) {
+            if (boxes[i] == boxes[r]) {
+                dp[l][r][k] = Math.max(dp[l][r][k], calculatePoint(boxes, dp, l, i, k + 1) + calculatePoint(boxes, dp, i + 1, r - 1, 0));
+            }
+        }
+        return dp[l][r][k];
+    }
+
+    /**
+     * 剑指 Offer 06. 从尾到头打印链表
+     *
+     * @param head
+     * @return
+     */
+    public int[] reversePrint(ListNode head) {
+        int[] result;
+        Stack<Integer> stack = new Stack<>();
+        ListNode current = head;
+        while (current != null) {
+            stack.push(current.val);
+            current = current.next;
+        }
+        int size = stack.size();
+        result = new int[size];
+        for (int i = 0; i < size; i++) {
+            result[i] = stack.pop();
+        }
+        return result;
+    }
+
+
 }

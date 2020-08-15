@@ -5,7 +5,12 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
@@ -926,4 +931,22 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertEquals("We%20are%20happy.", leetCode.replaceSpace("We are happy."));
     }
+
+    @Test
+    public void test546() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(23, leetCode.removeBoxes(new int[]{1, 3, 2, 2, 2, 3, 4, 3, 1}));
+    }
+
+    @Test
+    public void testOffer06() {
+        LeetCode.ListNode node = new LeetCode.ListNode(1);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(3);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(2);
+        node.next = node1;
+        node1.next = node2;
+        LeetCode leetCode = new LeetCode();
+        Assert.assertArrayEquals(new int[]{2, 3, 1}, leetCode.reversePrint(node));
+    }
+
 }
