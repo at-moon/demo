@@ -949,4 +949,14 @@ public class LeetCodeTests {
         Assert.assertArrayEquals(new int[]{2, 3, 1}, leetCode.reversePrint(node));
     }
 
+    @Test
+    public void test733() {
+        LeetCode leetCode = new LeetCode();
+        int[][] image = new int[][]{{1, 1, 1}, {1, 1, 0}, {1, 0, 1}};
+        Assert.assertArrayEquals(new int[][]{{2, 2, 2}, {2, 2, 0}, {2, 0, 1}}, leetCode.floodFillDfs(image, 1, 1, 2));
+        image = new int[][]{{0, 0, 0}, {0, 0, 0}};
+        Assert.assertArrayEquals(new int[][]{{2, 2, 2}, {2, 2, 2}}, leetCode.floodFillDfs(image, 0, 0, 2));
+        image = new int[][]{{0, 0, 0}, {0, 1, 1}};
+        Assert.assertArrayEquals(new int[][]{{0, 0, 0}, {0, 1, 1}}, leetCode.floodFillDfs(image, 1, 1, 1));
+    }
 }

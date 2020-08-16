@@ -1,5 +1,7 @@
 package com.atmoon.demo;
 
+import com.sun.jmx.remote.internal.ArrayQueue;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -3256,6 +3258,65 @@ public class LeetCode {
             result[i] = stack.pop();
         }
         return result;
+    }
+
+    /**
+     * 733. 图像渲染
+     *
+     * @param image
+     * @param sr
+     * @param sc
+     * @param newColor
+     * @return
+     */
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        if (oldColor == newColor) {
+            return image;
+        }
+        int n = image.length, m = image[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{sr, sc});
+        while (!queue.isEmpty()) {
+            int[] temp = queue.remove();
+            int row = temp[0], col = temp[1];
+            image[row][col] = newColor;
+            if (row - 1 >= 0 && image[row - 1][col] == oldColor) {
+                queue.offer(new int[]{row - 1, col});
+            }
+            if (row + 1 < n && image[row + 1][col] == oldColor) {
+                queue.offer(new int[]{row + 1, col});
+            }
+            if (col - 1 >= 0 && image[row][col - 1] == oldColor) {
+                queue.offer(new int[]{row, col - 1});
+            }
+            if (col + 1 < m && image[row][col + 1] == oldColor) {
+                queue.offer(new int[]{row, col + 1});
+            }
+        }
+        return image;
+    }
+
+    public int[][] floodFillDfs(int[][] image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        if (oldColor == newColor) {
+            return image;
+        }
+        n = image.length;
+        m = image[0].length;
+        dfs(image, sr, sc, oldColor, newColor);
+        return image;
+    }
+
+    private void dfs(int[][] image, int row, int col, int oldColor, int newColor) {
+        if (row < 0 || row >= n || col < 0 || col >= m || image[row][col] != oldColor) {
+            return;
+        }
+        image[row][col] = newColor;
+        dfs(image, row + 1, col, oldColor, newColor);
+        dfs(image, row - 1, col, oldColor, newColor);
+        dfs(image, row, col + 1, oldColor, newColor);
+        dfs(image, row, col - 1, oldColor, newColor);
     }
 
 
