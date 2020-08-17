@@ -1,7 +1,5 @@
 package com.atmoon.demo;
 
-import com.sun.jmx.remote.internal.ArrayQueue;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -3319,5 +3317,45 @@ public class LeetCode {
         dfs(image, row, col - 1, oldColor, newColor);
     }
 
+    /**
+     * 110. 平衡二叉树
+     * <p>
+     * top down
+     * 先判断自己是不是平衡,然后判断左右子树
+     *
+     * @param root
+     * @return
+     */
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return Math.abs(height(root.left) - height(root.right)) <= 1 && isBalanced(root.left) && isBalanced(root.right);
+    }
 
+    private int height(TreeNode node) {
+        if (node == null) {
+            return 0;
+        } else {
+            return Math.max(height(node.left), height(node.right)) + 1;
+        }
+    }
+
+    public boolean isBalancedBottomUp(TreeNode root) {
+        return heightBottomUp(root) >= 0;
+    }
+
+    private int heightBottomUp(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+        // 先判断左右子树是不是平衡，再判断当前节点
+        int leftHeight = heightBottomUp(node.left);
+        int rightHeight = heightBottomUp(node.right);
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) {
+            return -1;
+        } else {
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
 }

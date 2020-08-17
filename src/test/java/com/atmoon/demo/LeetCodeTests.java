@@ -5,12 +5,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
@@ -959,4 +955,25 @@ public class LeetCodeTests {
         image = new int[][]{{0, 0, 0}, {0, 1, 1}};
         Assert.assertArrayEquals(new int[][]{{0, 0, 0}, {0, 1, 1}}, leetCode.floodFillDfs(image, 1, 1, 1));
     }
+
+    @Test
+    public void test110() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        LeetCode.TreeNode node5 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        Assert.assertTrue(leetCode.isBalanced(node));
+        Assert.assertTrue(leetCode.isBalancedBottomUp(node));
+        node4.right = node5;
+        Assert.assertFalse(leetCode.isBalanced(node));
+        Assert.assertFalse(leetCode.isBalancedBottomUp(node));
+    }
+
 }
