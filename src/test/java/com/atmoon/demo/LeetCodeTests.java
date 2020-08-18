@@ -976,4 +976,19 @@ public class LeetCodeTests {
         Assert.assertFalse(leetCode.isBalancedBottomUp(node));
     }
 
+    @Test
+    public void test109() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(-10);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(-3);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(0);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(5);
+        LeetCode.ListNode node4 = new LeetCode.ListNode(9);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        LeetCode.TreeNode treeNode = leetCode.sortedListToBST(node);
+        Assert.assertNotNull(treeNode);
+    }
 }

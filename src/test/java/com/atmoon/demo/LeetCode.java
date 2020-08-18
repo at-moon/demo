@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
  */
 public class LeetCode {
 
-
     public static void main(String[] args) {
     }
 
@@ -222,8 +221,16 @@ public class LeetCode {
         int val;
         ListNode next;
 
+        ListNode() {
+        }
+
         ListNode(int x) {
             val = x;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
         }
     }
 
@@ -2009,8 +2016,17 @@ public class LeetCode {
         TreeNode left;
         TreeNode right;
 
+        TreeNode() {
+        }
+
         TreeNode(int x) {
             val = x;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
     }
 
@@ -3358,4 +3374,32 @@ public class LeetCode {
             return Math.max(leftHeight, rightHeight) + 1;
         }
     }
+
+    /**
+     * 109. 有序链表转换二叉搜索树
+     *
+     * @param head
+     * @return
+     */
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        if (head.next == null) {
+            return new TreeNode(head.val);
+        }
+        // 让fast从下一节点开始使得slow到达中点左侧
+        // 123(odd) slow为1 1234(even) slow为2
+        ListNode slow = head, fast = head.next;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // 记录根节点
+        ListNode root = slow.next;
+        // 解链
+        slow.next = null;
+        return new TreeNode(root.val, sortedListToBST(head), sortedListToBST(root.next));
+    }
+
 }
