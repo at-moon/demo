@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -991,4 +990,12 @@ public class LeetCodeTests {
         LeetCode.TreeNode treeNode = leetCode.sortedListToBST(node);
         Assert.assertNotNull(treeNode);
     }
+
+    @Test
+    public void test647() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(6, leetCode.countSubstrings("aaa"));
+        Assert.assertEquals(3, leetCode.countSubstrings("abc"));
+    }
+
 }
