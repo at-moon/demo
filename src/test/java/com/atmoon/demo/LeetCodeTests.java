@@ -1016,4 +1016,29 @@ public class LeetCodeTests {
         Assert.assertArrayEquals(result, leetCode.updateBoard(board, new int[]{3, 0}));
     }
 
+    @Test
+    public void test224() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(2, leetCode.calculate("1 + 1"));
+        Assert.assertEquals(3, leetCode.calculate(" 2-1 + 2 "));
+        Assert.assertEquals(23, leetCode.calculate("(1+(4+5+2)-3)+(6+8)"));
+        Assert.assertEquals(0, leetCode.calculate("-1 + (1)"));
+    }
+
+    @Test
+    public void test227() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(7, leetCode.calculate2("3+2*2"));
+        Assert.assertEquals(1, leetCode.calculate2(" 3/2 "));
+        Assert.assertEquals(5, leetCode.calculate2(" 3+5 / 2 "));
+    }
+
+    @Test
+    public void test772() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(25, leetCode.calculate3("3+2*{1+2*[-4/(8-6)+7]}"));
+        Assert.assertEquals(25, leetCode.calculate4("3+2*{1+2*[-4/(8-6)+7]}"));
+        leetCode = new LeetCode();
+        Assert.assertEquals(-322, leetCode.calculate4("5-3+9*6*(6-10-2)"));
+    }
 }

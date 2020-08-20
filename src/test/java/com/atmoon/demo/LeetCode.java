@@ -3469,4 +3469,205 @@ public class LeetCode {
         }
     }
 
+    /**
+     * 224. 基本计算器
+     *
+     * @param s
+     * @return
+     */
+    public int calculate(String s) {
+        Stack<Integer> stack = new Stack<>();
+        int operand = 0;
+        int result = 0;
+        int sign = 1;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch >= '0' && ch <= '9') {
+                operand = 10 * operand + (ch - '0');
+            } else if (ch == '+') {
+                result += sign * operand;
+
+                sign = 1;
+                operand = 0;
+            } else if (ch == '-') {
+                result += sign * operand;
+
+                sign = -1;
+                operand = 0;
+            } else if (ch == '(') {
+                stack.push(result);
+                stack.push(sign);
+
+                sign = 1;
+                result = 0;
+            } else if (ch == ')') {
+                result += sign * operand;
+                result *= stack.pop();
+                result += stack.pop();
+                operand = 0;
+            }
+        }
+        return result + (sign * operand);
+    }
+
+    /**
+     * 227. 基本计算器 II
+     *
+     * @param s
+     * @return
+     */
+    public int calculate2(String s) {
+        int operand = 0, preOperand = 0, result = 0;
+        char preOperate = '+';
+        // 保证最后一个数也被使用
+        s += '#';
+        for (char c : s.toCharArray()) {
+            if (c == ' ') {
+                continue;
+            }
+            if (c >= '0' && c <= '9') {
+                operand = operand * 10 + (c - '0');
+            } else {
+                switch (preOperate) {
+                    case '+':
+                        result += preOperand;
+                        preOperand = operand;
+                        break;
+                    case '-':
+                        result += preOperand;
+                        preOperand = -operand;
+                        break;
+                    case '*':
+                        preOperand *= operand;
+                        break;
+                    case '/':
+                        preOperand /= operand;
+                        break;
+                }
+                preOperate = c;
+                operand = 0;
+            }
+        }
+        return result + preOperand;
+    }
+
+    /**
+     * 772. 基本计算器 III
+     *
+     * @param s
+     * @return
+     */
+    public int calculate3(String s) {
+        Queue<Character> queue = new LinkedList<>();
+        for (char c : s.toCharArray()) {
+            if (c != ' ') {
+                switch (c) {
+                    case '[':
+                    case '{':
+                        c = '(';
+                        break;
+                    case ']':
+                    case '}':
+                        c = ')';
+                        break;
+                }
+                queue.offer(c);
+            }
+        }
+        // 保证最后一个数也被使用
+        queue.offer('#');
+        return calculate3(queue);
+    }
+
+    private int calculate3(Queue<Character> queue) {
+        int operand = 0, preOperand = 0, result = 0;
+        char preOperate = '+';
+        while (!queue.isEmpty()) {
+            char c = queue.poll();
+            if (c >= '0' && c <= '9') {
+                operand = operand * 10 + (c - '0');
+            } else if (c == '(') {
+                operand = calculate3(queue);
+            } else {
+                switch (preOperate) {
+                    case '+':
+                        result += preOperand;
+                        preOperand = operand;
+                        break;
+                    case '-':
+                        result += preOperand;
+                        preOperand = -operand;
+                        break;
+                    case '*':
+                        preOperand *= operand;
+                        break;
+                    case '/':
+                        preOperand /= operand;
+                        break;
+                }
+                if (c == ')') {
+                    break;
+                }
+                preOperate = c;
+                operand = 0;
+            }
+        }
+        return result + preOperand;
+    }
+
+    int i = 0;
+
+    public int calculate4(String s) {
+        Stack<Integer> stack = new Stack<>();
+        int operand = 0;
+        char preOperate = '+';
+        for (; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '[':
+                case '{':
+                    c = '(';
+                    break;
+                case ']':
+                case '}':
+                    c = ')';
+                    break;
+            }
+            if (c >= '0' && c <= '9') {
+                operand = operand * 10 + (c - '0');
+            }
+            if (c == '(') {
+                i++;
+                operand = calculate4(s);
+            }
+            if (c < '0' || c > '9' || i == s.length() - 1){
+                switch(preOperate) {
+                    case '+':
+                        stack.push(operand);
+                        break;
+                    case '-':
+                        stack.push(-operand);
+                        break;
+                    case '*':
+                        stack.push(stack.pop() * operand);
+                        break;
+                    case '/':
+                        stack.push(stack.pop() / operand);
+                        break;
+                }
+                preOperate = c;
+                operand = 0;
+            }
+            if (c == ')') {
+                break;
+            }
+        }
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+        return result;
+    }
+
+
 }
