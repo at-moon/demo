@@ -3424,4 +3424,49 @@ public class LeetCode {
         return count;
     }
 
+    /**
+     * 529. 扫雷游戏
+     *
+     * @param board
+     * @param click
+     * @return
+     */
+    public char[][] updateBoard(char[][] board, int[] click) {
+        n = board.length;
+        m = board[0].length;
+        int x = click[1], y = click[0];
+        if (board[y][x] == 'M') {
+            board[y][x] = 'X';
+        } else {
+            updateBoardDfs(board, x, y);
+        }
+        return board;
+    }
+
+    private void updateBoardDfs(char[][] board, int x, int y) {
+        if (x < 0 || x >= m || y < 0 || y >= n || board[y][x] != 'E') {
+            return;
+        }
+        int[] dirX = new int[]{1, 0, -1, 0, 1, 1, -1, -1};
+        int[] dirY = new int[]{0, 1, 0, -1, 1, -1, 1, -1};
+        int num = 0;
+        for (int i = 0; i < dirX.length; i++) {
+            int tempX = x + dirX[i];
+            int tempY = y + dirY[i];
+            if (tempX >= 0 && tempX < m && tempY >= 0 && tempY < n && board[tempY][tempX] == 'M') {
+                num++;
+            }
+        }
+        if (num > 0) {
+            board[y][x] = (char) (num + '0');
+        } else {
+            board[y][x] = 'B';
+            for (int i = 0; i < dirX.length; i++) {
+                int tempX = x + dirX[i];
+                int tempY = y + dirY[i];
+                updateBoardDfs(board, tempX, tempY);
+            }
+        }
+    }
+
 }

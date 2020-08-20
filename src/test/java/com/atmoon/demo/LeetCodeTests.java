@@ -998,4 +998,22 @@ public class LeetCodeTests {
         Assert.assertEquals(3, leetCode.countSubstrings("abc"));
     }
 
+    @Test
+    public void test529() {
+        LeetCode leetCode = new LeetCode();
+        char[][] board = new char[][]{
+                {'E', 'E', 'E', 'E', 'E'},
+                {'E', 'E', 'M', 'E', 'E'},
+                {'E', 'E', 'E', 'E', 'E'},
+                {'E', 'E', 'E', 'E', 'E'},
+        };
+        char[][] result = new char[][]{
+                {'B', '1', 'E', '1', 'B'},
+                {'B', '1', 'M', '1', 'B'},
+                {'B', '1', '1', '1', 'B'},
+                {'B', 'B', 'B', 'B', 'B'},
+        };
+        Assert.assertArrayEquals(result, leetCode.updateBoard(board, new int[]{3, 0}));
+    }
+
 }
