@@ -1041,4 +1041,23 @@ public class LeetCodeTests {
         leetCode = new LeetCode();
         Assert.assertEquals(-322, leetCode.calculate4("5-3+9*6*(6-10-2)"));
     }
+
+    @Test
+    public void test111() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        Assert.assertEquals(2, leetCode.minDepth(node));
+        node = new LeetCode.TreeNode(1);
+        node1 = new LeetCode.TreeNode(2);
+        node.left = node1;
+        Assert.assertEquals(2, leetCode.minDepth(node));
+    }
 }
