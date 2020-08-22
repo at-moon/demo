@@ -3692,4 +3692,72 @@ public class LeetCode {
         return min + 1;
     }
 
+    /**
+     * 679. 24 点游戏
+     *
+     * @param nums
+     * @return
+     */
+    public boolean judgePoint24(int[] nums) {
+        List<Double> list = new ArrayList<>();
+        for (int num : nums) {
+            list.add((double) num);
+        }
+        return judgePoint24(list);
+    }
+
+    private boolean judgePoint24(List<Double> list) {
+        int size = list.size();
+        if (size == 0) {
+            return false;
+        }
+        if (size == 1) {
+            return Math.abs(list.get(0) - 24) < 1e-6;
+        }
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i == j) {
+                    continue;
+                }
+                List<Double> subList = new ArrayList<>();
+                for (int k = 0; k < size; k++) {
+                    if (k != i && k != j) {
+                        subList.add(list.get(k));
+                    }
+                }
+                for (int s = 0; s < 4; s++) {
+                    // + * 满足交换律
+                    if (s < 2 && i > j) {
+                        continue;
+                    }
+                    Double num1 = list.get(i), num2 = list.get(j);
+                    switch (s) {
+                        case 0:
+                            subList.add(num1 + num2);
+                            break;
+                        case 1:
+                            subList.add(num1 * num2);
+                            break;
+                        case 2:
+                            subList.add(num1 - num2);
+                            break;
+                        case 3:
+                            if (Math.abs(num2) < 1e-6) {
+                                continue;
+                            } else {
+                                subList.add(num1 / num2);
+                            }
+                            break;
+                    }
+                    if (judgePoint24(subList)) {
+                        return true;
+                    }
+                    subList.remove(subList.size() - 1);
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

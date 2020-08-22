@@ -1060,4 +1060,12 @@ public class LeetCodeTests {
         node.left = node1;
         Assert.assertEquals(2, leetCode.minDepth(node));
     }
+
+    @Test
+    public void test679() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.judgePoint24(new int[]{4, 1, 8, 7}));
+        Assert.assertFalse(leetCode.judgePoint24(new int[]{1, 2, 1, 2}));
+    }
+
 }
