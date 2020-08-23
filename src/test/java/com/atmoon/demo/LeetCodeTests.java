@@ -1068,4 +1068,11 @@ public class LeetCodeTests {
         Assert.assertFalse(leetCode.judgePoint24(new int[]{1, 2, 1, 2}));
     }
 
+    @Test
+    public void test201() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(4, leetCode.rangeBitwiseAnd(5, 7));
+        Assert.assertEquals(0, leetCode.rangeBitwiseAnd(0, 1));
+    }
+
 }
