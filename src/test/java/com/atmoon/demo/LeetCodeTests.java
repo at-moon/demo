@@ -1075,4 +1075,12 @@ public class LeetCodeTests {
         Assert.assertEquals(0, leetCode.rangeBitwiseAnd(0, 1));
     }
 
+    @Test
+    public void test459() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.repeatedSubstringPattern("abab"));
+        Assert.assertFalse(leetCode.repeatedSubstringPattern("aba"));
+        Assert.assertTrue(leetCode.repeatedSubstringPattern("abcabcabcabc"));
+        Assert.assertTrue(leetCode.repeatedSubstringPattern("ababcababc"));
+    }
 }

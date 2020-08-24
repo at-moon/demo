@@ -3774,4 +3774,14 @@ public class LeetCode {
         return n;
     }
 
+    /**
+     * 459. 重复的子字符串
+     *
+     * @param s
+     * @return
+     */
+    public boolean repeatedSubstringPattern(String s) {
+        return (s + s).indexOf(s, 1) != s.length();
+    }
+
 }
