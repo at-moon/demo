@@ -1083,4 +1083,27 @@ public class LeetCodeTests {
         Assert.assertTrue(leetCode.repeatedSubstringPattern("abcabcabcabc"));
         Assert.assertTrue(leetCode.repeatedSubstringPattern("ababcababc"));
     }
+
+    @Test
+    public void test491() {
+        LeetCode leetCode = new LeetCode();
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = Arrays.asList(4, 6);
+        result.add(temp);
+        temp = Arrays.asList(4, 7);
+        result.add(temp);
+        temp = Arrays.asList(4, 6, 7);
+        result.add(temp);
+        temp = Arrays.asList(4, 6, 7, 7);
+        result.add(temp);
+        temp = Arrays.asList(6, 7);
+        result.add(temp);
+        temp = Arrays.asList(6, 7, 7);
+        result.add(temp);
+        temp = Arrays.asList(7, 7);
+        result.add(temp);
+        temp = Arrays.asList(4, 7, 7);
+        result.add(temp);
+        Assert.assertEquals(result, leetCode.findSubsequences(new int[]{4, 6, 7, 7}));
+    }
 }
