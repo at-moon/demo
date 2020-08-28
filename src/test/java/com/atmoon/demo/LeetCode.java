@@ -757,7 +757,7 @@ public class LeetCode {
      * @param digits
      * @return
      */
-    public static List<String> letterCombinations(String digits) {
+    public List<String> letterCombinations(String digits) {
         String[][] keyLetterMap = {{"!", "@", "#"}, {"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"}, {"p", "q", "r", "s"}, {"t", "u", "v"}, {"w", "x", "y", "z"}};
         List<String> combinations = new ArrayList<>();
         if (digits.length() == 0) {
@@ -765,7 +765,7 @@ public class LeetCode {
         }
         combinations = combination(keyLetterMap[digits.charAt(0) - '1'], new String[]{});
         for (int i = 1; i < digits.length(); i++) {
-            combinations = combination(combinations.toArray(new String[combinations.size()]), keyLetterMap[digits.charAt(i) - '1']);
+            combinations = combination(combinations.toArray(new String[0]), keyLetterMap[digits.charAt(i) - '1']);
         }
         return combinations;
     }
@@ -777,7 +777,7 @@ public class LeetCode {
      * @param b
      * @return
      */
-    private static List<String> combination(String[] a, String[] b) {
+    private List<String> combination(String[] a, String[] b) {
         List<String> combinations = new ArrayList<>();
         for (String l1 : a) {
             if (b.length == 0) {
@@ -3402,8 +3402,6 @@ public class LeetCode {
         return new TreeNode(root.val, sortedListToBST(head), sortedListToBST(root.next));
     }
 
-    // todo start
-
     /**
      * 647. 回文子串
      *
@@ -3784,6 +3782,9 @@ public class LeetCode {
         return (s + s).indexOf(s, 1) != s.length();
     }
 
+    private List<List<Integer>> result;
+    private List<Integer> temp;
+
     /**
      * 491. 递增子序列
      *
@@ -3791,28 +3792,87 @@ public class LeetCode {
      * @return
      */
     public List<List<Integer>> findSubsequences(int[] nums) {
+        result = new ArrayList<>();
+        temp = new ArrayList<>();
         dfs(0, Integer.MIN_VALUE, nums);
-        return ans;
+        return result;
     }
 
-    List<Integer> temp = new ArrayList<>();
-    List<List<Integer>> ans = new ArrayList<>();
-
-    public void dfs(int cur, int last, int[] nums) {
+    private void dfs(int cur, int pre, int[] nums) {
         if (cur == nums.length) {
             if (temp.size() >= 2) {
-                ans.add(new ArrayList<>(temp));
+                result.add(new ArrayList<>(temp));
             }
             return;
         }
-        if (nums[cur] >= last) {
+        if (nums[cur] >= pre) {
             temp.add(nums[cur]);
             dfs(cur + 1, nums[cur], nums);
             temp.remove(temp.size() - 1);
         }
-        if (nums[cur] != last) {
-            dfs(cur + 1, last, nums);
+        // 相等时不会被跳过(避免重复[1, 0] [0, 1])
+        if (nums[cur] != pre) {
+            dfs(cur + 1, pre, nums);
         }
+    }
+
+    /**
+     * 657. 机器人能否返回原点
+     *
+     * @param moves
+     * @return
+     */
+    public boolean judgeCircle(String moves) {
+        int[] move = new int[4];
+        for (char c : moves.toCharArray()) {
+            switch (c) {
+                case 'R':
+                    move[0] = move[0] + 1;
+                    break;
+                case 'L':
+                    move[1] = move[1] + 1;
+                    break;
+                case 'U':
+                    move[2] = move[2] + 1;
+                    break;
+                case 'D':
+                    move[3] = move[3] + 1;
+                    break;
+            }
+        }
+        return move[0] == move[1] && move[2] == move[3];
+    }
+
+    private Map<String, PriorityQueue<String>> map;
+    private List<String> itinerary;
+
+    /**
+     * 332. 重新安排行程
+     *
+     * @param tickets
+     * @return
+     */
+    public List<String> findItinerary(List<List<String>> tickets) {
+        map = new HashMap<>();
+        itinerary = new ArrayList<>();
+        for (List<String> path : tickets) {
+            String key = path.get(0);
+            if (!map.containsKey(key)) {
+                map.put(key, new PriorityQueue<>());
+            }
+            map.get(key).offer(path.get(1));
+        }
+        dfs("JFK");
+        Collections.reverse(itinerary);
+        return itinerary;
+    }
+
+    private void dfs(String from) {
+        while (map.containsKey(from) && map.get(from).size() > 0) {
+            String temp = map.get(from).poll();
+            dfs(temp);
+        }
+        itinerary.add(from);
     }
 
 }

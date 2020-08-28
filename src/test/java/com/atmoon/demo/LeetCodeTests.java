@@ -1088,22 +1088,84 @@ public class LeetCodeTests {
     public void test491() {
         LeetCode leetCode = new LeetCode();
         List<List<Integer>> result = new ArrayList<>();
-        List<Integer> temp = Arrays.asList(4, 6);
-        result.add(temp);
-        temp = Arrays.asList(4, 7);
+        List<Integer> temp;
+        temp = Arrays.asList(4, 6, 7, 7);
         result.add(temp);
         temp = Arrays.asList(4, 6, 7);
         result.add(temp);
-        temp = Arrays.asList(4, 6, 7, 7);
-        result.add(temp);
-        temp = Arrays.asList(6, 7);
-        result.add(temp);
-        temp = Arrays.asList(6, 7, 7);
-        result.add(temp);
-        temp = Arrays.asList(7, 7);
+        temp = Arrays.asList(4, 6);
         result.add(temp);
         temp = Arrays.asList(4, 7, 7);
         result.add(temp);
+        temp = Arrays.asList(4, 7);
+        result.add(temp);
+        temp = Arrays.asList(6, 7, 7);
+        result.add(temp);
+        temp = Arrays.asList(6, 7);
+        result.add(temp);
+        temp = Arrays.asList(7, 7);
+        result.add(temp);
         Assert.assertEquals(result, leetCode.findSubsequences(new int[]{4, 6, 7, 7}));
     }
+
+    @Test
+    public void test657() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.judgeCircle(""));
+        Assert.assertTrue(leetCode.judgeCircle("UD"));
+        Assert.assertFalse(leetCode.judgeCircle("LL"));
+    }
+
+    @Test
+    public void test332() {
+        LeetCode leetCode = new LeetCode();
+        List<List<String>> tickets = new ArrayList<>();
+        List<String> temp;
+        temp = Arrays.asList("MUC", "LHR");
+        tickets.add(temp);
+        temp = Arrays.asList("JFK", "MUC");
+        tickets.add(temp);
+        temp = Arrays.asList("SFO", "SJC");
+        tickets.add(temp);
+        temp = Arrays.asList("LHR", "SFO");
+        tickets.add(temp);
+        Assert.assertEquals(Arrays.asList("JFK", "MUC", "LHR", "SFO", "SJC"), leetCode.findItinerary(tickets));
+        tickets = new ArrayList<>();
+        temp = Arrays.asList("JFK", "SFO");
+        tickets.add(temp);
+        temp = Arrays.asList("JFK", "ATL");
+        tickets.add(temp);
+        temp = Arrays.asList("SFO", "ATL");
+        tickets.add(temp);
+        temp = Arrays.asList("ATL", "JFK");
+        tickets.add(temp);
+        temp = Arrays.asList("ATL", "SFO");
+        tickets.add(temp);
+        Assert.assertEquals(Arrays.asList("JFK", "ATL", "JFK", "SFO", "ATL", "SFO"), leetCode.findItinerary(tickets));
+        tickets = new ArrayList<>();
+        temp = Arrays.asList("JFK", "KUL");
+        tickets.add(temp);
+        temp = Arrays.asList("JFK", "NRT");
+        tickets.add(temp);
+        temp = Arrays.asList("NRT", "JFK");
+        tickets.add(temp);
+        Assert.assertEquals(Arrays.asList("JFK", "NRT", "JFK", "KUL"), leetCode.findItinerary(tickets));
+        tickets = new ArrayList<>();
+        temp = Arrays.asList("JFK", "ATL");
+        tickets.add(temp);
+        temp = Arrays.asList("JFK", "BTL");
+        tickets.add(temp);
+        temp = Arrays.asList("BTL", "JFK");
+        tickets.add(temp);
+        temp = Arrays.asList("ATL", "JFK");
+        tickets.add(temp);
+        Assert.assertEquals(Arrays.asList("JFK", "ATL", "JFK", "BTL", "JFK"), leetCode.findItinerary(tickets));
+    }
+
+    @Test
+    public void test17() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(Arrays.asList("ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"), leetCode.letterCombinations("23"));
+    }
+
 }
