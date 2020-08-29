@@ -3875,4 +3875,43 @@ public class LeetCode {
         itinerary.add(from);
     }
 
+    /**
+     * 214. 最短回文串
+     *
+     * @param s
+     * @return
+     */
+    public String shortestPalindrome(String s) {
+        int n = s.length();
+        if (n == 0) {
+            return s;
+        }
+        int[] fail = new int[n];
+        Arrays.fill(fail, -1);
+        for (int i = 1; i < n; ++i) {
+            int j = fail[i - 1];
+            while (j != -1 && s.charAt(j + 1) != s.charAt(i)) {
+                j = fail[j];
+            }
+            if (s.charAt(j + 1) == s.charAt(i)) {
+                fail[i] = j + 1;
+            }
+        }
+        int best = -1;
+        for (int i = n - 1; i >= 0; --i) {
+            while (best != -1 && s.charAt(best + 1) != s.charAt(i)) {
+                best = fail[best];
+            }
+            if (s.charAt(best + 1) == s.charAt(i)) {
+                ++best;
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = n - 1; i > best; i--) {
+            sb.append(s.charAt(i));
+        }
+        sb.append(s);
+        return sb.toString();
+    }
+
 }
