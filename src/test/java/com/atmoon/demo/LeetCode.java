@@ -3914,4 +3914,27 @@ public class LeetCode {
         return sb.toString();
     }
 
+    private Set<Integer> keys;
+
+    /**
+     * 841. 钥匙和房间
+     *
+     * @param rooms
+     * @return
+     */
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        keys = new HashSet<>();
+        dfs(rooms, 0);
+        return keys.size() == rooms.size();
+    }
+
+    private void dfs(List<List<Integer>> rooms, int key) {
+        keys.add(key);
+        for (int k : rooms.get(key)) {
+            if (!keys.contains(k)) {
+                dfs(rooms, k);
+            }
+        }
+    }
+
 }
