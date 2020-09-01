@@ -3937,4 +3937,64 @@ public class LeetCode {
         }
     }
 
+    /**
+     * 486. 预测赢家
+     *
+     * @param nums
+     * @return
+     */
+    public boolean PredictTheWinner(int[] nums) {
+        int total = total(nums, 0, nums.length - 1, 1);
+        return total >= 0;
+    }
+
+    private int total(int[] nums, int l, int r, int sign) {
+        if (l == r) {
+            return nums[l] * sign;
+        }
+        int lScore = nums[l] * sign + total(nums, l + 1, r, -sign);
+        int rScore = nums[r] * sign + total(nums, l, r - 1, -sign);
+        if (sign > 0) {
+            return Math.max(lScore, rScore);
+        } else {
+            return Math.min(lScore, rScore);
+        }
+    }
+
+    public boolean PredictTheWinnerDP(int[] nums) {
+        int length = nums.length;
+        int[] dp = new int[length];
+        // 只剩一个数时最大差就是该数
+        for (int i = 0; i < length; i++) {
+            dp[i] = nums[i];
+        }
+        // 根据转移方程计算
+        for (int i = length - 2; i >= 0; i--) {
+            for (int j = i + 1; j < length; j++) {
+                dp[j] = Math.max(nums[i] - dp[j], nums[j] - dp[j - 1]);
+            }
+        }
+        return dp[length - 1] >= 0;
+    }
+
+    /**
+     * 877. 石子游戏
+     * true
+     *
+     * @param piles
+     * @return
+     */
+    public boolean stoneGame(int[] piles) {
+        int length = piles.length;
+        int[] dp = new int[length];
+        System.arraycopy(piles, 0, dp, 0, length);
+        for (int i = length - 2; i >= 0; i--) {
+            for (int j = i + 1; j < length; j++) {
+                dp[j] = Math.max(piles[i] - dp[j], piles[j] - dp[j - 1]);
+            }
+        }
+        return dp[length - 1] > 0;
+    }
+
+
 }

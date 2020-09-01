@@ -1205,4 +1205,19 @@ public class LeetCodeTests {
         rooms.add(temp);
         Assert.assertFalse(leetCode.canVisitAllRooms(rooms));
     }
+
+    @Test
+    public void test486() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertFalse(leetCode.PredictTheWinner(new int[]{1, 5, 2}));
+        Assert.assertTrue(leetCode.PredictTheWinner(new int[]{1, 5, 233, 7}));
+        Assert.assertFalse(leetCode.PredictTheWinnerDP(new int[]{1, 5, 2}));
+        Assert.assertTrue(leetCode.PredictTheWinnerDP(new int[]{1, 5, 233, 7}));
+    }
+
+    @Test
+    public void test877() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.stoneGame(new int[]{5, 3, 4, 5}));
+    }
 }
