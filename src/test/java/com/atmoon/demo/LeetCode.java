@@ -3996,5 +3996,15 @@ public class LeetCode {
         return dp[length - 1] > 0;
     }
 
+    /**
+     * 剑指 Offer 20. 表示数值的字符串
+     *
+     * @param s
+     * @return
+     */
+    public boolean isNumber(String s) {
+        String regex = "[ ]*[-,+]?(([0-9]+([.][0-9]*)?)|([0-9]*([.][0-9]+)))([e,E][-,+]?[0-9]+)?[ ]*";
+        return s.matches(regex) && s.trim().length() != 0;
+    }
 
 }

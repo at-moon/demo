@@ -1220,4 +1220,30 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertTrue(leetCode.stoneGame(new int[]{5, 3, 4, 5}));
     }
+
+    @Test
+    public void testOffer20() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.isNumber("+100"));
+        Assert.assertTrue(leetCode.isNumber("5e2"));
+        Assert.assertTrue(leetCode.isNumber("-123"));
+        Assert.assertTrue(leetCode.isNumber("3.1416"));
+        Assert.assertTrue(leetCode.isNumber("-1E-16"));
+        Assert.assertTrue(leetCode.isNumber("0123"));
+        Assert.assertTrue(leetCode.isNumber("1 "));
+        Assert.assertTrue(leetCode.isNumber("1  "));
+        Assert.assertTrue(leetCode.isNumber(" 1"));
+        Assert.assertTrue(leetCode.isNumber("   1"));
+        Assert.assertTrue(leetCode.isNumber(".1"));
+        Assert.assertTrue(leetCode.isNumber("1."));
+        Assert.assertTrue(leetCode.isNumber(" 005047e+6"));
+        Assert.assertFalse(leetCode.isNumber(" "));
+        Assert.assertFalse(leetCode.isNumber("e9"));
+        Assert.assertFalse(leetCode.isNumber("12e"));
+        Assert.assertFalse(leetCode.isNumber("1a3.14"));
+        Assert.assertFalse(leetCode.isNumber("1.2.3"));
+        Assert.assertFalse(leetCode.isNumber("+-5"));
+        Assert.assertFalse(leetCode.isNumber("12e+5.4"));
+        Assert.assertFalse(leetCode.isNumber("5-1"));
+    }
 }
