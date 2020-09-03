@@ -1246,4 +1246,24 @@ public class LeetCodeTests {
         Assert.assertFalse(leetCode.isNumber("12e+5.4"));
         Assert.assertFalse(leetCode.isNumber("5-1"));
     }
+
+    @Test
+    public void test51() {
+        LeetCode leetCode = new LeetCode();
+        List<List<String>> result = new ArrayList<>();
+        List<String> temp;
+        temp = new ArrayList<>();
+        temp.add(".Q..");
+        temp.add("...Q");
+        temp.add("Q...");
+        temp.add("..Q.");
+        result.add(temp);
+        temp = new ArrayList<>();
+        temp.add("..Q.");
+        temp.add("Q...");
+        temp.add("...Q");
+        temp.add(".Q..");
+        result.add(temp);
+        Assert.assertEquals(result, leetCode.solveNQueens(4));
+    }
 }

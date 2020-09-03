@@ -4007,4 +4007,69 @@ public class LeetCode {
         return s.matches(regex) && s.trim().length() != 0;
     }
 
+    private Set<Integer> columns;
+    private Set<Integer> diagonals1;
+    private Set<Integer> diagonals2;
+    private List<List<String>> NQueens;
+    private int[] queens;
+
+    /**
+     * 51. N 皇后
+     *
+     * @param n
+     * @return
+     */
+    public List<List<String>> solveNQueens(int n) {
+        columns = new HashSet<>();
+        diagonals1 = new HashSet<>();
+        diagonals2 = new HashSet<>();
+        NQueens = new ArrayList<>();
+        queens = new int[n];
+        Arrays.fill(queens, -1);
+        backtrackNQueens(n, 0);
+        return NQueens;
+    }
+
+    private void backtrackNQueens(int n, int row) {
+        if (row == n) {
+            NQueens.add(generateBoard(n));
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (columns.contains(i)) {
+                continue;
+            }
+            // \斜线行减列不变
+            int diagonal1 = row - i;
+            if (diagonals1.contains(diagonal1)) {
+                continue;
+            }
+            // /斜线行加列不变
+            int diagonal2 = row + i;
+            if (diagonals2.contains(diagonal2)) {
+                continue;
+            }
+            queens[row] = i;
+            columns.add(i);
+            diagonals1.add(diagonal1);
+            diagonals2.add(diagonal2);
+            backtrackNQueens(n, row + 1);
+            queens[row] = -1;
+            columns.remove(i);
+            diagonals1.remove(diagonal1);
+            diagonals2.remove(diagonal2);
+        }
+    }
+
+    private List<String> generateBoard(int n) {
+        List<String> board = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            char[] row = new char[n];
+            Arrays.fill(row, '.');
+            row[queens[i]] = 'Q';
+            board.add(new String(row));
+        }
+        return board;
+    }
+
 }
