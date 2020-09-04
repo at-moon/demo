@@ -4072,4 +4072,42 @@ public class LeetCode {
         return board;
     }
 
+    private List<String> treePaths;
+
+    /**
+     * 257. 二叉树的所有路径
+     *
+     * @param root
+     * @return
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        treePaths = new ArrayList<>();
+        temp = new ArrayList<>();
+        if (root == null) {
+            return treePaths;
+        }
+        backtrackFindPaths(root);
+        return treePaths;
+    }
+
+    private void backtrackFindPaths(TreeNode node) {
+        if (node.left == null && node.right == null) {
+            StringBuilder sb = new StringBuilder();
+            for (int path : temp) {
+                sb.append(path);
+                sb.append("->");
+            }
+            sb.append(node.val);
+            treePaths.add(sb.toString());
+        }
+        temp.add(node.val);
+        if (node.left != null) {
+            backtrackFindPaths(node.left);
+        }
+        if (node.right != null) {
+            backtrackFindPaths(node.right);
+        }
+        temp.remove(temp.size() - 1);
+    }
+
 }

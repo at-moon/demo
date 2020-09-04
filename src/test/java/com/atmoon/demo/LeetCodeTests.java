@@ -1266,4 +1266,21 @@ public class LeetCodeTests {
         result.add(temp);
         Assert.assertEquals(result, leetCode.solveNQueens(4));
     }
+
+    @Test
+    public void test257() {
+        LeetCode leetCode = new LeetCode();
+        List<String> result;
+        result = new ArrayList<>();
+        result.add("1->2->5");
+        result.add("1->3");
+        LeetCode.TreeNode node = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(5);
+        node.left = node1;
+        node.right = node2;
+        node1.right = node3;
+        Assert.assertEquals(result, leetCode.binaryTreePaths(node));
+    }
 }
