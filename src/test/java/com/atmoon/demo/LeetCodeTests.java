@@ -1283,4 +1283,12 @@ public class LeetCodeTests {
         node1.right = node3;
         Assert.assertEquals(result, leetCode.binaryTreePaths(node));
     }
+
+    @Test
+    public void test60() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals("1", leetCode.getPermutation(1, 1));
+        Assert.assertEquals("213", leetCode.getPermutation(3, 3));
+        Assert.assertEquals("2314", leetCode.getPermutation(4, 9));
+    }
 }

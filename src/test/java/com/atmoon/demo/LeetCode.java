@@ -4110,4 +4110,38 @@ public class LeetCode {
         temp.remove(temp.size() - 1);
     }
 
+    /**
+     * 60. 第k个排列
+     *
+     * @param n
+     * @param k
+     * @return
+     */
+    public String getPermutation(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        List<Integer> list = new LinkedList<>();
+        // (n - 1)!
+        int factorial = 1;
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+            factorial *= i;
+        }
+        factorial /= n;
+        while (k != 0) {
+            int temp = k / factorial;
+            k %= factorial;
+            if (k == 0) {
+                sb.append(list.remove(--temp));
+                for (int i = list.size() - 1; i >= 0; i--) {
+                    sb.append(list.get(i));
+                }
+            } else {
+                sb.append(list.remove(temp));
+                factorial /= list.size();
+            }
+        }
+        return sb.toString();
+    }
+
+
 }
