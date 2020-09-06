@@ -1291,4 +1291,27 @@ public class LeetCodeTests {
         Assert.assertEquals("213", leetCode.getPermutation(3, 3));
         Assert.assertEquals("2314", leetCode.getPermutation(4, 9));
     }
+
+    @Test
+    public void test107() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp;
+        temp = Arrays.asList(15, 7);
+        result.add(temp);
+        temp = Arrays.asList(9, 20);
+        result.add(temp);
+        temp = Collections.singletonList(3);
+        result.add(temp);
+        Assert.assertEquals(result, leetCode.levelOrderBottom(node));
+    }
 }
