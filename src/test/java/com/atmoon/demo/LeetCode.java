@@ -4174,5 +4174,25 @@ public class LeetCode {
         return result;
     }
 
+    /**
+     * 347. 前 K 个高频元素
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        int[] result = new int[k];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        List<Integer> list = new ArrayList<>(map.keySet());
+        list.sort((a, b) -> map.get(b) - map.get(a));
+        for (int i = 0; i < k; i++) {
+            result[i] = list.get(i);
+        }
+        return result;
+    }
 
 }

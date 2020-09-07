@@ -1314,4 +1314,11 @@ public class LeetCodeTests {
         result.add(temp);
         Assert.assertEquals(result, leetCode.levelOrderBottom(node));
     }
+
+    @Test
+    public void test347() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertArrayEquals(new int[]{1, 2}, leetCode.topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2));
+        Assert.assertArrayEquals(new int[]{1}, leetCode.topKFrequent(new int[]{1}, 1));
+    }
 }
