@@ -4195,4 +4195,33 @@ public class LeetCode {
         return result;
     }
 
+    /**
+     * 77. 组合
+     *
+     * @param n
+     * @param k
+     * @return
+     */
+    public List<List<Integer>> combine(int n, int k) {
+        result = new ArrayList<>();
+        temp = new ArrayList<>();
+        backtrackCombine(1, n, k);
+        return result;
+    }
+
+    private void backtrackCombine(int i, int n, int k) {
+        if (n - i + 1 + temp.size() < k) {
+            return;
+        }
+        if (temp.size() == k) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        temp.add(i);
+        backtrackCombine(i + 1, n, k);
+        temp.remove(temp.size() - 1);
+        backtrackCombine(i + 1, n, k);
+    }
+
+
 }

@@ -1321,4 +1321,25 @@ public class LeetCodeTests {
         Assert.assertArrayEquals(new int[]{1, 2}, leetCode.topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2));
         Assert.assertArrayEquals(new int[]{1}, leetCode.topKFrequent(new int[]{1}, 1));
     }
+
+    @Test
+    public void test77() {
+        LeetCode leetCode = new LeetCode();
+        List<List<Integer>> result;
+        List<Integer> temp;
+        result = new ArrayList<>();
+        temp = Arrays.asList(1, 2);
+        result.add(temp);
+        temp = Arrays.asList(1, 3);
+        result.add(temp);
+        temp = Arrays.asList(1, 4);
+        result.add(temp);
+        temp = Arrays.asList(2, 3);
+        result.add(temp);
+        temp = Arrays.asList(2, 4);
+        result.add(temp);
+        temp = Arrays.asList(3, 4);
+        result.add(temp);
+        Assert.assertEquals(result, leetCode.combine(4, 2));
+    }
 }
