@@ -1624,7 +1624,6 @@ public class LeetCode {
     }
 
 
-    private List<List<Integer>> res;
     private int[] candidates;
 
     /**
@@ -1635,25 +1634,26 @@ public class LeetCode {
      * @return
      */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        res = new ArrayList<>();
+        result = new ArrayList<>();
+        temp = new ArrayList<>();
         Arrays.sort(candidates);
         this.candidates = candidates;
-        backtrack(target, 0, new ArrayList<>());
-        return res;
+        backtrackCombinationSum(target, 0);
+        return result;
     }
 
-    private void backtrack(int target, int index, List<Integer> tmp) {
+    private void backtrackCombinationSum(int target, int index) {
         if (target < 0) {
             return;
         }
         if (target == 0) {
-            res.add(new ArrayList<>(tmp));
+            result.add(new ArrayList<>(temp));
             return;
         }
         for (int i = index; i < candidates.length; i++) {
-            tmp.add(candidates[i]);
-            backtrack(target - candidates[i], i, tmp);
-            tmp.remove(tmp.size() - 1);
+            temp.add(candidates[i]);
+            backtrackCombinationSum(target - candidates[i], i);
+            temp.remove(temp.size() - 1);
         }
     }
 
