@@ -1623,7 +1623,6 @@ public class LeetCode {
         return sb.toString();
     }
 
-
     private int[] candidates;
 
     /**
@@ -4223,5 +4222,45 @@ public class LeetCode {
         backtrackCombine(i + 1, n, k);
     }
 
+    private Map<Integer, Integer> candidatesMap;
+
+    /**
+     * 40. 组合总和 II
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        result = new ArrayList<>();
+        temp = new ArrayList<>();
+        candidatesMap = new HashMap<>();
+        Arrays.sort(candidates);
+        this.candidates = candidates;
+        for (int i : candidates) {
+            candidatesMap.put(i, candidatesMap.getOrDefault(i, 0) + 1);
+        }
+        backtrackCombinationSum2(0, target);
+        return result;
+    }
+
+    private void backtrackCombinationSum2(int i, int target) {
+        if (target == 0) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        if (i == candidates.length || target < 0) {
+            return;
+        }
+        backtrackCombinationSum2(i + candidatesMap.get(candidates[i]), target);
+        int maxTime = Math.min(target / candidates[i], candidatesMap.get(candidates[i]));
+        for (int j = 1; j <= maxTime; j++) {
+            temp.add(candidates[i]);
+            backtrackCombinationSum2(i + candidatesMap.get(candidates[i]), target - candidates[i] * j);
+        }
+        for (int j = 1; j <= maxTime; j++) {
+            temp.remove(temp.size() - 1);
+        }
+    }
 
 }

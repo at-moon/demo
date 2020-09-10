@@ -1342,4 +1342,31 @@ public class LeetCodeTests {
         result.add(temp);
         Assert.assertEquals(result, leetCode.combine(4, 2));
     }
+
+    @Test
+    public void test40() {
+        LeetCode leetCode = new LeetCode();
+        int[] candidates = new int[]{10, 1, 2, 7, 6, 1, 5};
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> tmp;
+        tmp = Arrays.asList(1, 1, 6);
+        res.add(tmp);
+        tmp = Arrays.asList(1, 2, 5);
+        res.add(tmp);
+        tmp = Arrays.asList(1, 7);
+        res.add(tmp);
+        tmp = Arrays.asList(2, 6);
+        res.add(tmp);
+        Collections.reverse(res);
+        Assert.assertEquals(res, leetCode.combinationSum2(candidates, 8));
+
+        candidates = new int[]{2, 5, 2, 1, 2};
+        res = new ArrayList<>();
+        tmp = Arrays.asList(1, 2, 2);
+        res.add(tmp);
+        tmp = Collections.singletonList(5);
+        res.add(tmp);
+        Collections.reverse(res);
+        Assert.assertEquals(res, leetCode.combinationSum2(candidates, 5));
+    }
 }
