@@ -1369,4 +1369,22 @@ public class LeetCodeTests {
         Collections.reverse(res);
         Assert.assertEquals(res, leetCode.combinationSum2(candidates, 5));
     }
+
+    @Test
+    public void test216() {
+        LeetCode leetCode = new LeetCode();
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> tmp;
+        tmp = Arrays.asList(1, 2, 4);
+        res.add(tmp);
+        Assert.assertEquals(res, leetCode.combinationSum3(3, 7));
+        res = new ArrayList<>();
+        tmp = Arrays.asList(1, 2, 6);
+        res.add(tmp);
+        tmp = Arrays.asList(1, 3, 5);
+        res.add(tmp);
+        tmp = Arrays.asList(2, 3, 4);
+        res.add(tmp);
+        Assert.assertEquals(res, leetCode.combinationSum3(3, 9));
+    }
 }

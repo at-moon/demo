@@ -4263,4 +4263,38 @@ public class LeetCode {
         }
     }
 
+    /**
+     * 216. 组合总和 III
+     *
+     * @param k
+     * @param n
+     * @return
+     */
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        result = new ArrayList<>();
+        temp = new ArrayList<>();
+        backtrackCombinationSum3(1, k, n);
+        return result;
+    }
+
+    private void backtrackCombinationSum3(int i, int k, int n) {
+        if (k == 0 && n == 0) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        if (i > 9 || n < 0 || k == 0) {
+            return;
+        }
+        if (k == 1 && n <= 9 && n >= i) {
+            temp.add(n);
+            result.add(new ArrayList<>(temp));
+            temp.remove(temp.size() - 1);
+            return;
+        }
+        temp.add(i);
+        backtrackCombinationSum3(i + 1, k - 1, n - i);
+        temp.remove(temp.size() - 1);
+        backtrackCombinationSum3(i + 1, k, n);
+    }
+
 }
