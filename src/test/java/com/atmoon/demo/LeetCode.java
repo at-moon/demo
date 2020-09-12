@@ -4297,4 +4297,32 @@ public class LeetCode {
         backtrackCombinationSum3(i + 1, k, n);
     }
 
+    /**
+     * 637. 二叉树的层平均值
+     *
+     * @param root
+     * @return
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            double sum = 0;
+            for (int i = 0; i < size; i++) {
+                TreeNode temp = queue.poll();
+                sum += temp.val;
+                if (temp.left != null) {
+                    queue.offer(temp.left);
+                }
+                if (temp.right != null) {
+                    queue.offer(temp.right);
+                }
+            }
+            result.add(sum / size);
+        }
+        return result;
+    }
+
 }
