@@ -1410,4 +1410,23 @@ public class LeetCodeTests {
         result = Arrays.asList(2147483647.0, 2147483647.0);
         Assert.assertEquals(result, leetCode.averageOfLevels(node));
     }
+
+    @Test
+    public void test79() {
+        LeetCode leetCode = new LeetCode();
+        char[][] board = new char[][]{
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}
+        };
+        Assert.assertTrue(leetCode.exist(board, "ABCCED"));
+        Assert.assertTrue(leetCode.exist(board, "SEE"));
+        Assert.assertFalse(leetCode.exist(board, "ABCB"));
+        board = new char[][]{
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'E', 'S'},
+                {'A', 'D', 'E', 'E'}
+        };
+        Assert.assertTrue(leetCode.exist(board, "ABCESEEEFS"));
+    }
 }

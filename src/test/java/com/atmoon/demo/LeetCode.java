@@ -1504,7 +1504,7 @@ public class LeetCode {
     HashSet<Character>[] cols = new HashSet[9];
     HashSet<Character>[] boxes = new HashSet[9];
 
-    char[][] board;
+    private char[][] board;
 
     boolean sudokuSolved = false;
 
@@ -2970,7 +2970,7 @@ public class LeetCode {
     }
 
     // 二维数组宽、高
-    int m, n;
+    private int m, n;
 
     /**
      * 深度优先搜索
@@ -4323,6 +4323,56 @@ public class LeetCode {
             result.add(sum / size);
         }
         return result;
+    }
+
+    private boolean isEnd;
+
+    /**
+     * 79. 单词搜索
+     *
+     * @param board
+     * @param word
+     * @return
+     */
+    public boolean exist(char[][] board, String word) {
+        this.board = board;
+        this.isEnd = false;
+        n = board.length;
+        m = board[0].length;
+        boolean[][] isVisited = new boolean[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == word.charAt(0)) {
+                    dfsExist(j, i, 0, word, isVisited);
+                    if (isEnd) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private void dfsExist(int col, int row, int i, String word, boolean[][] isVisited) {
+        if (board[row][col] != word.charAt(i)) {
+            return;
+        }
+        if (i == word.length() - 1) {
+            isEnd = true;
+            return;
+        }
+        isVisited[row][col] = true;
+        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        for (int[] dir : directions) {
+            int newRow = row + dir[0], newCol = col + dir[1];
+            if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m && !isVisited[newRow][newCol]) {
+                dfsExist(newCol, newRow, i + 1, word, isVisited);
+                if (isEnd) {
+                    break;
+                }
+            }
+        }
+        isVisited[row][col] = false;
     }
 
 }
