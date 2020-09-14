@@ -1429,4 +1429,16 @@ public class LeetCodeTests {
         };
         Assert.assertTrue(leetCode.exist(board, "ABCESEEEFS"));
     }
+
+    @Test
+    public void test94() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(3);
+        node.right = node1;
+        node1.left = node2;
+        List<Integer> result = Arrays.asList(1, 3, 2);
+        Assert.assertEquals(result, leetCode.inorderTraversal(node));
+    }
 }
