@@ -1452,4 +1452,33 @@ public class LeetCodeTests {
         List<Integer> result = Arrays.asList(1, 3, 2);
         Assert.assertEquals(result, leetCode.inorderTraversal(node));
     }
+
+    @Test
+    public void test226() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(4);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(7);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node5 = new LeetCode.TreeNode(6);
+        LeetCode.TreeNode node6 = new LeetCode.TreeNode(9);
+        node.left = node1;
+        node.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+        node2.left = node5;
+        node2.right = node6;
+        node = leetCode.invertTree(node);
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp;
+        temp = Arrays.asList(9, 6, 3, 1);
+        result.add(temp);
+        temp = Arrays.asList(7, 2);
+        result.add(temp);
+        temp = Collections.singletonList(4);
+        result.add(temp);
+        Assert.assertEquals(result, leetCode.levelOrderBottom(node));
+
+    }
 }

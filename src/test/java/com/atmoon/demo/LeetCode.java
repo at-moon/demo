@@ -4396,4 +4396,20 @@ public class LeetCode {
         return result;
     }
 
+    /**
+     * 226. 翻转二叉树
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode temp = invertTree(root.left);
+        root.left = invertTree(root.right);
+        root.right = temp;
+        return root;
+    }
+
 }
