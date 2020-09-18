@@ -1481,4 +1481,25 @@ public class LeetCodeTests {
         Assert.assertEquals(result, leetCode.levelOrderBottom(node));
 
     }
+
+    @Test
+    public void test685() {
+        LeetCode leetCode = new LeetCode();
+        int[][] edges = new int[][]{{1, 2}, {1, 3}, {2, 3}};
+        Assert.assertArrayEquals(new int[]{2, 3}, leetCode.findRedundantDirectedConnection(edges));
+        edges = new int[][]{{1, 2}, {2, 3}, {3, 4}, {4, 1}, {1, 5}};
+        Assert.assertArrayEquals(new int[]{4, 1}, leetCode.findRedundantDirectedConnection(edges));
+        edges = new int[][]{{2, 1}, {3, 1}, {4, 2}, {1, 4}};
+        Assert.assertArrayEquals(new int[]{2, 1}, leetCode.findRedundantDirectedConnection(edges));
+    }
+
+    @Test
+    public void test47() {
+        LeetCode leetCode = new LeetCode();
+        List<List<Integer>> res = new ArrayList<>();
+        res.add(Arrays.asList(1, 1, 2));
+        res.add(Arrays.asList(1, 2, 1));
+        res.add(Arrays.asList(2, 1, 1));
+        Assert.assertEquals(res, leetCode.permuteUnique(new int[]{1, 2, 1}));
+    }
 }

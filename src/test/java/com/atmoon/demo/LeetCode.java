@@ -4412,4 +4412,101 @@ public class LeetCode {
         return root;
     }
 
+    /**
+     * 685. 冗余连接 II
+     *
+     * @param edges
+     * @return
+     */
+    public int[] findRedundantDirectedConnection(int[][] edges) {
+        int n = edges.length;
+        UnionFind uf = new UnionFind(n + 1);
+        int[] parent = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            parent[i] = i;
+        }
+        int conflict = -1, cycle = -1;
+        for (int i = 0; i < n; i++) {
+            int[] edge = edges[i];
+            int u = edge[0], v = edge[1];
+            if (parent[v] != v) {
+                conflict = i;
+            } else {
+                parent[v] = u;
+                if (uf.find(u) == uf.find(v)) {
+                    cycle = i;
+                } else {
+                    uf.union(u, v);
+                }
+            }
+        }
+
+        if (conflict < 0) {
+            return new int[]{edges[cycle][0], edges[cycle][1]};
+        } else {
+            if (cycle < 0) {
+                return new int[]{edges[conflict][0], edges[conflict][1]};
+            } else {
+                return new int[]{parent[edges[conflict][1]], edges[conflict][1]};
+            }
+        }
+    }
+
+    class UnionFind {
+        int[] ancestor;
+
+        public UnionFind(int n) {
+            ancestor = new int[n];
+            for (int i = 0; i < n; ++i) {
+                ancestor[i] = i;
+            }
+        }
+
+        public void union(int index1, int index2) {
+            ancestor[find(index1)] = find(index2);
+        }
+
+        public int find(int index) {
+            if (ancestor[index] != index) {
+                ancestor[index] = find(ancestor[index]);
+            }
+            return ancestor[index];
+        }
+    }
+
+    private boolean[] vis;
+
+    /**
+     * 47. 全排列 II
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        result = new ArrayList<>();
+        temp = new ArrayList<>();
+        vis = new boolean[nums.length];
+        Arrays.sort(nums);
+        backtrackPermuteUnique(nums, 0);
+        return result;
+    }
+
+    private void backtrackPermuteUnique(int[] nums, int i) {
+        if (i == nums.length) {
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int j = 0; j < nums.length; j++) {
+            if (vis[j] || (j > 0 && nums[j] == nums[j - 1] && !vis[j - 1])) {
+                continue;
+            }
+            temp.add(nums[j]);
+            vis[j] = true;
+            backtrackPermuteUnique(nums, i + 1);
+            temp.remove(temp.size() - 1);
+            vis[j] = false;
+        }
+    }
+
 }
+
