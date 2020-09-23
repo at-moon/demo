@@ -278,34 +278,14 @@ public class LeetCodeTests {
     public void test78() {
         LeetCode leetCode = new LeetCode();
         List<List<Integer>> res = new ArrayList<>();
-        List<Integer> tmp = new ArrayList<>();
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(1);
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(2);
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(1);
-        tmp.add(2);
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(3);
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(1);
-        tmp.add(3);
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(2);
-        tmp.add(3);
-        res.add(tmp);
-        tmp = new ArrayList<>();
-        tmp.add(1);
-        tmp.add(2);
-        tmp.add(3);
-        res.add(tmp);
+        res.add(Collections.emptyList());
+        res.add(Collections.singletonList(1));
+        res.add(Collections.singletonList(2));
+        res.add(Arrays.asList(1, 2));
+        res.add(Collections.singletonList(3));
+        res.add(Arrays.asList(1, 3));
+        res.add(Arrays.asList(2, 3));
+        res.add(Arrays.asList(1, 2, 3));
         Assert.assertEquals(res, leetCode.subsets(new int[]{1, 2, 3}));
     }
 
@@ -1501,5 +1481,69 @@ public class LeetCodeTests {
         res.add(Arrays.asList(1, 2, 1));
         res.add(Arrays.asList(2, 1, 1));
         Assert.assertEquals(res, leetCode.permuteUnique(new int[]{1, 2, 1}));
+    }
+
+    @Test
+    public void test617() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node11 = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node12 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node13 = new LeetCode.TreeNode(5);
+        node1.left = node11;
+        node1.right = node12;
+        node11.left = node13;
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node21 = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node22 = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node23 = new LeetCode.TreeNode(4);
+        LeetCode.TreeNode node24 = new LeetCode.TreeNode(7);
+        node2.left = node21;
+        node2.right = node22;
+        node21.right = node23;
+        node22.right = node24;
+        LeetCode.TreeNode result = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode result1 = new LeetCode.TreeNode(4);
+        LeetCode.TreeNode result2 = new LeetCode.TreeNode(5);
+        LeetCode.TreeNode result3 = new LeetCode.TreeNode(5);
+        LeetCode.TreeNode result4 = new LeetCode.TreeNode(4);
+        LeetCode.TreeNode result5 = new LeetCode.TreeNode(7);
+        result.left = result1;
+        result.right = result2;
+        result1.left = result3;
+        result1.right = result4;
+        result2.right = result5;
+        Assert.assertEquals(leetCode.levelOrderBottom(result), leetCode.levelOrderBottom(leetCode.mergeTrees(node1, node2)));
+    }
+
+    @Test
+    public void test404() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        Assert.assertEquals(24, leetCode.sumOfLeftLeaves(node));
+    }
+
+    @Test
+    public void test538() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(5);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(13);
+        node.left = node1;
+        node.right = node2;
+        LeetCode.TreeNode resultNode = new LeetCode.TreeNode(18);
+        LeetCode.TreeNode resultNode1 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode resultNode2 = new LeetCode.TreeNode(13);
+        resultNode.left = resultNode1;
+        resultNode.right = resultNode2;
+        Assert.assertEquals(leetCode.levelOrderBottom(resultNode), leetCode.levelOrderBottom(leetCode.convertBST(node)));
     }
 }

@@ -1948,24 +1948,17 @@ public class LeetCode {
         if (len == 0) {
             return result;
         }
-        for (int i = 0; i < len; i++) {
+        result.add(new ArrayList<>());
+        result.add(Collections.singletonList(nums[0]));
+        for (int i = 1; i < len; i++) {
+            List<List<Integer>> resultTemp = new ArrayList<>();
             List<Integer> temp;
-            if (i == 0) {
-                temp = new ArrayList<>();
+            for (List<Integer> sub : result) {
+                temp = new ArrayList<>(sub);
                 temp.add(nums[i]);
-                result.add(new ArrayList<>());
-                result.add(temp);
-            } else {
-                List<List<Integer>> resultTemp = new ArrayList<>();
-                for (List<Integer> sub : result) {
-                    temp = new ArrayList<>();
-                    temp.addAll(0, sub);
-                    temp.add(nums[i]);
-                    resultTemp.add(temp);
-                }
-                result.addAll(result.size(), resultTemp);
+                resultTemp.add(temp);
             }
-
+            result.addAll(result.size(), resultTemp);
         }
         return result;
     }
@@ -4506,6 +4499,84 @@ public class LeetCode {
             temp.remove(temp.size() - 1);
             vis[j] = false;
         }
+    }
+
+    /**
+     * 617. 合并二叉树
+     *
+     * @param t1
+     * @param t2
+     * @return
+     */
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null) {
+            return t2;
+        }
+        if (t2 == null) {
+            return t1;
+        }
+        TreeNode node = new TreeNode(t1.val + t2.val);
+        node.left = mergeTrees(t1.left, t2.left);
+        node.right = mergeTrees(t1.right, t2.right);
+        return node;
+    }
+
+    /**
+     * 404. 左叶子之和
+     *
+     * @param root
+     * @return
+     */
+    public int sumOfLeftLeaves(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        int sum = 0;
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node.left != null) {
+                if (node.left.left == null && node.left.right == null) {
+                    sum += node.left.val;
+                } else {
+                    queue.offer(node.left);
+                }
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        return sum;
+    }
+
+    private int sum = 0;
+
+    /**
+     * 538. 把二叉搜索树转换为累加树
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode convertBST(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        convertBST(root.right);
+        sum += root.val;
+        root.val = sum;
+        convertBST(root.left);
+        return root;
+    }
+
+    /**
+     * 968. 监控二叉树
+     *
+     * @param root
+     * @return
+     */
+    public int minCameraCover(TreeNode root) {
+        return 0;
     }
 
 }
