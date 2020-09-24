@@ -4576,7 +4576,72 @@ public class LeetCode {
      * @return
      */
     public int minCameraCover(TreeNode root) {
-        return 0;
+        int[] result = dfsMinCameraCover(root);
+        return result[1];
+    }
+
+    private int[] dfsMinCameraCover(TreeNode node) {
+        if (node == null) {
+            return new int[]{Integer.MAX_VALUE / 2, 0, 0};
+        }
+        int[] result = new int[3];
+        int[] left = dfsMinCameraCover(node.left);
+        int[] right = dfsMinCameraCover(node.right);
+        result[0] = left[2] + right[2] + 1;
+        result[1] = Math.min(result[0], Math.min(left[0] + right[1], left[1] + right[0]));
+        result[2] = Math.min(result[0], left[1] + right[1]);
+        return result;
+    }
+
+    /**
+     * 501. 二叉搜索树中的众数
+     *
+     * @param root
+     * @return
+     */
+    public int[] findMode(TreeNode root) {
+        temp = new ArrayList<>();
+        dfsFindMode(root);
+        if (temp.size() == 0) {
+            return new int[]{};
+        }
+        int current = temp.get(0), times = 0, maxTimes = Integer.MIN_VALUE;
+        List<Integer> result = new ArrayList<>();
+        for (int num : temp) {
+            if (num == current) {
+                times++;
+            } else {
+                if (maxTimes < times) {
+                    result = new ArrayList<>();
+                    maxTimes = times;
+                }
+                if (maxTimes <= times) {
+                    result.add(current);
+                }
+                current = num;
+                times = 1;
+            }
+        }
+        if (maxTimes < times) {
+            result = new ArrayList<>();
+        }
+        if (maxTimes <= times) {
+            result.add(current);
+        }
+        int[] resultArray = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            resultArray[i] = result.get(i);
+        }
+        return resultArray;
+    }
+
+    private void dfsFindMode(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        dfsFindMode(node.left);
+        temp.add(node.val);
+        dfsFindMode(node.right);
     }
 
 }

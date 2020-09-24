@@ -1546,4 +1546,41 @@ public class LeetCodeTests {
         resultNode.right = resultNode2;
         Assert.assertEquals(leetCode.levelOrderBottom(resultNode), leetCode.levelOrderBottom(leetCode.convertBST(node)));
     }
+
+    @Test
+    public void test501() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(2);
+        node.right = node1;
+        node1.left = node2;
+        Assert.assertArrayEquals(new int[]{2}, leetCode.findMode(node));
+        node = new LeetCode.TreeNode(2147483647);
+        Assert.assertArrayEquals(new int[]{2147483647}, leetCode.findMode(node));
+        Assert.assertArrayEquals(new int[]{}, leetCode.findMode(null));
+    }
+
+    @Test
+    public void test968() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(0);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(0);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(0);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(0);
+        node.left = node1;
+        node1.left = node2;
+        node1.right = node3;
+        Assert.assertEquals(1, leetCode.minCameraCover(node));
+        node = new LeetCode.TreeNode(0);
+        node1 = new LeetCode.TreeNode(0);
+        node2 = new LeetCode.TreeNode(0);
+        node3 = new LeetCode.TreeNode(0);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(0);
+        node.left = node1;
+        node1.left = node2;
+        node2.left = node3;
+        node3.right = node4;
+        Assert.assertEquals(2, leetCode.minCameraCover(node));
+    }
 }
