@@ -4644,5 +4644,32 @@ public class LeetCode {
         dfsFindMode(node.right);
     }
 
+    /**
+     * 106. 从中序与后序遍历序列构造二叉树
+     *
+     * @param inorder
+     * @param postorder
+     * @return
+     */
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        int length = postorder.length;
+        if (length == 0) {
+            return null;
+        }
+        int rootValue = postorder[length - 1];
+        TreeNode root = new TreeNode(rootValue);
+        int i = 0;
+        for (; i < length; i++) {
+            if (inorder[i] == rootValue) {
+                break;
+            }
+        }
+        TreeNode left = buildTree(Arrays.copyOfRange(inorder, 0, i), Arrays.copyOfRange(postorder, 0, i));
+        TreeNode right = buildTree(Arrays.copyOfRange(inorder, i + 1, length), Arrays.copyOfRange(postorder, i, length - 1));
+        root.left = left;
+        root.right = right;
+        return root;
+    }
+
 }
 

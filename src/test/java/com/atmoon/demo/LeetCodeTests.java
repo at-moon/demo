@@ -1583,4 +1583,20 @@ public class LeetCodeTests {
         node3.right = node4;
         Assert.assertEquals(2, leetCode.minCameraCover(node));
     }
+
+    @Test
+    public void test106() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(3);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(9);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(20);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(15);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(7);
+        node.left = node1;
+        node.right = node2;
+        node2.left = node3;
+        node2.right = node4;
+        LeetCode.TreeNode actual = leetCode.buildTree(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
+        Assert.assertEquals(leetCode.levelOrderBottom(node), leetCode.levelOrderBottom(actual));
+    }
 }
