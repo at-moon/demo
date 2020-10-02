@@ -4671,5 +4671,61 @@ public class LeetCode {
         return root;
     }
 
+    /**
+     * 771. 宝石与石头
+     *
+     * @param J
+     * @param S
+     * @return
+     */
+    public int numJewelsInStones(String J, String S) {
+        Set<Character> jewels = new HashSet<>();
+        for (char c : J.toCharArray()) {
+            jewels.add(c);
+        }
+        int count = 0;
+        for (char c : S.toCharArray()) {
+            if (jewels.contains(c)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * LCP 19. 秋叶收藏集
+     *
+     * @param leaves
+     * @return
+     */
+    public int minimumOperations(String leaves) {
+        // 通过x,y将字符串分为三部分(red yellow red),结果为三部分翻转数之和
+        // result = yellow(x) + (red(y) - red(x)) + (yellow(length - 1) - yellow(y))
+        // ==> yellow(length - 1) + (yellow(x) - red(x)) - (yellow(y) - red(y))
+        int length = leaves.length();
+        // g(x) = yellow(x) - red(x)
+        int g = leaves.charAt(0) == 'y' ? 1 : -1;
+        // 对每个y来说g(x)最小时result最小
+        int gMin = g;
+        // 由于yellow(length - 1)是固定值,只需计算g(x) - g(y)
+        int answer = Integer.MAX_VALUE;
+        for (int i = 1; i < length; i++) {
+            int isYellow = leaves.charAt(i) == 'y' ? 1 : 0;
+            // yellow(x) + red(x) = x + 1
+            // g(x) = 2 * yellow(x) - (x + 1)
+            // g(x + 1) - g(x) = 2 * isYellow(x + 1) - 1
+            g += 2 * isYellow - 1;
+            // 要分成三段 y < length - 1
+            if (i != length -1) {
+                // answer = g(x) - g(y)
+                answer = Math.min(answer, gMin - g);
+            }
+            gMin = Math.min(gMin, g);
+        }
+        // yellow(length - 1) = (g(length - 1) + length)/ 2
+        // result = yellow(length - 1) + g(x) - g(y)
+        return (g + length) / 2 + answer;
+    }
+
 }
 

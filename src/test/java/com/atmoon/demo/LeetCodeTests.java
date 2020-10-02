@@ -1599,4 +1599,18 @@ public class LeetCodeTests {
         LeetCode.TreeNode actual = leetCode.buildTree(new int[]{9, 3, 15, 20, 7}, new int[]{9, 15, 7, 20, 3});
         Assert.assertEquals(leetCode.levelOrderBottom(node), leetCode.levelOrderBottom(actual));
     }
+
+    @Test
+    public void test771() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(3, leetCode.numJewelsInStones("aA", "aAAbbbb"));
+        Assert.assertEquals(0, leetCode.numJewelsInStones("z", "ZZ"));
+    }
+
+    @Test
+    public void lcp19() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(2, leetCode.minimumOperations("rrryyyrryyyrr"));
+        Assert.assertEquals(0, leetCode.minimumOperations("ryr"));
+    }
 }
