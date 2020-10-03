@@ -1613,4 +1613,10 @@ public class LeetCodeTests {
         Assert.assertEquals(2, leetCode.minimumOperations("rrryyyrryyyrr"));
         Assert.assertEquals(0, leetCode.minimumOperations("ryr"));
     }
+
+    @Test
+    public void test1() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertArrayEquals(new int[]{0, 1}, leetCode.twoSum(new int[]{2, 7, 11, 15}, 9));
+    }
 }

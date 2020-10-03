@@ -4716,7 +4716,7 @@ public class LeetCode {
             // g(x + 1) - g(x) = 2 * isYellow(x + 1) - 1
             g += 2 * isYellow - 1;
             // 要分成三段 y < length - 1
-            if (i != length -1) {
+            if (i != length - 1) {
                 // answer = g(x) - g(y)
                 answer = Math.min(answer, gMin - g);
             }
@@ -4725,6 +4725,25 @@ public class LeetCode {
         // yellow(length - 1) = (g(length - 1) + length)/ 2
         // result = yellow(length - 1) + g(x) - g(y)
         return (g + length) / 2 + answer;
+    }
+
+    /**
+     * 1. 两数之和
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int req = target - nums[i];
+            if (map.containsKey(req)) {
+                return new int[]{map.get(req), i};
+            }
+            map.put(nums[i], i);
+        }
+        return null;
     }
 
 }
