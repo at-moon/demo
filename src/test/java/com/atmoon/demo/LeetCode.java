@@ -4746,5 +4746,73 @@ public class LeetCode {
         return null;
     }
 
+    private int[] dp;
+    private int[] subTreeSize;
+    private int[] ans;
+    private List<List<Integer>> graph;
+
+    /**
+     * 834. 树中距离之和
+     *
+     * @param N
+     * @param edges
+     * @return
+     */
+    public int[] sumOfDistancesInTree(int N, int[][] edges) {
+        dp = new int[N];
+        subTreeSize = new int[N];
+        ans = new int[N];
+        graph = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            int u = edge[0], v = edge[1];
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
+        sumOfDistancesInTreeDfs(0, -1);
+        sumOfDistancesInTreeDfs2(0, -1);
+        return ans;
+    }
+
+    private void sumOfDistancesInTreeDfs(int u, int father) {
+        dp[u] = 0;
+        subTreeSize[u] = 1;
+        for (int v : graph.get(u)) {
+            if (v == father) {
+                continue;
+            }
+            sumOfDistancesInTreeDfs(v, u);
+            dp[u] += dp[v] + subTreeSize[v];
+            subTreeSize[u] += subTreeSize[v];
+        }
+    }
+
+    private void sumOfDistancesInTreeDfs2(int u, int father) {
+        ans[u] = dp[u];
+        for (int v : graph.get(u)) {
+            if (v == father) {
+                continue;
+            }
+            // 记录交换前值用于恢复
+            int beforeDpU = dp[u], beforeDpV = dp[v];
+            int beforeSubTreeSizeU = subTreeSize[u], beforeSubTreeSizeV = subTreeSize[v];
+
+            // 交换根节点
+            dp[u] -= dp[v] + subTreeSize[v];
+            subTreeSize[u] -= subTreeSize[v];
+            dp[v] += dp[u] + subTreeSize[u];
+            subTreeSize[v] += subTreeSize[u];
+
+            sumOfDistancesInTreeDfs2(v, u);
+
+            // 多个子节点需要换根时要恢复初始状态
+            dp[u] = beforeDpU;
+            subTreeSize[u] = beforeSubTreeSizeU;
+            dp[v] = beforeDpV;
+            subTreeSize[v] = beforeSubTreeSizeV;
+        }
+    }
 }
 
