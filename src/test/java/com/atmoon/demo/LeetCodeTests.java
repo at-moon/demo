@@ -1625,4 +1625,12 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertArrayEquals(new int[]{8, 12, 6, 10, 10, 10}, leetCode.sumOfDistancesInTree(6, new int[][]{{0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}}));
     }
+
+    @Test
+    public void test75() {
+        LeetCode leetCode = new LeetCode();
+        int[] nums = new int[]{2, 0, 2, 1, 1, 0};
+        leetCode.sortColors(nums);
+        Assert.assertArrayEquals(new int[]{0, 0, 1, 1, 2, 2}, nums);
+    }
 }
