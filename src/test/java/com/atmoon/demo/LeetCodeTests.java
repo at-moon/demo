@@ -379,8 +379,8 @@ public class LeetCodeTests {
         node1.next = node2;
         node2.next = node3;
         node3.next = node1;
-        Assert.assertEquals(true, leetCode.hasCycle(node));
-        Assert.assertEquals(true, leetCode.hasCycle2(node));
+        Assert.assertTrue(leetCode.hasCycle(node));
+        Assert.assertTrue(leetCode.hasCycle2(node));
     }
 
     @Test
