@@ -1633,4 +1633,11 @@ public class LeetCodeTests {
         leetCode.sortColors(nums);
         Assert.assertArrayEquals(new int[]{0, 0, 1, 1, 2, 2}, nums);
     }
+
+    @Test
+    public void test416() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.canPartition(new int[]{1, 5, 11, 5}));
+        Assert.assertFalse(leetCode.canPartition(new int[]{1, 2, 3, 5}));
+    }
 }

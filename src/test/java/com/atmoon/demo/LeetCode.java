@@ -4836,5 +4836,40 @@ public class LeetCode {
             }
         }
     }
+
+    /**
+     * 416. 分割等和子集
+     *
+     * @param nums
+     * @return
+     */
+    public boolean canPartition(int[] nums) {
+        int length = nums.length;
+        if (length < 2) {
+            return false;
+        }
+        int sum = 0, max = 0;
+        for (int num : nums) {
+            sum += num;
+            max = Math.max(num, max);
+        }
+        // 总数为奇数时无法平分
+        if (sum % 2 != 0) {
+            return false;
+        }
+        int target = sum / 2;
+        // 最大数大于分割值时无法平分
+        if (max > target) {
+            return false;
+        }
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;
+        for (int num : nums) {
+            for (int j = target; j >= num; j--) {
+                dp[j] |= dp[j - num];
+            }
+        }
+        return dp[target];
+    }
 }
 
