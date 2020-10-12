@@ -4871,5 +4871,33 @@ public class LeetCode {
         }
         return dp[target];
     }
+
+    private int min, pre;
+
+    /**
+     * 530. 二叉搜索树的最小绝对差
+     *
+     * @param root
+     * @return
+     */
+    public int getMinimumDifference(TreeNode root) {
+        pre = -1;
+        min = Integer.MAX_VALUE;
+        dfsGetMinimumDifference(root);
+        return min;
+    }
+
+    private void dfsGetMinimumDifference(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        dfsGetMinimumDifference(node.left);
+        if (pre != -1) {
+            min = Math.min(min, node.val - pre);
+        }
+        pre = node.val;
+        dfsGetMinimumDifference(node.right);
+    }
+
 }
 

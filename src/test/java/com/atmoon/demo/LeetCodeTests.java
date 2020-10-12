@@ -1640,4 +1640,15 @@ public class LeetCodeTests {
         Assert.assertTrue(leetCode.canPartition(new int[]{1, 5, 11, 5}));
         Assert.assertFalse(leetCode.canPartition(new int[]{1, 2, 3, 5}));
     }
+
+    @Test
+    public void test530() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(3);
+        node.right = node2;
+        node2.left = node1;
+        Assert.assertEquals(1, leetCode.getMinimumDifference(node));
+    }
 }
