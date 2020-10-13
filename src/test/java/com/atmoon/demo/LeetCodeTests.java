@@ -1651,4 +1651,33 @@ public class LeetCodeTests {
         node2.left = node1;
         Assert.assertEquals(1, leetCode.getMinimumDifference(node));
     }
+
+    @Test
+    public void test24() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = new LeetCode.ListNode(1);
+        LeetCode.ListNode node1 = new LeetCode.ListNode(2);
+        LeetCode.ListNode node2 = new LeetCode.ListNode(3);
+        LeetCode.ListNode node3 = new LeetCode.ListNode(4);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        LeetCode.ListNode result = leetCode.swapPairs(node);
+        Assert.assertEquals(2, result.val);
+        Assert.assertEquals(1, result.next.val);
+        Assert.assertEquals(4, result.next.next.val);
+        Assert.assertEquals(3, result.next.next.next.val);
+        node = new LeetCode.ListNode(1);
+        node1 = new LeetCode.ListNode(2);
+        node2 = new LeetCode.ListNode(3);
+        node.next = node1;
+        node1.next = node2;
+        result = leetCode.swapPairs(node);
+        Assert.assertEquals(2, result.val);
+        Assert.assertEquals(1, result.next.val);
+        Assert.assertEquals(3, result.next.next.val);
+        node = new LeetCode.ListNode(1);
+        result = leetCode.swapPairs(node);
+        Assert.assertEquals(1, result.val);
+    }
 }

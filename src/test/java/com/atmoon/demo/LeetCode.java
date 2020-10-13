@@ -1015,20 +1015,20 @@ public class LeetCode {
      * @param head
      * @return
      */
-    public static ListNode swapPairs(ListNode head) {
+    public ListNode swapPairs(ListNode head) {
         ListNode result = new ListNode(0);
+        // 避免只有一个节点的情况
+        result.next = head;
         ListNode temp = result;
-        while (head != null) {
-            if (head.next != null) {
-                temp.next = head.next;
-                head.next = head.next.next;
-                temp.next.next = head;
-                temp = temp.next;
-            } else {
-                temp.next = head;
-            }
+        while (head != null && head.next != null) {
+            // 0 -> 2
+            temp.next = head.next;
+            // 1 -> 3
+            head.next = head.next.next;
+            // 2 -> 1
+            temp.next.next = head;
+            temp = head;
             head = head.next;
-            temp = temp.next;
         }
         return result.next;
     }
