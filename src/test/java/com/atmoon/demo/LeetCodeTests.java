@@ -1680,4 +1680,12 @@ public class LeetCodeTests {
         result = leetCode.swapPairs(node);
         Assert.assertEquals(1, result.val);
     }
+
+    @Test
+    public void test1002() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(Arrays.asList("e", "l", "l"), leetCode.commonChars(new String[]{"bella", "label", "roller"}));
+        Assert.assertEquals(Arrays.asList("c", "o"), leetCode.commonChars(new String[]{"cool", "lock", "cook"}));
+        Assert.assertEquals(Arrays.asList("c", "l", "o", "o"), leetCode.commonChars(new String[]{"cool"}));
+    }
 }

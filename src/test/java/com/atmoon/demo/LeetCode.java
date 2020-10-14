@@ -1,5 +1,7 @@
 package com.atmoon.demo;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -4897,6 +4899,48 @@ public class LeetCode {
         }
         pre = node.val;
         dfsGetMinimumDifference(node.right);
+    }
+
+    /**
+     * 1002. 查找常用字符
+     *
+     * @param A
+     * @return
+     */
+    public List<String> commonChars(String[] A) {
+        List<String> result = new ArrayList<>();
+        Map<Character, int[]> charMap = new HashMap<>();
+        for (char c : A[0].toCharArray()) {
+            int[] temp = charMap.getOrDefault(c, new int[]{0, 0});
+            temp[0] += 1;
+            charMap.put(c, temp);
+        }
+        for (int i = 1; i < A.length; i++) {
+            for (char c : A[i].toCharArray()) {
+                if (charMap.containsKey(c)) {
+                    int[] temp = charMap.get(c);
+                    temp[1] += 1;
+                }
+            }
+            Iterator<Map.Entry<Character, int[]>> iterator = charMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Character, int[]> entry = iterator.next();
+                int[] temp = entry.getValue();
+                if (temp[1] == 0) {
+                    iterator.remove();
+                } else {
+                    temp[0] = Math.min(temp[0], temp[1]);
+                    temp[1] = 0;
+                }
+            }
+        }
+        for (Map.Entry<Character, int[]> entry : charMap.entrySet()) {
+            int[] temp = entry.getValue();
+            for (int i = 0; i < temp[0]; i++) {
+                result.add(entry.getKey().toString());
+            }
+        }
+        return result;
     }
 
 }
