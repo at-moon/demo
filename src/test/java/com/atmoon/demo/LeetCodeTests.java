@@ -1688,4 +1688,12 @@ public class LeetCodeTests {
         Assert.assertEquals(Arrays.asList("c", "o"), leetCode.commonChars(new String[]{"cool", "lock", "cook"}));
         Assert.assertEquals(Arrays.asList("c", "l", "o", "o"), leetCode.commonChars(new String[]{"cool"}));
     }
+
+    @Test
+    public void test977() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertArrayEquals(new int[]{0, 1, 9, 16, 100}, leetCode.sortedSquares(new int[]{-4, -1, 0, 3, 10}));
+        Assert.assertArrayEquals(new int[]{4, 9, 9, 49, 121}, leetCode.sortedSquares(new int[]{-7, -3, 2, 3, 11}));
+        Assert.assertArrayEquals(new int[]{121}, leetCode.sortedSquares(new int[]{-11}));
+    }
 }

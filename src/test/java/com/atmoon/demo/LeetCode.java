@@ -4986,5 +4986,27 @@ public class LeetCode {
         return root;
     }
 
+    /**
+     * 977. 有序数组的平方
+     *
+     * @param A
+     * @return
+     */
+    public int[] sortedSquares(int[] A) {
+        int length = A.length;
+        int[] result = new int[length];
+        int l = 0, r = length - 1;
+        for (int i = length - 1; i >= 0; i--) {
+            if (Math.abs(A[l]) >= Math.abs(A[r])) {
+                result[i] = A[l] * A[l];
+                l++;
+            } else {
+                result[i] = A[r] * A[r];
+                r--;
+            }
+        }
+        return result;
+    }
+
 }
 
