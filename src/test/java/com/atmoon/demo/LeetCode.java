@@ -5008,5 +5008,42 @@ public class LeetCode {
         return result;
     }
 
+    private int total;
+
+    /**
+     * 52. N皇后 II
+     *
+     * @param n
+     * @return
+     */
+    public int totalNQueens(int n) {
+        total = 0;
+        columns = new HashSet<>();
+        diagonals1 = new HashSet<>();
+        diagonals2 = new HashSet<>();
+        backtrackTotalNQueens(n, 0);
+        return total;
+    }
+
+    private void backtrackTotalNQueens(int n, int row) {
+        if (n == row) {
+            total++;
+            return;
+        }
+        for (int col = 0; col < n; col++) {
+            int diagonal1 = col - row, diagonal2 = col + row;
+            if (columns.contains(col) || diagonals1.contains(diagonal1) || diagonals2.contains(diagonal2)) {
+                continue;
+            }
+            columns.add(col);
+            diagonals1.add(diagonal1);
+            diagonals2.add(diagonal2);
+            backtrackTotalNQueens(n, row + 1);
+            columns.remove(col);
+            diagonals1.remove(diagonal1);
+            diagonals2.remove(diagonal2);
+        }
+    }
+
 }
 

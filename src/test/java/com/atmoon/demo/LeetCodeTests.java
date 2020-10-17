@@ -1696,4 +1696,10 @@ public class LeetCodeTests {
         Assert.assertArrayEquals(new int[]{4, 9, 9, 49, 121}, leetCode.sortedSquares(new int[]{-7, -3, 2, 3, 11}));
         Assert.assertArrayEquals(new int[]{121}, leetCode.sortedSquares(new int[]{-11}));
     }
+
+    @Test
+    public void test52() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(2, leetCode.totalNQueens(4));
+    }
 }
