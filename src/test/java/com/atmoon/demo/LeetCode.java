@@ -865,7 +865,7 @@ public class LeetCode {
      * @return
      */
     public static ListNode removeNthFromEnd(ListNode head, int n) {
-        HashMap<Integer, ListNode> map = new HashMap();
+        HashMap<Integer, ListNode> map = new HashMap<>();
         int i = 0;
         ListNode node = head;
         while (node != null) {
