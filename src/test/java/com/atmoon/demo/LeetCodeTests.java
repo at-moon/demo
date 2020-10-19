@@ -1702,4 +1702,13 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertEquals(2, leetCode.totalNQueens(4));
     }
+
+    @Test
+    public void test844() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.backspaceCompare("ab#c", "ad#c"));
+        Assert.assertTrue(leetCode.backspaceCompare("ab##", "c#d#"));
+        Assert.assertTrue(leetCode.backspaceCompare("a##c", "#a#c"));
+        Assert.assertFalse(leetCode.backspaceCompare("a#c", "b"));
+    }
 }

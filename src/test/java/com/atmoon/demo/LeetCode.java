@@ -5045,5 +5045,46 @@ public class LeetCode {
         }
     }
 
+    /**
+     * 844. 比较含退格的字符串
+     *
+     * @param S
+     * @param T
+     * @return
+     */
+    public boolean backspaceCompare(String S, String T) {
+        Stack<Character> s = getActualByBackspace(S);
+        Stack<Character> t = getActualByBackspace(T);
+        if (s.size() != t.size()) {
+            return false;
+        }
+        while (!s.isEmpty()) {
+            if (s.pop() != t.pop()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 获取含退格字符串的实际值
+     *
+     * @param S
+     * @return
+     */
+    private Stack<Character> getActualByBackspace(String S) {
+        Stack<Character> s = new Stack<>();
+        for (char c : S.toCharArray()) {
+            if (c != '#') {
+                s.push(c);
+            } else {
+                if (!s.isEmpty()) {
+                    s.pop();
+                }
+            }
+        }
+        return s;
+    }
+
 }
 
