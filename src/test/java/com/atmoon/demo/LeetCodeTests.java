@@ -1711,4 +1711,18 @@ public class LeetCodeTests {
         Assert.assertTrue(leetCode.backspaceCompare("a##c", "#a#c"));
         Assert.assertFalse(leetCode.backspaceCompare("a#c", "b"));
     }
+
+    @Test
+    public void test143() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.ListNode node = leetCode.generateListNode(new int[]{1, 2, 3, 4, 5});
+        leetCode.reorderList(node);
+        Assert.assertArrayEquals(new int[]{1, 5, 2, 4, 3}, leetCode.transListNode2Array(node));
+        node = leetCode.generateListNode(new int[]{1, 2, 3, 4});
+        leetCode.reorderList(node);
+        Assert.assertArrayEquals(new int[]{1, 4, 2, 3}, leetCode.transListNode2Array(node));
+        node = null;
+        leetCode.reorderList(node);
+        Assert.assertNull(node);
+    }
 }

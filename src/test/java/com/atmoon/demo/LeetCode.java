@@ -5086,5 +5086,72 @@ public class LeetCode {
         return s;
     }
 
+    /**
+     * 143. 重排链表
+     *
+     * @param head
+     */
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        List<ListNode> list = new ArrayList<>();
+        ListNode dump = new ListNode(0);
+        dump.next = head;
+        ListNode current = head;
+        while (current != null) {
+            list.add(current);
+            current = current.next;
+        }
+        current = head;
+        int i = 1, j = list.size() - 1;
+        while (i < j) {
+            current.next = list.get(j);
+            j--;
+            if (i <= j) {
+                current.next.next = list.get(i);
+                i++;
+                current = current.next.next;
+            }
+        }
+        if (list.size() % 2 == 1) {
+            current.next = null;
+        } else {
+            current.next.next = null;
+        }
+    }
+
+    /**
+     * 将链表转换为数组
+     *
+     * @param node
+     * @return
+     */
+    public int[] transListNode2Array(ListNode node) {
+        List<Integer> list = new ArrayList<>();
+        ListNode current = node;
+        while (current != null) {
+            list.add(current.val);
+            current = current.next;
+        }
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /**
+     * 根据数组生成链表
+     *
+     * @param array
+     * @return
+     */
+    public ListNode generateListNode(int[] array) {
+        ListNode dump = new ListNode(0);
+        ListNode current = dump;
+        for (int num : array) {
+            current.next = new ListNode(num);
+            current = current.next;
+        }
+        return dump.next;
+    }
+
 }
 
