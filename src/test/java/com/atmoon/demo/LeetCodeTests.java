@@ -1725,4 +1725,14 @@ public class LeetCodeTests {
         leetCode.reorderList(node);
         Assert.assertNull(node);
     }
+
+    @Test
+    public void test925() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.isLongPressedName("alex", "aaleex"));
+        Assert.assertFalse(leetCode.isLongPressedName("saeed", "ssaaedd"));
+        Assert.assertTrue(leetCode.isLongPressedName("leelee", "lleeelee"));
+        Assert.assertTrue(leetCode.isLongPressedName("laiden", "laiden"));
+        Assert.assertFalse(leetCode.isLongPressedName("pyplrz", "ppyypllr"));
+    }
 }
