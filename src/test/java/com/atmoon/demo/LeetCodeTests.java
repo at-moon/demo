@@ -1735,4 +1735,12 @@ public class LeetCodeTests {
         Assert.assertTrue(leetCode.isLongPressedName("laiden", "laiden"));
         Assert.assertFalse(leetCode.isLongPressedName("pyplrz", "ppyypllr"));
     }
+
+    @Test
+    public void test763() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(Arrays.asList(9, 7, 8), leetCode.partitionLabels("ababcbacadefegdehijhklij"));
+        Assert.assertEquals(Collections.singletonList(1), leetCode.partitionLabels("a"));
+        Assert.assertEquals(Collections.singletonList(24), leetCode.partitionLabels("ababcbacadefegdehijhklia"));
+    }
 }

@@ -5174,5 +5174,33 @@ public class LeetCode {
         }
         return i == name.length();
     }
+
+    /**
+     * 763. 划分字母区间
+     *
+     * @param S
+     * @return
+     */
+    public List<Integer> partitionLabels(String S) {
+        List<Integer> result = new ArrayList<>();
+        int[] lastPosition = new int[26];
+        for (int i = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            lastPosition[c - 'a'] = i;
+        }
+        int l = 0, r = 0, i = 0;
+        while (r != S.length() - 1) {
+            r = Math.max(r, lastPosition[S.charAt(i) - 'a']);
+            if (i == r) {
+                result.add(r - l + 1);
+                l = r + 1;
+            }
+            i++;
+        }
+        if (l <= r) {
+            result.add(r - l + 1);
+        }
+        return result;
+    }
 }
 
