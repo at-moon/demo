@@ -1743,4 +1743,13 @@ public class LeetCodeTests {
         Assert.assertEquals(Collections.singletonList(1), leetCode.partitionLabels("a"));
         Assert.assertEquals(Collections.singletonList(24), leetCode.partitionLabels("ababcbacadefegdehijhklia"));
     }
+
+    @Test
+    public void test234() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertFalse(leetCode.isPalindrome(leetCode.generateListNode(new int[]{1, 2})));
+        Assert.assertTrue(leetCode.isPalindrome(leetCode.generateListNode(new int[]{1, 2, 2, 1})));
+        Assert.assertTrue(leetCode.isPalindrome(leetCode.generateListNode(new int[]{1})));
+        Assert.assertTrue(leetCode.isPalindrome(leetCode.generateListNode(new int[]{-129, -129})));
+    }
 }

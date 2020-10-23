@@ -5202,5 +5202,28 @@ public class LeetCode {
         }
         return result;
     }
+
+    /**
+     * 234. 回文链表
+     *
+     * @param head
+     * @return
+     */
+    public boolean isPalindrome(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        ListNode current = head;
+        while (current != null) {
+            list.add(current.val);
+            current = current.next;
+        }
+        int size = list.size();
+        for (int i = 0; i < size / 2; i++) {
+            if (!list.get(i).equals(list.get(size - i - 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 
