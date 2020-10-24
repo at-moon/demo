@@ -5225,5 +5225,47 @@ public class LeetCode {
         return true;
     }
 
+    /**
+     * 1024. 视频拼接
+     *
+     * @param clips
+     * @param T
+     * @return
+     */
+    public int videoStitching(int[][] clips, int T) {
+        int[] dp = new int[T + 1];
+        Arrays.fill(dp, 101);
+        dp[0] = 0;
+        for (int i = 0; i <= T; i++) {
+            for (int[] clip : clips) {
+                if (clip[0] < i && i <= clip[1]) {
+                    dp[i] = Math.min(dp[i], dp[clip[0]] + 1);
+                }
+            }
+        }
+        return dp[T] == 101 ? -1 : dp[T];
+    }
+
+    public int videoStitching2(int[][] clips, int T) {
+        int[] lastPosition = new int[T];
+        for (int[] clip : clips) {
+            if (clip[0] < T) {
+                lastPosition[clip[0]] = Math.max(clip[1], lastPosition[clip[0]]);
+            }
+        }
+        int last = 0, num = 0, pre = 0;
+        for (int i = 0; i < T; i++) {
+            last = Math.max(last, lastPosition[i]);
+            if (i == last) {
+                return -1;
+            }
+            if (i == pre) {
+                num++;
+                pre = last;
+            }
+        }
+        return num;
+    }
+
 }
 
