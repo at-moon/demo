@@ -5267,5 +5267,40 @@ public class LeetCode {
         return num;
     }
 
+    /**
+     * 845. 数组中的最长山脉
+     *
+     * @param A
+     * @return
+     */
+    public int longestMountain(int[] A) {
+        int length = A.length;
+        if (length < 3) {
+            return 0;
+        }
+        int[] left = new int[length], right = new int[length];
+        for (int i = 1; i < length; i++) {
+            if (A[i] > A[i - 1]) {
+                left[i] = left[i - 1] + 1;
+            } else {
+                left[i] = 0;
+            }
+        }
+        for (int i = length - 1; i > 0; i--) {
+            if (A[i - 1] > A[i]) {
+                right[i - 1] = right[i] + 1;
+            } else {
+                right[i - 1] = 0;
+            }
+        }
+        int longestMountain = 0;
+        for (int i = 1; i < length - 1; i++) {
+            if (left[i] != 0 && right[i] != 0) {
+                longestMountain = Math.max(longestMountain, left[i] + right[i] + 1);
+            }
+        }
+        return longestMountain;
+    }
+
 }
 
