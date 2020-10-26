@@ -1775,4 +1775,12 @@ public class LeetCodeTests {
         Assert.assertEquals(0, leetCode.longestMountain(new int[]{2, 2, 2}));
         Assert.assertEquals(3, leetCode.longestMountain(new int[]{0, 1, 0}));
     }
+
+    @Test
+    public void test1365() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertArrayEquals(new int[]{4, 0, 1, 1, 3}, leetCode.smallerNumbersThanCurrent(new int[]{8, 1, 2, 2, 3}));
+        Assert.assertArrayEquals(new int[]{2, 1, 0, 3}, leetCode.smallerNumbersThanCurrent(new int[]{6, 5, 4, 8}));
+        Assert.assertArrayEquals(new int[]{0, 0, 0, 0}, leetCode.smallerNumbersThanCurrent(new int[]{7, 7, 7, 7}));
+    }
 }

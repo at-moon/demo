@@ -5302,5 +5302,27 @@ public class LeetCode {
         return longestMountain;
     }
 
+    /**
+     * 1365. 有多少小于当前数字的数字
+     *
+     * @param nums
+     * @return
+     */
+    public int[] smallerNumbersThanCurrent(int[] nums) {
+        int length = nums.length;
+        int[] result = new int[length];
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = i + 1; j < length; j++) {
+                if (nums[i] > nums[j]) {
+                    result[i]++;
+                }
+                if (nums[j] > nums[i]) {
+                    result[j]++;
+                }
+            }
+        }
+        return result;
+    }
+
 }
 
