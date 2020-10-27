@@ -1783,4 +1783,16 @@ public class LeetCodeTests {
         Assert.assertArrayEquals(new int[]{2, 1, 0, 3}, leetCode.smallerNumbersThanCurrent(new int[]{6, 5, 4, 8}));
         Assert.assertArrayEquals(new int[]{0, 0, 0, 0}, leetCode.smallerNumbersThanCurrent(new int[]{7, 7, 7, 7}));
     }
+
+    @Test
+    public void test144() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(3);
+        node.right = node1;
+        node1.left = node2;
+        Assert.assertEquals(Arrays.asList(1, 2, 3), leetCode.preorderTraversal(node));
+        Assert.assertEquals(Arrays.asList(1, 2, 3), leetCode.preorderTraversal2(node));
+    }
 }

@@ -5324,5 +5324,41 @@ public class LeetCode {
         return result;
     }
 
+    /**
+     * 144. 二叉树的前序遍历
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        preorderTraversal(root, result);
+        return result;
+    }
+
+    private void preorderTraversal(TreeNode root, List<Integer> result) {
+        if (root == null) {
+            return;
+        }
+        result.add(root.val);
+        preorderTraversal(root.left, result);
+        preorderTraversal(root.right, result);
+    }
+
+    public List<Integer> preorderTraversal2(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                result.add(node.val);
+                stack.push(node);
+                node = node.left;
+            }
+            node = stack.pop();
+            node = node.right;
+        }
+        return result;
+    }
 }
 
