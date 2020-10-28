@@ -1795,4 +1795,12 @@ public class LeetCodeTests {
         Assert.assertEquals(Arrays.asList(1, 2, 3), leetCode.preorderTraversal(node));
         Assert.assertEquals(Arrays.asList(1, 2, 3), leetCode.preorderTraversal2(node));
     }
+
+    @Test
+    public void test1207() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.uniqueOccurrences(new int[]{1, 2, 2, 1, 1, 3}));
+        Assert.assertFalse(leetCode.uniqueOccurrences(new int[]{1, 2}));
+        Assert.assertTrue(leetCode.uniqueOccurrences(new int[]{-3, 0, 1, -3, 1, 1, 1, -3, 10, 0}));
+    }
 }

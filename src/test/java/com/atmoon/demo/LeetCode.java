@@ -5360,5 +5360,20 @@ public class LeetCode {
         }
         return result;
     }
+
+    /**
+     * 1207. 独一无二的出现次数
+     *
+     * @param arr
+     * @return
+     */
+    public boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : arr) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        Set<Integer> timesSet = new HashSet<>(map.values());
+        return timesSet.size() == map.size();
+    }
 }
 
