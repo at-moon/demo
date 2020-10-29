@@ -5375,5 +5375,39 @@ public class LeetCode {
         Set<Integer> timesSet = new HashSet<>(map.values());
         return timesSet.size() == map.size();
     }
+
+    /**
+     * 129. 求根到叶子节点数字之和
+     *
+     * @param root
+     * @return
+     */
+    public int sumNumbers(TreeNode root) {
+        int sum = 0;
+        if (root == null) {
+            return sum;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            for (int i = 0; i < queue.size(); i++) {
+                TreeNode node = queue.poll();
+                if (node.left == null && node.right == null) {
+                    sum += node.val;
+                    continue;
+                }
+                if (node.left != null) {
+                    node.left.val += node.val * 10;
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    node.right.val += node.val * 10;
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return sum;
+    }
+
 }
 

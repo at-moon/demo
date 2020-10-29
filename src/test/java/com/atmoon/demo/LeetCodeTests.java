@@ -1803,4 +1803,26 @@ public class LeetCodeTests {
         Assert.assertFalse(leetCode.uniqueOccurrences(new int[]{1, 2}));
         Assert.assertTrue(leetCode.uniqueOccurrences(new int[]{-3, 0, 1, -3, 1, 1, 1, -3, 10, 0}));
     }
+
+    @Test
+    public void test129() {
+        LeetCode leetCode = new LeetCode();
+        LeetCode.TreeNode node = new LeetCode.TreeNode(1);
+        LeetCode.TreeNode node1 = new LeetCode.TreeNode(2);
+        LeetCode.TreeNode node2 = new LeetCode.TreeNode(3);
+        node.left = node1;
+        node.right = node2;
+        Assert.assertEquals(25, leetCode.sumNumbers(node));
+        node = new LeetCode.TreeNode(4);
+        node1 = new LeetCode.TreeNode(9);
+        node2 = new LeetCode.TreeNode(0);
+        LeetCode.TreeNode node3 = new LeetCode.TreeNode(5);
+        LeetCode.TreeNode node4 = new LeetCode.TreeNode(1);
+        node.left = node1;
+        node.right = node2;
+        node1.left = node3;
+        node1.right = node4;
+        Assert.assertEquals(1026, leetCode.sumNumbers(node));
+        Assert.assertEquals(0, leetCode.sumNumbers(null));
+    }
 }
