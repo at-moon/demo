@@ -1825,4 +1825,13 @@ public class LeetCodeTests {
         Assert.assertEquals(1026, leetCode.sumNumbers(node));
         Assert.assertEquals(0, leetCode.sumNumbers(null));
     }
+
+    @Test
+    public void test463() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(16, leetCode.islandPerimeter(new int[][]{{0, 1, 0, 0},
+                {1, 1, 1, 0},
+                {0, 1, 0, 0},
+                {1, 1, 0, 0}}));
+    }
 }
