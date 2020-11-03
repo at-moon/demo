@@ -1834,4 +1834,13 @@ public class LeetCodeTests {
                 {0, 1, 0, 0},
                 {1, 1, 0, 0}}));
     }
+
+    @Test
+    public void test1616() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertTrue(leetCode.checkPalindromeFormation("x", "y"));
+        Assert.assertTrue(leetCode.checkPalindromeFormation("cdeoo", "oooab"));
+        Assert.assertTrue(leetCode.checkPalindromeFormation("pvhmupgqeltozftlmfjjde", "yjgpzbezspnnpszebzmhvp"));
+        Assert.assertFalse(leetCode.checkPalindromeFormation("abc", "bac"));
+    }
 }
