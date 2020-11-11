@@ -5523,5 +5523,70 @@ public class LeetCode {
         }
         return left;
     }
+
+    /**
+     * 327. 区间和的个数
+     *
+     * @param nums
+     * @param lower
+     * @param upper
+     * @return
+     */
+    public int countRangeSum(int[] nums, int lower, int upper) {
+        int length = nums.length;
+        long[] sum = new long[length + 1];
+        long s = 0;
+        for (int i = 0; i < length; i++) {
+            s += nums[i];
+            sum[i + 1] = s;
+        }
+        return countRangeSumRecursive(sum, lower, upper, 0, length);
+    }
+
+    private int countRangeSumRecursive(long[] sum, int lower, int upper, int left, int right) {
+        if (left == right) {
+            return 0;
+        }
+        int mid = (left + right) / 2;
+        // 分别统计左右部分
+        int c1 = countRangeSumRecursive(sum, lower, upper, left, mid);
+        int c2 = countRangeSumRecursive(sum, lower, upper, mid + 1, right);
+        int count = c1 + c2;
+        // 然后统计l在左侧，r在右侧的情况
+        int l = left;
+        int r1 = mid + 1;
+        while (l <= mid) {
+            while (r1 <= right && sum[r1] - sum[l] < lower) {
+                r1++;
+            }
+            int r2 = r1;
+            while (r2 <= right && sum[r2] - sum[l] <= upper) {
+                r2++;
+            }
+            count += r2 - r1;
+            l++;
+        }
+        // 合并两侧有序数组
+        int[] sorted = new int[right - left + 1];
+        int p = 0;
+        int p1 = left, p2 = mid + 1;
+        while (p1 <= mid || p2 <= right) {
+            if (p1 > mid) {
+                sorted[p++] = (int) sum[p2++];
+            } else if (p2 > right) {
+                sorted[p++] = (int) sum[p1++];
+            } else {
+                if (sum[p1] > sum[p2]) {
+                    sorted[p++] = (int) sum[p2++];
+                } else {
+                    sorted[p++] = (int) sum[p1++];
+                }
+            }
+        }
+        for (int i = 0; i < sorted.length; i++) {
+            sum[left + i] = sorted[i];
+        }
+        return count;
+    }
 }
 

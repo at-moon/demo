@@ -1843,4 +1843,10 @@ public class LeetCodeTests {
         Assert.assertTrue(leetCode.checkPalindromeFormation("pvhmupgqeltozftlmfjjde", "yjgpzbezspnnpszebzmhvp"));
         Assert.assertFalse(leetCode.checkPalindromeFormation("abc", "bac"));
     }
+
+    @Test
+    public void test327() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(3, leetCode.countRangeSum(new int[]{-2, 5, -1}, -2, 2));
+    }
 }
