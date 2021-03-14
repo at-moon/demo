@@ -1849,4 +1849,26 @@ public class LeetCodeTests {
         LeetCode leetCode = new LeetCode();
         Assert.assertEquals(3, leetCode.countRangeSum(new int[]{-2, 5, -1}, -2, 2));
     }
+
+    @Test
+    public void digitalSum() {
+        LeetCode leetCode = new LeetCode();
+        int n = 10000000;
+        long start = System.currentTimeMillis();
+        int[] sum1 = leetCode.digitalSum(n);
+        long time1 = System.currentTimeMillis();
+        int[] sum2 = leetCode.digitalSum2(n);
+        long time2 = System.currentTimeMillis();
+        Assert.assertArrayEquals(sum1, sum2);
+        System.out.println(time1 - start + " " + (time2 - time1));
+    }
+
+    @Test
+    public void testOffer13() {
+        LeetCode leetCode = new LeetCode();
+        Assert.assertEquals(6, leetCode.movingCount(1, 20, 5));
+        Assert.assertEquals(3, leetCode.movingCount(2, 3, 1));
+        Assert.assertEquals(1, leetCode.movingCount(3, 1, 0));
+        Assert.assertEquals(1051, leetCode.movingCount(41, 29, 16));
+    }
 }

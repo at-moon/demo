@@ -5588,5 +5588,99 @@ public class LeetCode {
         }
         return count;
     }
+
+    /**
+     * 1551. 使数组中所有元素相等的最小操作数
+     *
+     * @param n
+     * @return
+     */
+    public int minOperations(int n) {
+        // 1 3 5        2   a = n/2  a * a + a
+        // 1 3 5 7      4            a * a
+        int a = n / 2;
+        return n % 2 == 0 ? a * a : a * a + a;
+    }
+
+    private int[] digitalSum;
+
+    private static final int CAN_REACH = 1;
+
+    /**
+     * 剑指 Offer 13. 机器人的运动范围
+     *
+     * @param m
+     * @param n
+     * @param k
+     * @return
+     */
+    public int movingCount(int m, int n, int k) {
+        this.m = n;
+        this.n = m;
+        digitalSum = digitalSum(Math.max(m, n));
+        int[][] board = new int[m][n];
+        movingCountDfs(board, 0, 0, k);
+        return countCanReach(board);
+    }
+
+    private void movingCountDfs(int[][] board, int x, int y, int k) {
+        if (x < 0 || x > m - 1 || y < 0 || y > n - 1 || digitalSum[x] + digitalSum[y] > k || board[y][x] == CAN_REACH) {
+            return;
+        }
+        board[y][x] = CAN_REACH;
+        movingCountDfs(board, x + 1, y, k);
+        movingCountDfs(board, x, y + 1, k);
+    }
+
+    private int countCanReach(int[][] board) {
+        int count = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[j][i] == CAN_REACH) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int[] digitalSum(int n) {
+        int[] digitalSum = new int[n];
+        digitalSum[0] = 0;
+        for (int i = 1; i < n; i++) {
+            digitalSum[i] = digitalSum[i - 1] + 1;
+            int endZero = countEndZero(i);
+            if (endZero > 0) {
+                digitalSum[i] -= endZero * 9;
+            }
+        }
+        return digitalSum;
+    }
+
+    public int[] digitalSum2(int n) {
+        int[] digitalSum = new int[n];
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            int temp = i;
+            while (temp != 0) {
+                sum += temp % 10;
+                temp = temp / 10;
+            }
+            digitalSum[i] = sum;
+        }
+        return digitalSum;
+    }
+
+    private int countEndZero(int i) {
+        int count = 0;
+        int temp = i;
+        while (temp % 10 == 0) {
+            count++;
+            temp = temp / 10;
+        }
+        return count;
+    }
+
+
 }
 
