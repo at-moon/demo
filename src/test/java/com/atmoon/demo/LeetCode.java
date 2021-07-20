@@ -1,8 +1,21 @@
 package com.atmoon.demo;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -29,15 +42,23 @@ public class LeetCode {
                     int sum = nums[i] + nums[l] + nums[r];
                     if (sum == 0) {
                         res.add(Arrays.asList(nums[i], nums[l], nums[r]));
-                        while (l < r && nums[l] == nums[l + 1]) l++;
-                        while (l < r && nums[r] == nums[r - 1]) r--;//去重
+                        while (l < r && nums[l] == nums[l + 1]) {
+                            l++;
+                        }
+                        while (l < r && nums[r] == nums[r - 1]) {
+                            r--;//去重
+                        }
                         l++;
                         r--;
                     } else if (sum > 0) {
-                        while (l < r && nums[r] == nums[r - 1]) r--;//去重
+                        while (l < r && nums[r] == nums[r - 1]) {
+                            r--;//去重
+                        }
                         r--;
                     } else {
-                        while (l < r && nums[l] == nums[l + 1]) l++;//去重
+                        while (l < r && nums[l] == nums[l + 1]) {
+                            l++;//去重
+                        }
                         l++;
                     }
                 }
@@ -221,6 +242,7 @@ public class LeetCode {
 
     static class ListNode {
         int val;
+
         ListNode next;
 
         ListNode() {
@@ -501,7 +523,8 @@ public class LeetCode {
             if (temp > Integer.MAX_VALUE / 10 || (temp == Integer.MAX_VALUE / 10 && lastBit > Integer.MAX_VALUE % 10)) {
                 return Integer.MAX_VALUE;
             }
-            if (temp < Integer.MIN_VALUE / 10 || (temp == Integer.MIN_VALUE / 10 && -lastBit < Integer.MIN_VALUE % 10)) {
+            if (temp < Integer.MIN_VALUE / 10 || (temp == Integer.MIN_VALUE / 10
+                && -lastBit < Integer.MIN_VALUE % 10)) {
                 return Integer.MIN_VALUE;
             }
         }
@@ -540,14 +563,14 @@ public class LeetCode {
      * @return
      */
     public static boolean isMatch(String s, String p) {
-        if (p.isEmpty()) return s.isEmpty();
+        if (p.isEmpty()) {
+            return s.isEmpty();
+        }
         // .可以匹配任意字符
-        boolean first_match = (!s.isEmpty() &&
-                (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'));
+        boolean first_match = (!s.isEmpty() && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.'));
         // *匹配零个或者多个
         if (p.length() >= 2 && p.charAt(1) == '*') {
-            return (isMatch(s, p.substring(2)) ||
-                    (first_match && isMatch(s.substring(1), p)));
+            return (isMatch(s, p.substring(2)) || (first_match && isMatch(s.substring(1), p)));
         } else {
             return first_match && isMatch(s.substring(1), p.substring(1));
         }
@@ -567,9 +590,7 @@ public class LeetCode {
 
         for (int i = s.length(); i >= 0; i--) {
             for (int j = p.length() - 1; j >= 0; j--) {
-                boolean first_match = (i < s.length() &&
-                        (p.charAt(j) == s.charAt(i) ||
-                                p.charAt(j) == '.'));
+                boolean first_match = (i < s.length() && (p.charAt(j) == s.charAt(i) || p.charAt(j) == '.'));
                 if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
                     dp[i][j] = dp[i][j + 2] || first_match && dp[i + 1][j];
                 } else {
@@ -579,7 +600,6 @@ public class LeetCode {
         }
         return dp[0][0];
     }
-
 
     /**
      * 12. 整数转罗马数字
@@ -625,7 +645,6 @@ public class LeetCode {
 
         return result;
     }
-
 
     /**
      * 14. 最长公共前缀
@@ -760,12 +779,15 @@ public class LeetCode {
      * @return
      */
     public List<String> letterCombinations(String digits) {
-        String[][] keyLetterMap = {{"!", "@", "#"}, {"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"}, {"p", "q", "r", "s"}, {"t", "u", "v"}, {"w", "x", "y", "z"}};
+        String[][] keyLetterMap = {
+            {"!", "@", "#"}, {"a", "b", "c"}, {"d", "e", "f"}, {"g", "h", "i"}, {"j", "k", "l"}, {"m", "n", "o"},
+            {"p", "q", "r", "s"}, {"t", "u", "v"}, {"w", "x", "y", "z"}
+        };
         List<String> combinations = new ArrayList<>();
         if (digits.length() == 0) {
             return combinations;
         }
-        combinations = combination(keyLetterMap[digits.charAt(0) - '1'], new String[]{});
+        combinations = combination(keyLetterMap[digits.charAt(0) - '1'], new String[] {});
         for (int i = 1; i < digits.length(); i++) {
             combinations = combination(combinations.toArray(new String[0]), keyLetterMap[digits.charAt(i) - '1']);
         }
@@ -791,7 +813,6 @@ public class LeetCode {
         }
         return combinations;
     }
-
 
     /**
      * 18. 四数之和
@@ -981,14 +1002,16 @@ public class LeetCode {
         if (n == 0) {
             ans.add("");
         } else {
-            for (int c = 0; c < n; ++c)
-                for (String left : generateParenthesis(c))
-                    for (String right : generateParenthesis(n - 1 - c))
+            for (int c = 0; c < n; ++c) {
+                for (String left : generateParenthesis(c)) {
+                    for (String right : generateParenthesis(n - 1 - c)) {
                         ans.add("(" + left + ")" + right);
+                    }
+                }
+            }
         }
         return ans;
     }
-
 
     /**
      * 23. 合并K个排序链表
@@ -1235,7 +1258,6 @@ public class LeetCode {
         }
         int len = words[0].length();
 
-
         return null;
     }
 
@@ -1364,13 +1386,14 @@ public class LeetCode {
         int pivot = 0, l = 0, r = nums.length - 1;
         while (l <= r) {
             pivot = (l + r) / 2;
-            if (nums[pivot] > nums[pivot + 1])
+            if (nums[pivot] > nums[pivot + 1]) {
                 break;
-            else {
-                if (nums[pivot] < nums[l])
+            } else {
+                if (nums[pivot] < nums[l]) {
                     r = pivot - 1;
-                else
+                } else {
                     l = pivot + 1;
+                }
             }
         }
         return pivot + 1;
@@ -1503,7 +1526,9 @@ public class LeetCode {
     }
 
     HashSet<Character>[] rows = new HashSet[9];
+
     HashSet<Character>[] cols = new HashSet[9];
+
     HashSet<Character>[] boxes = new HashSet[9];
 
     private char[][] board;
@@ -2007,7 +2032,9 @@ public class LeetCode {
 
     static class TreeNode {
         int val;
+
         TreeNode left;
+
         TreeNode right;
 
         TreeNode() {
@@ -2239,6 +2266,7 @@ public class LeetCode {
     static class LRUCache {
 
         LinkedHashMap<Integer, Integer> map;
+
         int capacity;
 
         public LRUCache(int capacity) {
@@ -2379,6 +2407,7 @@ public class LeetCode {
     static class MinStack {
 
         private Stack<Integer> stack;
+
         private Stack<Integer> helper;
 
         /**
@@ -2705,7 +2734,6 @@ public class LeetCode {
         return null;
     }
 
-
     /**
      * 237. 删除链表中的节点
      *
@@ -2996,18 +3024,18 @@ public class LeetCode {
         Queue<int[]> queue = new ArrayDeque<>();
         for (int i = 0; i < m; i++) {
             if (board[0][i] == 'O') {
-                queue.offer(new int[]{i, 0});
+                queue.offer(new int[] {i, 0});
             }
             if (board[n - 1][i] == 'O') {
-                queue.offer(new int[]{i, n - 1});
+                queue.offer(new int[] {i, n - 1});
             }
         }
         for (int i = 1; i < n - 1; i++) {
             if (board[i][0] == 'O') {
-                queue.offer(new int[]{0, i});
+                queue.offer(new int[] {0, i});
             }
             if (board[i][m - 1] == 'O') {
-                queue.offer(new int[]{m - 1, i});
+                queue.offer(new int[] {m - 1, i});
             }
         }
         // 检查每个与边界'O'相连的点
@@ -3017,16 +3045,16 @@ public class LeetCode {
             int col = temp[0];
             board[row][col] = 'A';
             if (row + 1 < n && board[row + 1][col] == 'O') {
-                queue.offer(new int[]{col, row + 1});
+                queue.offer(new int[] {col, row + 1});
             }
             if (row - 1 >= 0 && board[row - 1][col] == 'O') {
-                queue.offer(new int[]{col, row - 1});
+                queue.offer(new int[] {col, row - 1});
             }
             if (col + 1 < m && board[row][col + 1] == 'O') {
-                queue.offer(new int[]{col + 1, row});
+                queue.offer(new int[] {col + 1, row});
             }
             if (col - 1 >= 0 && board[row][col - 1] == 'O') {
-                queue.offer(new int[]{col - 1, row});
+                queue.offer(new int[] {col - 1, row});
             }
         }
         // 恢复标记并修改未标记O
@@ -3040,7 +3068,6 @@ public class LeetCode {
             }
         }
     }
-
 
     /**
      * N个人围成一个圆圈进行报数, 报偶数者出列, 剩下的人继续报数
@@ -3094,9 +3121,13 @@ public class LeetCode {
 
     class Node {
         public int val;
+
         public Node left;
+
         public Node right;
+
         public Node next;
+
         public List<Node> neighbors;
 
         public Node() {
@@ -3250,7 +3281,8 @@ public class LeetCode {
         // find internal same box
         for (int i = l; i < r; i++) {
             if (boxes[i] == boxes[r]) {
-                dp[l][r][k] = Math.max(dp[l][r][k], calculatePoint(boxes, dp, l, i, k + 1) + calculatePoint(boxes, dp, i + 1, r - 1, 0));
+                dp[l][r][k] = Math.max(dp[l][r][k],
+                    calculatePoint(boxes, dp, l, i, k + 1) + calculatePoint(boxes, dp, i + 1, r - 1, 0));
             }
         }
         return dp[l][r][k];
@@ -3294,22 +3326,22 @@ public class LeetCode {
         }
         int n = image.length, m = image[0].length;
         Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{sr, sc});
+        queue.offer(new int[] {sr, sc});
         while (!queue.isEmpty()) {
             int[] temp = queue.remove();
             int row = temp[0], col = temp[1];
             image[row][col] = newColor;
             if (row - 1 >= 0 && image[row - 1][col] == oldColor) {
-                queue.offer(new int[]{row - 1, col});
+                queue.offer(new int[] {row - 1, col});
             }
             if (row + 1 < n && image[row + 1][col] == oldColor) {
-                queue.offer(new int[]{row + 1, col});
+                queue.offer(new int[] {row + 1, col});
             }
             if (col - 1 >= 0 && image[row][col - 1] == oldColor) {
-                queue.offer(new int[]{row, col - 1});
+                queue.offer(new int[] {row, col - 1});
             }
             if (col + 1 < m && image[row][col + 1] == oldColor) {
-                queue.offer(new int[]{row, col + 1});
+                queue.offer(new int[] {row, col + 1});
             }
         }
         return image;
@@ -3449,8 +3481,8 @@ public class LeetCode {
         if (x < 0 || x >= m || y < 0 || y >= n || board[y][x] != 'E') {
             return;
         }
-        int[] dirX = new int[]{1, 0, -1, 0, 1, 1, -1, -1};
-        int[] dirY = new int[]{0, 1, 0, -1, 1, -1, 1, -1};
+        int[] dirX = new int[] {1, 0, -1, 0, 1, 1, -1, -1};
+        int[] dirY = new int[] {0, 1, 0, -1, 1, -1, 1, -1};
         int num = 0;
         for (int i = 0; i < dirX.length; i++) {
             int tempX = x + dirX[i];
@@ -3787,6 +3819,7 @@ public class LeetCode {
     }
 
     private List<List<Integer>> result;
+
     private List<Integer> temp;
 
     /**
@@ -3848,6 +3881,7 @@ public class LeetCode {
     }
 
     private Map<String, PriorityQueue<String>> map;
+
     private List<String> itinerary;
 
     /**
@@ -4012,9 +4046,13 @@ public class LeetCode {
     }
 
     private Set<Integer> columns;
+
     private Set<Integer> diagonals1;
+
     private Set<Integer> diagonals2;
+
     private List<List<String>> NQueens;
+
     private int[] queens;
 
     /**
@@ -4447,12 +4485,12 @@ public class LeetCode {
         }
 
         if (conflict < 0) {
-            return new int[]{edges[cycle][0], edges[cycle][1]};
+            return new int[] {edges[cycle][0], edges[cycle][1]};
         } else {
             if (cycle < 0) {
-                return new int[]{edges[conflict][0], edges[conflict][1]};
+                return new int[] {edges[conflict][0], edges[conflict][1]};
             } else {
-                return new int[]{parent[edges[conflict][1]], edges[conflict][1]};
+                return new int[] {parent[edges[conflict][1]], edges[conflict][1]};
             }
         }
     }
@@ -4594,7 +4632,7 @@ public class LeetCode {
 
     private int[] dfsMinCameraCover(TreeNode node) {
         if (node == null) {
-            return new int[]{Integer.MAX_VALUE / 2, 0, 0};
+            return new int[] {Integer.MAX_VALUE / 2, 0, 0};
         }
         int[] result = new int[3];
         int[] left = dfsMinCameraCover(node.left);
@@ -4615,7 +4653,7 @@ public class LeetCode {
         temp = new ArrayList<>();
         dfsFindMode(root);
         if (temp.size() == 0) {
-            return new int[]{};
+            return new int[] {};
         }
         int current = temp.get(0), times = 0, maxTimes = Integer.MIN_VALUE;
         List<Integer> result = new ArrayList<>();
@@ -4677,7 +4715,8 @@ public class LeetCode {
             }
         }
         TreeNode left = buildTree(Arrays.copyOfRange(inorder, 0, i), Arrays.copyOfRange(postorder, 0, i));
-        TreeNode right = buildTree(Arrays.copyOfRange(inorder, i + 1, length), Arrays.copyOfRange(postorder, i, length - 1));
+        TreeNode right = buildTree(Arrays.copyOfRange(inorder, i + 1, length),
+            Arrays.copyOfRange(postorder, i, length - 1));
         root.left = left;
         root.right = right;
         return root;
@@ -4751,7 +4790,7 @@ public class LeetCode {
         for (int i = 0; i < nums.length; i++) {
             int req = target - nums[i];
             if (map.containsKey(req)) {
-                return new int[]{map.get(req), i};
+                return new int[] {map.get(req), i};
             }
             map.put(nums[i], i);
         }
@@ -4759,8 +4798,11 @@ public class LeetCode {
     }
 
     private int[] dp;
+
     private int[] subTreeSize;
+
     private int[] ans;
+
     private List<List<Integer>> graph;
 
     /**
@@ -4921,7 +4963,7 @@ public class LeetCode {
         List<String> result = new ArrayList<>();
         Map<Character, int[]> charMap = new HashMap<>();
         for (char c : A[0].toCharArray()) {
-            int[] temp = charMap.getOrDefault(c, new int[]{0, 0});
+            int[] temp = charMap.getOrDefault(c, new int[] {0, 0});
             temp[0] += 1;
             charMap.put(c, temp);
         }
@@ -5446,6 +5488,7 @@ public class LeetCode {
      */
     class RandomizedCollection {
         Map<Integer, Set<Integer>> idx;
+
         List<Integer> nums;
 
         /**
@@ -5681,6 +5724,62 @@ public class LeetCode {
         return count;
     }
 
+    /**
+     * 187. 重复的DNA序列
+     *
+     * @param s
+     * @return
+     */
+    public List<String> findRepeatedDnaSequences(String s) {
+        Set<String> subSet = new HashSet<>();
+        Set<String> repeated = new HashSet<>();
+        for (int i = 0; i <= s.length() - 10; i++) {
+            String subStr = s.substring(i, i + 10);
+            if (subSet.contains(subStr)) {
+                repeated.add(subStr);
+            }
+            subSet.add(subStr);
+        }
+        return new ArrayList<>(repeated);
+    }
+
+    /**
+     * 220. 存在重复元素 III
+     *
+     * @param nums
+     * @param k
+     * @param t
+     * @return
+     */
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        int length = nums.length;
+        Map<Long, Long> bucket = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            long id = getBucketId(nums[i], t + 1);
+            if (bucket.containsKey(id)) {
+                return true;
+            }
+            if (bucket.get(id - 1) != null && Math.abs(bucket.get(id - 1) - nums[i]) <= t) {
+                return true;
+            }
+            if (bucket.get(id + 1) != null && Math.abs(bucket.get(id + 1) - nums[i]) <= t) {
+                return true;
+            }
+            bucket.put(id, (long) nums[i]);
+            // 只对下标差不超过k的元素进行判断
+            if (i >= k) {
+                bucket.remove(getBucketId(nums[i - k], t + 1));
+            }
+        }
+        return false;
+    }
+
+    private long getBucketId(long val, long size) {
+        if (val >= 0) {
+            return val / size;
+        }
+        return val / size - 1;
+    }
 
 }
 
