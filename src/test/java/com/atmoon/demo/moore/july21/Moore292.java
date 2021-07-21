@@ -7,7 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Moore292 {
+
+    private RoadNode node;
+
     public boolean func(RoadNode rn) {
+        node = rn;
+        return recursionCheck(rn);
+    }
+
+    private boolean recursionCheck(RoadNode current) {
+        if (current == null) {
+            return true;
+        }
+        if (!recursionCheck(current.next)) {
+            return false;
+        }
+        if (node.val != current.val) {
+            return false;
+        }
+        node = node.next;
+        return true;
+    }
+
+    public boolean func1(RoadNode rn) {
         int[] path = getPath(rn);
         int length = path.length;
         int left = (length - 1) / 2;
@@ -37,11 +59,35 @@ public class Moore292 {
         node.next = node1;
         node1.next = node2;
         node2.next = node3;
-        Assert.assertFalse(func(node));
+        Assert.assertFalse(func1(node));
     }
 
     @Test
     public void test2() {
+        RoadNode node = new RoadNode(1);
+        RoadNode node1 = new RoadNode(2);
+        RoadNode node2 = new RoadNode(2);
+        RoadNode node3 = new RoadNode(1);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        Assert.assertTrue(func1(node));
+    }
+
+    @Test
+    public void test3() {
+        RoadNode node = new RoadNode(1);
+        RoadNode node1 = new RoadNode(2);
+        RoadNode node2 = new RoadNode(3);
+        RoadNode node3 = new RoadNode(1);
+        node.next = node1;
+        node1.next = node2;
+        node2.next = node3;
+        Assert.assertFalse(func(node));
+    }
+
+    @Test
+    public void test4() {
         RoadNode node = new RoadNode(1);
         RoadNode node1 = new RoadNode(2);
         RoadNode node2 = new RoadNode(2);
